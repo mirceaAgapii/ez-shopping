@@ -25,5 +25,5 @@ Just joking :D  (No I'm not)
 
 ## Contents:
 * [Functional Requirements](https://github.com/mirceaAgapii/ez-shopping/wiki/Functional-Requirements)
-* [Non-functional Requirements](#)
-* [Backlog](#)
+* [Non-functional Requirements](https://github.com/mirceaAgapii/ez-shopping/wiki/Non-functional-Requirements)
+* [Backlog](https://github.com/mirceaAgapii/ez-shopping/issues)
