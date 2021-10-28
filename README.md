@@ -1,7 +1,7 @@
 ## Introduction
 My company “EZ-shopping”, is developing a supermarket checkout application to help store owners to cope with the COVID situation by offering their customers the possibility to buy goods on their own without the help of cashiers and consultants.
 
-## **Why EZ-Shopping**
+## **Why EZ-Shopping?**
 Regarding the pandemic situation from the last period, we always try to minimize contact with other people for our and their safety. But still, we can't avoid all possible places which are usually very crowded like public transport, stores, banks, etc. All these places are very important for us and we have to visit them even with the risk to be infected. 
 
 But why not reduce the risk by decreasing the number of people we interact with? For example in a supermarket: imagine that we can just enter one, pick whatever we need and just leave without interacting with anyone? Isn't this brilliant? Especially for introverts :)
