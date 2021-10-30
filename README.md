@@ -6,8 +6,7 @@ Regarding the pandemic situation from the last period, we always try to minimize
 
 But why not reduce the risk by decreasing the number of people we interact with? For example in a supermarket: imagine that we can just enter one, pick whatever we need and just leave without interacting with anyone? Isn't this brilliant? Especially for introverts :)
 
-So now it is! Ok, not so revolutionary as it might sound at the first glance but it's a step forward towards a better world with fewer people bothering you with unnecessary things that you don't give a fu*k! 
-Just kidding :D  (No I'm not)
+So now it is! Ok, not so revolutionary as it might sound at the first glance but it's a step forward towards a better world with fewer people bothering you with unnecessary things :D 
 
 ## With this application you'll be able to:
 ### For store customers:
