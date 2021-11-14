@@ -4,30 +4,54 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet id="2" author="mag">
-        <createTable tableName="article">
-            <column name="id" type="serial"/>
-            <column name="name" type="varchar(50)"/>
-            <column name="description" type="varchar(100)"/>
-            <column name="price" type="number"/>
-        </createTable>
-        <insert tableName="article">
+    <changeSet id="3" author="mag">
+        <!-- Add user role -->
+        <insert tableName="ez_role">
+            <column name="role_id" value="CLIENT"/>
+        </insert>
+        <insert tableName="ez_role">
+            <column name="role_id" value="ADMINISTRATOR"/>
+        </insert>
+
+        <!-- Add default users -->
+        <insert tableName="ez_user">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Mircea"/>
+            <column name="email" value="mircea@gmail.com"/>
+            <column name="role" value="ADMINISTRATOR"/>
+        </insert>
+        <insert tableName="ez_user">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Ion"/>
+            <column name="email" value="ion@gmail.com"/>
+            <column name="role" value="CLIENT"/>
+        </insert>
+        <insert tableName="ez_user">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Vasea"/>
+            <column name="email" value="vasea@gmail.com"/>
+            <column name="role" value="CLIENT"/>
+        </insert>
+
+        <!-- Add products -->
+        <insert tableName="ez_product">
             <column name="id" valueNumeric="1"/>
             <column name="name" value="Apple"/>
             <column name="description" value="Golden"/>
             <column name="price" valueNumeric="10.00"/>
         </insert>
-        <insert tableName="article">
+        <insert tableName="ez_product">
             <column name="id" valueNumeric="2"/>
             <column name="name" value="Banana"/>
             <column name="description" value="Sweet bananas"/>
             <column name="price" valueNumeric="25.00"/>
         </insert>
-        <insert tableName="article">
+        <insert tableName="ez_product">
             <column name="id" valueNumeric="3"/>
             <column name="name" value="Potatoes"/>
             <column name="description" value="Din sera"/>
             <column name="price" valueNumeric="7.50"/>
         </insert>
+
     </changeSet>
 </databaseChangeLog>
