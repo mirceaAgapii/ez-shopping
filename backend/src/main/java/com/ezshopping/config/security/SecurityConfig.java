@@ -1,6 +1,8 @@
 package com.ezshopping.config.security;
 
 import static com.ezshopping.api.EndpointsAPI.*;
+import com.ezshopping.config.security.filter.CustomAuthenticationFilter;
+import com.ezshopping.config.security.filter.CustomAuthorizationFilter;
 import com.ezshopping.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
-                .antMatchers(API + LOGIN + ALL, API + USERS + TOKEN + REFRESH + ALL).permitAll();
+                .antMatchers(API + LOGIN + ALL, API + USERS + TOKEN + REFRESH + ALL, "/actuator/**", "/applications/**", "/error/**", "/instances/**").permitAll();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, API + ALL).hasAnyAuthority(UserRole.ADMINISTRATOR.getValue());
         http.authorizeRequests()

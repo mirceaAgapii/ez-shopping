@@ -1,6 +1,6 @@
 package com.ezshopping.stock;
 
-import com.ezshopping.location.store.StoreEntity;
+import com.ezshopping.location.LocationEntity;
 import com.ezshopping.model.AbstractEntity;
 import com.ezshopping.product.ProductEntity;
 import lombok.EqualsAndHashCode;
@@ -21,8 +21,8 @@ public class StockEntity extends AbstractEntity {
     private String locationType;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "store_id", referencedColumnName = "id")
-    private StoreEntity store;
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private LocationEntity location;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")

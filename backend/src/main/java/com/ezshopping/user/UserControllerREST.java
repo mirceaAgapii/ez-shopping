@@ -56,7 +56,7 @@ public class UserControllerREST extends AbstractController<UserEntity>{
     }
 
     @PostMapping("/save")
-    public ResponseEntity saveUser(@RequestBody UserDTO user) {
+    public ResponseEntity registerUser(@RequestBody UserDTO user) {
         UserEntity newUser = UserEntity.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
@@ -66,7 +66,7 @@ public class UserControllerREST extends AbstractController<UserEntity>{
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/save").toUriString());
         ResponseEntity responseEntity;
         try {
-            responseEntity = ResponseEntity.created(uri).body(userService.saveUser(newUser));
+            responseEntity = ResponseEntity.created(uri).body(userService.registerUser(newUser));
             log.info("New user [{}] successfully saved", newUser);
         } catch (UserAlreadyInDatabaseException ex) {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

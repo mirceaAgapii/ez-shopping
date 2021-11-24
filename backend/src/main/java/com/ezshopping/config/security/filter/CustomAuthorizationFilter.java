@@ -1,4 +1,4 @@
-package com.ezshopping.config.security;
+package com.ezshopping.config.security.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import static com.ezshopping.util.Utilities.*;

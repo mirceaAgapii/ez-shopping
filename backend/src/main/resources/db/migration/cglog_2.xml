@@ -47,6 +47,17 @@
                                  referencedTableName="ez_product"
                                  referencedColumnNames="id"/>
 
+        <addForeignKeyConstraint constraintName="fk_cart2location"
+                                 baseTableName="ez_cart"
+                                 baseColumnNames="id"
+                                 referencedTableName="ez_location"
+                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_store2location"
+                                 baseTableName="ez_store"
+                                 baseColumnNames="id"
+                                 referencedTableName="ez_location"
+                                 referencedColumnNames="id" />
+
         <addForeignKeyConstraint constraintName="fk_product2cart_product"
                                  baseTableName="ez_cart_product"
                                  baseColumnNames="product_id"
@@ -58,10 +69,10 @@
                                  referencedTableName="ez_cart"
                                  referencedColumnNames="id"/>
 
-        <addForeignKeyConstraint constraintName="fk_store2stock"
+        <addForeignKeyConstraint constraintName="fk_location2stock"
                                  baseTableName="ez_stock"
-                                 baseColumnNames="store_id"
-                                 referencedTableName="ez_store"
+                                 baseColumnNames="location_id"
+                                 referencedTableName="ez_location"
                                  referencedColumnNames="id"/>
 
         <addForeignKeyConstraint constraintName="fk_cart2user"

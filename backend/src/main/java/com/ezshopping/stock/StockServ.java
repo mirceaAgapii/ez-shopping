@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class StockServ extends AbstractService<StockEntity> {
     @Override
-    public List getAll() {
+    public List<StockEntity> getAll() {
         return null;
     }
 }

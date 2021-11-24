@@ -1,6 +1,6 @@
 package com.ezshopping.location.cart;
 
-import com.ezshopping.model.AbstractEntity;
+import com.ezshopping.location.LocationEntity;
 import com.ezshopping.product.ProductEntity;
 import com.ezshopping.user.UserEntity;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class CartEntity extends AbstractEntity {
+public class CartEntity extends LocationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id", updatable = false, insertable = false)

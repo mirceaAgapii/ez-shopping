@@ -73,7 +73,7 @@ public class UserService extends AbstractService<UserEntity> implements UserDeta
         return user;
     }
 
-    public UserEntity saveUser(UserEntity user) throws UserAlreadyInDatabaseException {
+    public UserEntity registerUser(UserEntity user) throws UserAlreadyInDatabaseException {
         try {
             getUserByUsername(user.getUsername());
             log.warn("User with username [{}] is already in database", user.getUsername());

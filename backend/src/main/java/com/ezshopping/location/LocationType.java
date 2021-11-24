@@ -7,9 +7,9 @@ public enum LocationType {
     STORE("STORE"),
     CART("CART");
 
-    private String Value;
+    private final String value;
 
     LocationType(String value) {
-       this.Value = value;
+       this.value = value;
     }
 }
