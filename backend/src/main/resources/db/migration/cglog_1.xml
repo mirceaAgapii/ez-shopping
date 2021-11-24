@@ -6,42 +6,43 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet id="1" author="mag">
         <createTable tableName="ez_user">
-            <column name="id" type="serial"/>
-            <column name="name" type="varchar(50)"/>
+            <column name="id" type="varchar(36)"/>
+            <column name="username" type="varchar(50)"/>
+            <column name="password" type="varchar(100)"/>
             <column name="email" type="varchar(50)"/>
             <column name="role" type="varchar(15)"/>
         </createTable>
-        <createTable tableName="ez_role">
-            <column name="role_id" type="varchar(15)"/>
-        </createTable>
+        <addPrimaryKey tableName="ez_user" columnNames="id"/>
+
         <createTable tableName="ez_product">
-            <column name="id" type="serial"/>
+            <column name="id" type="varchar(36)"/>
             <column name="name" type="varchar(50)"/>
             <column name="description" type="varchar(100)"/>
-            <column name="price" type="number"/>
+            <column name="price" type="double"/>
+            <column name="barcode" type="varchar(20)"/>
         </createTable>
-        <createTable tableName="ez_locationtype">
-            <column name="type_id" type="varchar(15)"/>
-        </createTable>
-        <createTable tableName="ez_location">
-            <column name="id" type="serial"/>
-            <column name="location_id" type="varchar(50)"/>
-            <column name="type" type="varchar(15)"/>
-        </createTable>
+        <addPrimaryKey tableName="ez_product" columnNames="id"/>
+
         <createTable tableName="ez_store">
-            <column name="id" type="serial"/>
+            <column name="id" type="varchar(36)"/>
+            <column name="store_id" type="varchar(50)"/>
             <column name="address" type="varchar(100)"/>
         </createTable>
         <createTable tableName="ez_cart">
-            <column name="id" type="serial"/>
-            <column name="user_id" type="serial"/>
+            <column name="id" type="varchar(36)"/>
+            <column name="user_id" type="varchar(36)"/>
+        </createTable>
+        <createTable tableName="ez_cart_product">
+            <column name="cart_id" type="varchar(36)"/>
+            <column name="product_id" type="varchar(36)"/>
+            <column name="quantity" type="double"/>
         </createTable>
         <createTable tableName="ez_stock">
-            <column name="id" type="serial"/>
+            <column name="id" type="varchar(36)"/>
             <column name="location_type" type="varchar(15)"/>
-            <column name="location_id" type="serial"/>
-            <column name="product_id" type="serial"/>
-            <column name="quantity" type="number"/>
+            <column name="store_id" type="varchar(36)"/>
+            <column name="product_id" type="varchar(36)"/>
+            <column name="quantity" type="double"/>
         </createTable>
 
     </changeSet>
