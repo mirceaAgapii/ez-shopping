@@ -17,7 +17,6 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class UserService extends AbstractService<UserEntity> implements UserDetailsService {
 
@@ -73,6 +72,7 @@ public class UserService extends AbstractService<UserEntity> implements UserDeta
         return user;
     }
 
+    @Transactional
     public UserEntity registerUser(UserEntity user) throws UserAlreadyInDatabaseException {
         try {
             getUserByUsername(user.getUsername());
@@ -91,12 +91,14 @@ public class UserService extends AbstractService<UserEntity> implements UserDeta
         }
     }
 
+    @Transactional
     public UserEntity deleteUserById(String id) throws UserNotFoundException {
         UserEntity user = getUserById(id);
         userRepository.delete(user);
         return user;
     }
 
+    @Transactional
     public UserEntity updateUser(UserEntity updatedUser) throws UsernameNotFoundException {
         UserEntity userEntity = getUserById(updatedUser.getId());
         if (Objects.nonNull(updatedUser.getEmail()) && !updatedUser.getEmail().equals(userEntity.getEmail())) {
