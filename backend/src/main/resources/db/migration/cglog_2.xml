@@ -6,36 +6,37 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet id="2" author="mag">
 
-
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_store"/>
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_cart"/>
         <addPrimaryKey
                 tableName="ez_cart"
                 columnNames="id"/>
-
+        <addPrimaryKey
+                tableName="ez_user"
+                columnNames="id"/>
         <addPrimaryKey
                 tableName="ez_store"
                 columnNames="id"/>
         <addPrimaryKey
                 tableName="ez_stock"
                 columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_product"
+                columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_location"
+                columnNames="id" />
+        <addPrimaryKey
+                tableName="ez_order"
+                columnNames="id" />
+        <addPrimaryKey
+                tableName="ez_order_line"
+                columnNames="id"/>
 
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_user"/>
         <addUniqueConstraint
                 columnNames="username"
                 tableName="ez_user"/>
         <addUniqueConstraint
                 columnNames="email"
                 tableName="ez_user"/>
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_product"/>
         <addUniqueConstraint
                 columnNames="barcode"
                 tableName="ez_product"/>
@@ -69,6 +70,17 @@
                                  referencedTableName="ez_cart"
                                  referencedColumnNames="id"/>
 
+        <addForeignKeyConstraint constraintName="fk_product2order_line"
+                                 baseTableName="ez_order_line"
+                                 baseColumnNames="product_id"
+                                 referencedTableName="ez_product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order2order_line"
+                                 baseTableName="ez_order_line"
+                                 baseColumnNames="order_id"
+                                 referencedTableName="ez_order"
+                                 referencedColumnNames="id"/>
+
         <addForeignKeyConstraint constraintName="fk_location2stock"
                                  baseTableName="ez_stock"
                                  baseColumnNames="location_id"
@@ -77,6 +89,12 @@
 
         <addForeignKeyConstraint constraintName="fk_cart2user"
                                  baseTableName="ez_cart"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="ez_user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_order2user"
+                                 baseTableName="ez_order"
                                  baseColumnNames="user_id"
                                  referencedTableName="ez_user"
                                  referencedColumnNames="id"/>

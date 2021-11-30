@@ -26,7 +26,9 @@ public class HttpRequestReplyFilter implements Filter {
 
         if(!request.getRequestURI().contains("actuator")) {
             log.info("[{}] request for URL: [{}]", request.getMethod(), request.getRequestURI());
-            filterChain.doFilter(servletRequest, servletResponse);
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
+        if(!request.getRequestURI().contains("actuator")) {
             log.info("Response status: [{}]", response.getStatus());
         }
     }

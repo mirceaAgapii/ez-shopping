@@ -22,4 +22,6 @@ public class EndpointsAPI {
 
     public static final String REFRESH = "/refresh";
 
+    public static final String ORDERS = "/orders";
+
 }

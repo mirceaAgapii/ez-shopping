@@ -2,10 +2,10 @@ package com.ezshopping.product;
 
 import com.ezshopping.location.cart.CartEntity;
 import com.ezshopping.model.AbstractEntity;
+import com.ezshopping.order.orderline.OrderLineEntity;
 import com.ezshopping.stock.StockEntity;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -39,4 +39,7 @@ public class ProductEntity extends AbstractEntity {
     @ManyToMany(mappedBy = "productList")
     private List<CartEntity> cartList;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private Set<OrderLineEntity> orderLines;
 }

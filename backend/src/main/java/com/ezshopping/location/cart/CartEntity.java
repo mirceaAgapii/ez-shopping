@@ -6,6 +6,7 @@ import com.ezshopping.user.UserEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "ez_cart")
@@ -15,7 +16,7 @@ import java.util.List;
 public class CartEntity extends LocationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", updatable = false, insertable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, insertable = false)
     private UserEntity user;
 
     @ManyToMany
@@ -24,5 +25,5 @@ public class CartEntity extends LocationEntity {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<ProductEntity> productList;
+    private Set<ProductEntity> productList;
 }

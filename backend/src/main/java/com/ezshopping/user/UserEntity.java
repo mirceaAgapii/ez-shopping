@@ -8,8 +8,9 @@ import javax.persistence.*;
 @Table(name = "ez_user")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 @Builder
 public class UserEntity extends AbstractEntity {
 

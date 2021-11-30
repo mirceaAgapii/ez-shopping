@@ -12,7 +12,7 @@
             <column name="email" type="varchar(50)"/>
             <column name="role" type="varchar(15)"/>
         </createTable>
-        <addPrimaryKey tableName="ez_user" columnNames="id"/>
+
 
         <createTable tableName="ez_product">
             <column name="id" type="varchar(36)"/>
@@ -21,19 +21,20 @@
             <column name="price" type="double"/>
             <column name="barcode" type="varchar(20)"/>
         </createTable>
-        <addPrimaryKey tableName="ez_product" columnNames="id"/>
+
 
         <createTable tableName="ez_location">
             <column name="id" type="varchar(36)"/>
             <column name="location_type" type="varchar(15)"/>
         </createTable>
-        <addPrimaryKey tableName="ez_location" columnNames="id" />
+
 
         <createTable tableName="ez_store">
             <column name="id" type="varchar(36)"/>
             <column name="store_id" type="varchar(50)"/>
             <column name="address" type="varchar(100)"/>
         </createTable>
+
         <createTable tableName="ez_cart">
             <column name="id" type="varchar(36)"/>
             <column name="user_id" type="varchar(36)"/>
@@ -50,6 +51,16 @@
             <column name="product_id" type="varchar(36)"/>
             <column name="quantity" type="double"/>
         </createTable>
-
+        <createTable tableName="ez_order">
+            <column name="id" type="varchar(36)"/>
+            <column name="user_id" type="varchar(36)"/>
+            <column name="total" type="double"/>
+        </createTable>
+        <createTable tableName="ez_order_line">
+            <column name="id" type="varchar(36)"/>
+            <column name="order_id" type="varchar(36)"/>
+            <column name="product_id" type="varchar(36)"/>
+            <column name="quantity" type="double"/>
+        </createTable>
     </changeSet>
 </databaseChangeLog>
