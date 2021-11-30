@@ -7,8 +7,8 @@ import com.ezshopping.model.AbstractController;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,11 @@ import static com.ezshopping.util.Utilities.*;
 
 @RestController
 @RequestMapping(API + USERS)
+@RequiredArgsConstructor
 @Slf4j
 public class UserControllerREST extends AbstractController<UserEntity>{
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     @GetMapping
