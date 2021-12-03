@@ -3,7 +3,7 @@ package com.ezshopping.product;
 import com.ezshopping.location.cart.CartEntity;
 import com.ezshopping.model.AbstractEntity;
 import com.ezshopping.order.orderline.OrderLineEntity;
-import com.ezshopping.stock.StockEntity;
+import com.ezshopping.stock.model.StockEntity;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;

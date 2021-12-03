@@ -1,7 +1,10 @@
-package com.ezshopping.stock;
+package com.ezshopping.stock.controller;
 
 import com.ezshopping.api.EndpointsAPI;
 import com.ezshopping.model.AbstractController;
+import com.ezshopping.stock.model.StockEntity;
+import com.ezshopping.stock.service.StockService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping(EndpointsAPI.API + EndpointsAPI.STOCK)
 @Slf4j
+@RequiredArgsConstructor
 public class StockControllerREST extends AbstractController<StockEntity> {
+
+    private final StockService stockService;
+
     @Override
     public ResponseEntity<List<StockEntity>> getAllEntities() {
         return null;

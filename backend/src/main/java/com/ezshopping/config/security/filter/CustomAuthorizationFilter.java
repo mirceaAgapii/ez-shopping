@@ -22,6 +22,8 @@ import java.util.*;
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
@@ -41,7 +43,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception exception) {
-                    new ObjectMapper().writeValue(response.getOutputStream(), getErrorMessageMap(response, exception));
+                    objectMapper.writeValue(response.getOutputStream(), getErrorMessageMap(response, exception));
                 }
 
             } else {

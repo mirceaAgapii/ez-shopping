@@ -1,4 +1,4 @@
-package com.ezshopping.stock;
+package com.ezshopping.stock.model;
 
 import com.ezshopping.location.LocationEntity;
 import com.ezshopping.model.AbstractEntity;

@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import static com.ezshopping.util.Utilities.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import liquibase.pro.packaged.O;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    //TODO: send tokens in headers
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -53,7 +57,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        new ObjectMapper().writeValue(response.getOutputStream(),
+        objectMapper.writeValue(response.getOutputStream(),
                 getTokenMap(response,
                         access_token,
                         refresh_token));

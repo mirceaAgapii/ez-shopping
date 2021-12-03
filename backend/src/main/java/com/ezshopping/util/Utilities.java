@@ -15,6 +15,7 @@ import java.util.Map;
 @Slf4j
 public class Utilities {
 
+    //TODO: change the name of the header for something more
     private static final String REQUEST_HEADER_PREFIX = "Bearer ";
 
     public static boolean checkAuthorisationHeader(String authorizationHeader) {
