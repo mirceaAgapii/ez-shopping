@@ -1,4 +1,4 @@
-package com.ezshopping.model;
+package com.ezshopping.common;
 
 public interface Mapper<E, D> {
 

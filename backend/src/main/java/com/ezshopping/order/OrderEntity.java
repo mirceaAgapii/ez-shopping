@@ -1,14 +1,10 @@
 package com.ezshopping.order;
 
-import com.ezshopping.model.AbstractEntity;
-import com.ezshopping.order.orderline.OrderLineEntity;
-import com.ezshopping.product.ProductEntity;
-import com.ezshopping.user.UserEntity;
+import com.ezshopping.common.AbstractEntity;
+import com.ezshopping.user.model.User;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "ez_order")
@@ -22,7 +18,7 @@ public class OrderEntity extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, insertable = false)
-    private UserEntity user;
+    private User user;
 
     @Column(name = "total")
     private Double total;

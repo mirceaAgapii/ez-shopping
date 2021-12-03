@@ -1,6 +1,5 @@
 package com.ezshopping.stock.service;
 
-import com.ezshopping.model.AbstractService;
 import com.ezshopping.stock.model.StockEntity;
 import org.springframework.stereotype.Service;
 

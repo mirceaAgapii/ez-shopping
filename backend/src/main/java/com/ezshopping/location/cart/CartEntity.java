@@ -1,11 +1,10 @@
 package com.ezshopping.location.cart;
 
 import com.ezshopping.location.LocationEntity;
-import com.ezshopping.product.ProductEntity;
-import com.ezshopping.user.UserEntity;
+import com.ezshopping.product.model.Product;
+import com.ezshopping.user.model.User;
 import lombok.*;
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,7 @@ public class CartEntity extends LocationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, insertable = false)
-    private UserEntity user;
+    private User user;
 
     @ManyToMany
     @JoinTable(
@@ -25,5 +24,5 @@ public class CartEntity extends LocationEntity {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<ProductEntity> productList;
+    private Set<Product> productList;
 }

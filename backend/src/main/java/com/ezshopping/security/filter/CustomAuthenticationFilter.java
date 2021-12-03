@@ -1,12 +1,15 @@
-package com.ezshopping.config.security.filter;
+package com.ezshopping.security.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import static com.ezshopping.util.Utilities.*;
+
+import com.ezshopping.security.service.SecurityService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import liquibase.pro.packaged.O;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +17,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
+
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +30,6 @@ import java.util.stream.Collectors;
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    //TODO: send tokens in headers
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -42,7 +45,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         User user = (User) authResult.getPrincipal();
         Algorithm algorithm = getSecretAlgorithm();
         String access_token = JWT.create()
@@ -57,9 +60,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        objectMapper.writeValue(response.getOutputStream(),
-                getTokenMap(response,
-                        access_token,
-                        refresh_token));
+        response.setHeader("access_token", access_token);
+        response.setHeader("refresh_token", refresh_token);
+    }
+
+    private Algorithm getSecretAlgorithm() {
+        return Algorithm.HMAC256(System.getenv("SECRET_ALGORITHM").getBytes());
     }
 }

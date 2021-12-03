@@ -1,6 +1,6 @@
-package com.ezshopping.user;
+package com.ezshopping.user.model;
 
-import com.ezshopping.model.AbstractEntity;
+import com.ezshopping.common.AbstractEntity;
 import lombok.*;
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class UserEntity extends AbstractEntity {
+public class User extends AbstractEntity {
 
     @Column(name = "username")
     private String username;

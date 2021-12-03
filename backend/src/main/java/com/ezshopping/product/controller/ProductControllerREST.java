@@ -1,8 +1,8 @@
-package com.ezshopping.product;
+package com.ezshopping.product.controller;
 
 import com.ezshopping.api.EndpointsAPI;
-import com.ezshopping.model.AbstractController;
-import lombok.RequiredArgsConstructor;
+import com.ezshopping.product.model.ProductDTO;
+import com.ezshopping.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping(EndpointsAPI.API + EndpointsAPI.PRODUCTS)
 @Slf4j
-public class ProductControllerREST extends AbstractController {
+public class ProductControllerREST {
 
     @Autowired
     private ProductService productService;
 
-    @Override
     @GetMapping
-    public ResponseEntity<List<ProductEntity>> getAllEntities() {
+    public ResponseEntity<List<ProductDTO>> getAllEntities() {
         return ResponseEntity.ok().body(productService.getAll());
     }
 }

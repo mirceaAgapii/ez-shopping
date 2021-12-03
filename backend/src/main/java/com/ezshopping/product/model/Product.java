@@ -1,7 +1,7 @@
-package com.ezshopping.product;
+package com.ezshopping.product.model;
 
 import com.ezshopping.location.cart.CartEntity;
-import com.ezshopping.model.AbstractEntity;
+import com.ezshopping.common.AbstractEntity;
 import com.ezshopping.order.orderline.OrderLineEntity;
 import com.ezshopping.stock.model.StockEntity;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
-public class ProductEntity extends AbstractEntity {
+public class Product extends AbstractEntity {
 
     @Column(name = "name")
     private String name;

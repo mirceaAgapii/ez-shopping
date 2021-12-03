@@ -1,10 +1,6 @@
-package com.ezshopping.config.security.filter;
+package com.ezshopping.security.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

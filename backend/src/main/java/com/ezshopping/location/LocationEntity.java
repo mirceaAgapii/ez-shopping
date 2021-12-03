@@ -1,6 +1,6 @@
 package com.ezshopping.location;
 
-import com.ezshopping.model.AbstractEntity;
+import com.ezshopping.common.AbstractEntity;
 
 import javax.persistence.*;
 

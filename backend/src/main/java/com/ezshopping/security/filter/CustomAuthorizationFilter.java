@@ -1,11 +1,16 @@
-package com.ezshopping.config.security.filter;
+package com.ezshopping.security.filter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import static com.ezshopping.util.Utilities.*;
+
 import static com.ezshopping.api.EndpointsAPI.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +27,7 @@ import java.util.*;
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String REQUEST_HEADER_PREFIX = "Bearer ";
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -43,7 +48,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception exception) {
-                    objectMapper.writeValue(response.getOutputStream(), getErrorMessageMap(response, exception));
+
                 }
 
             } else {
@@ -51,4 +56,35 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             }
         }
     }
+
+    private boolean checkAuthorisationHeader(String authorizationHeader) {
+        return authorizationHeader != null && authorizationHeader.startsWith(REQUEST_HEADER_PREFIX);
+    }
+
+    private DecodedJWT decodedJWTFromAuthorizationHeader(String authorizationHeader) {
+        String token = getRefreshToken(authorizationHeader);
+        Algorithm algorithm = getSecretAlgorithm();
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(token);
+    }
+
+    public String getRefreshToken(String authorizationHeader) {
+        return authorizationHeader.substring(REQUEST_HEADER_PREFIX.length());
+    }
+
+    public Algorithm getSecretAlgorithm() {
+        return Algorithm.HMAC256(System.getenv("SECRET_ALGORITHM").getBytes());
+    }
+
+    public Map<String, String> setErrorMessageMap(HttpServletResponse response, Exception exception) {
+        log.error("Exception during authorization: {}", exception.getMessage());
+        response.setHeader("error", exception.getMessage());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+
+        Map<String, String> error = new HashMap<>();
+        error.put("error_message", exception.getMessage());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        return error;
+    }
+
 }

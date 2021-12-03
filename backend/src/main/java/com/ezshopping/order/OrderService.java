@@ -1,6 +1,5 @@
 package com.ezshopping.order;
 
-import com.ezshopping.model.AbstractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,8 +11,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class OrderService extends AbstractService<OrderEntity> {
-    @Override
+public class OrderService  {
+
     public List<OrderEntity> getAll() {
         return null;
     }

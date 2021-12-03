@@ -1,6 +1,5 @@
-package com.ezshopping.model;
+package com.ezshopping.common;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;

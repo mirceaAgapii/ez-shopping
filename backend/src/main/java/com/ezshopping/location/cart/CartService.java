@@ -1,14 +1,13 @@
 package com.ezshopping.location.cart;
 
-import com.ezshopping.model.AbstractService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CartService extends AbstractService<CartEntity> {
+public class CartService  {
 
-    @Override
+
     public List<CartEntity> getAll() {
         return null;
     }

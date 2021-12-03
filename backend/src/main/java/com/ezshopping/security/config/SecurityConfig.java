@@ -1,8 +1,8 @@
-package com.ezshopping.config.security;
+package com.ezshopping.security.config;
 
 import static com.ezshopping.api.EndpointsAPI.*;
-import com.ezshopping.config.security.filter.CustomAuthenticationFilter;
-import com.ezshopping.config.security.filter.CustomAuthorizationFilter;
+import com.ezshopping.security.filter.CustomAuthenticationFilter;
+import com.ezshopping.security.filter.CustomAuthorizationFilter;
 import com.ezshopping.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

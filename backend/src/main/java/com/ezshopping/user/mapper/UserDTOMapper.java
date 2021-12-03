@@ -1,18 +1,19 @@
 package com.ezshopping.user.mapper;
 
-import com.ezshopping.model.Mapper;
-import com.ezshopping.user.UserDTO;
-import com.ezshopping.user.UserEntity;
+import com.ezshopping.common.Mapper;
+import com.ezshopping.user.model.UserDTO;
+import com.ezshopping.user.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-class UserDTOMapper implements Mapper<UserEntity, UserDTO> {
+class UserDTOMapper implements Mapper<User, UserDTO> {
     @Override
-    public UserDTO map(UserEntity entity) {
+    public UserDTO map(User entity) {
         return UserDTO.builder()
                 .username(entity.getUsername())
                 .password(entity.getPassword())
                 .email(entity.getEmail())
+                .id(entity.getId())
                 .build();
     }
 }

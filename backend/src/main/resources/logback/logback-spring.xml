@@ -41,7 +41,7 @@
         <appender-ref ref="Console" />
         <appender-ref ref="RollingFile" />
     </root>
-    <logger name="com.ezshopping.config.security.filter.HttpRequestReplyFilter"
+    <logger name="com.ezshopping.security.filter.HttpRequestReplyFilter"
             additivity="false"
             level="INFO">
         <appender-ref ref="RequestResponse"/>
