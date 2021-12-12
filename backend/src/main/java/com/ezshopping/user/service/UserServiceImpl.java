@@ -28,6 +28,7 @@ class UserServiceImpl implements UserDetailsService, UserService {
     private final PasswordEncoder passwordEncoder;
     private final Mapper<User, UserDTO> mapper;
 
+    //TODO: move to a separate service
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
@@ -112,7 +113,7 @@ class UserServiceImpl implements UserDetailsService, UserService {
         userRepository.save(userEntity);
     }
 
-    private boolean userExists(UserDTO userDTO) {
+    private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
         try {
             if(Objects.nonNull(getUserByUsername(userDTO.getUsername()))) {
                 return true;

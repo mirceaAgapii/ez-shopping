@@ -63,9 +63,10 @@ public class UserControllerREST {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         securityService.getNewAccessToken(request, response);
     }
-
+//TODO: move to contollerAdvice
     @ExceptionHandler(UserAlreadyInDatabaseException.class)
     public  ResponseEntity<String> handleUserAlreadyInDatabaseException(UserAlreadyInDatabaseException ex) {
+        //TODO: send a DTO instead: with timestamp, endpoint/operation name, exception message
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 

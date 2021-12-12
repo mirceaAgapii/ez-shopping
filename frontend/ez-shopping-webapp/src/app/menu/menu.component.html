@@ -1,0 +1,35 @@
+<mat-toolbar color="light">
+
+  <mat-toolbar-row>
+    <img src="../../assets/img/logo.png" style="height: 50px; width: 70px; cursor: pointer;" (click)="navigateToMain()">
+    <span class="example-fill-remaining-space"></span>
+    <span class="align-center"></span>
+    <span class="example-spacer"></span>
+    <button mat-button>About</button>
+    <button mat-button>Contact</button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>face</mat-icon>
+      <span>Users</span>
+    </button>
+    <button mat-menu-item disabled="false">
+      <mat-icon (click)="toProducts()">shopping_cart</mat-icon>
+      <span (click)="toProducts()">Products</span>
+    </button>
+    <button mat-menu-item *ngIf="isUserLoggedIn" >
+      <mat-icon (click)="logOff()">account_circle</mat-icon>
+      <span (click)="logOff()">Log off</span>
+    </button>
+  </mat-menu>
+
+
+    <mat-icon style="position: relative;">account_circle</mat-icon>
+    <span >{{this.currentUser}}</span>
+
+
+</mat-toolbar-row>
+
+
