@@ -19,14 +19,12 @@ export class LoginComponent implements OnInit {
   disableButton = true;
   username!: string;
   password!: string;
-  loadData: Subscription;
 
 
   constructor(private router: Router,
     private restService: UserRestService,
     private userService: UserService,
     private authorizationService: AuthorizationService) {
-      this.loadData = new Subscription();
      }
 
   showSpinner = false;
@@ -40,7 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.loadData.unsubscribe();
   }
 
 

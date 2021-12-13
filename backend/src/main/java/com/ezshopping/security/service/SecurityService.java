@@ -44,17 +44,6 @@ public class SecurityService {
         return Algorithm.HMAC256(System.getenv("SECRET_ALGORITHM").getBytes());
     }
 
-    public Map<String, String> getErrorMessageMap(HttpServletResponse response, Exception exception) {
-        log.error("Exception during authorization: {}", exception.getMessage());
-        response.setHeader("error", exception.getMessage());
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-
-        Map<String, String> error = new HashMap<>();
-        error.put("error_message", exception.getMessage());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return error;
-    }
-
     public void getNewAccessToken(HttpServletRequest request, HttpServletResponse response) {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (checkAuthorisationHeader(authorizationHeader)) {

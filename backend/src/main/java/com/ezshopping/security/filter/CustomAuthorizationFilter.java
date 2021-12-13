@@ -33,28 +33,19 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals(API + LOGIN) || request.getServletPath().equals(API + USERS + TOKEN + REFRESH)) {
-            filterChain.doFilter(request, response);
-        } else {
+        if (!request.getServletPath().equals(API + LOGIN) && !request.getServletPath().equals(API + USERS + TOKEN + REFRESH)) {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if (checkAuthorisationHeader(authorizationHeader)) {
-                try {
-                    DecodedJWT decodedJWT = decodedJWTFromAuthorizationHeader(authorizationHeader);
-                    String username = decodedJWT.getSubject();
-                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                    Arrays.stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority((role))));
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    filterChain.doFilter(request, response);
-                } catch (Exception exception) {
-
-                }
-
-            } else {
-                filterChain.doFilter(request, response);
+                DecodedJWT decodedJWT = decodedJWTFromAuthorizationHeader(authorizationHeader);
+                String username = decodedJWT.getSubject();
+                String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                Arrays.stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority((role))));
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
+        filterChain.doFilter(request, response);
     }
 
     private boolean checkAuthorisationHeader(String authorizationHeader) {
@@ -74,17 +65,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     public Algorithm getSecretAlgorithm() {
         return Algorithm.HMAC256(System.getenv("SECRET_ALGORITHM").getBytes());
-    }
-
-    public Map<String, String> setErrorMessageMap(HttpServletResponse response, Exception exception) {
-        log.error("Exception during authorization: {}", exception.getMessage());
-        response.setHeader("error", exception.getMessage());
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-
-        Map<String, String> error = new HashMap<>();
-        error.put("error_message", exception.getMessage());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        return error;
     }
 
 }

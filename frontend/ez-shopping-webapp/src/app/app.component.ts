@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from './services/auth/authorization.service';
 
 @Component({
@@ -9,11 +9,9 @@ import { AuthorizationService } from './services/auth/authorization.service';
 export class AppComponent implements OnInit{
   title = 'ez-shopping-webapp';
   userLoggedIn!: boolean;
-  constructor(private authorizationService: AuthorizationService,
-    private cd: ChangeDetectorRef) {}
+  constructor(private authorizationService: AuthorizationService) {}
 
   ngOnInit(): void {
-    this.cd.detectChanges();
     this.authorizationService.isUserAuthenticated.subscribe(
       data => {
         this.userLoggedIn = data;
@@ -21,6 +19,4 @@ export class AppComponent implements OnInit{
       }
     );
   }
-
-
 }

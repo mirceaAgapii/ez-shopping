@@ -45,6 +45,7 @@ export class MenuComponent implements OnInit {
   logOff() {
     console.log('logoff - clicked');
     this.localStorageService.remove('access_token');
+    this.authorizationService.isAuthenticated();
     this.isUserLoggedIn = false;
     this.router.navigate(['/login']);
   }

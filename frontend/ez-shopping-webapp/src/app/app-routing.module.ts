@@ -5,13 +5,13 @@ import { AuthorizationGuard } from './guard/authorization.guard';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ProductsComponent } from './products/products.component';
+//import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '404', component: PageNotFoundComponent},
   {path: '', component: MainComponent, canActivate: [AuthorizationGuard]},
-  {path: 'products', component: ProductsComponent, canActivate: [AuthorizationGuard]},
+  /*{path: 'products', component: ProductsComponent, canActivate: [AuthorizationGuard]},*/
   {path: '**', redirectTo: '/404'}
 ];
 

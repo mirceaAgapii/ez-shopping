@@ -21,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { JWTTokenService } from './services/jwttoken.service';
 import { LocalStorageService } from './services/local-storage.service';
-import { ProductsComponent } from './products/products.component';
+//import { ProductsComponent } from './products/products.component';
 
 
 @NgModule({
@@ -30,14 +30,14 @@ import { ProductsComponent } from './products/products.component';
     PageNotFoundComponent,
     MainComponent,
     MenuComponent,
-    LoginComponent,
-    ProductsComponent
-    
+    LoginComponent//,
+   // ProductsComponent
+
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule, 
+    AppRoutingModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
