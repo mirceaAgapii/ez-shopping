@@ -62,7 +62,8 @@ export class UserRestService {
     }
     this.http.post<any>(environment.restUrl + '/users/save', body).subscribe({
       next: data => {
-        console.log('requested data ' + data);
+        console.log('success');
+        this.router.navigate(['/login']);
       },
       error: error => {
         console.log(error);
