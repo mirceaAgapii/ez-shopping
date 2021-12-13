@@ -115,6 +115,7 @@ class UserServiceImpl implements UserDetailsService, UserService {
 
     private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
         try {
+            //TODO: think of a better way to check user exists by checking the email too
             if(Objects.nonNull(getUserByUsername(userDTO.getUsername()))) {
                 return true;
             }

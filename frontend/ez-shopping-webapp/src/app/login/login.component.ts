@@ -50,6 +50,10 @@ export class LoginComponent implements OnInit {
     }
 
   }
+
+  register() {
+    this.router.navigate(['/registration']);
+  }
   
   autoLogin() {
     this.restService.login('Mircea', '12345');

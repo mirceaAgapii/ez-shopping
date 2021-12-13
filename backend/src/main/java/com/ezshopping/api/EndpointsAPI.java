@@ -6,6 +6,8 @@ public class EndpointsAPI {
 
     public static final String API = "/api";
 
+    public static final String REGISTRATION = "/save";
+
     public static final String USERS = "/users";
 
     public static final String PRODUCTS = "/products";

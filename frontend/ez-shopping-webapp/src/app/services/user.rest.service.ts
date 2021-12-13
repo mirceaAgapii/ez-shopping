@@ -54,6 +54,22 @@ export class UserRestService {
     )
   }
 
+  register(user: User) {
+    const body = {
+      username : user.username,
+      password : user.password,
+      email : user.email
+    }
+    this.http.post<any>(environment.restUrl + '/users/save', body).subscribe({
+      next: data => {
+        console.log('requested data ' + data);
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
+
 
 
   getAllUsers(): Observable<Array<User>> 

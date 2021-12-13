@@ -1,0 +1,55 @@
+<div>
+
+    <img [ngClass]="showSpinner ? 'content' : ''" src="../../../assets/img/logo.png" style="width: 200px; height: 130px; position: relative; left: 50%; transform: translateX(-50%);"/>
+    <mat-card class="example-card" style="width: 200px; height: 260px; position: relative; left: 50%; transform: translateX(-50%);">
+      <div [ngClass]="showSpinner ? 'content' : ''">
+          <mat-card-header style="position: relative; left: 75%; transform: translateX(-50%);">
+            <mat-card-title >Register</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form class="example-form" >
+              <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Username" [(ngModel)]="username" name="username" required [disabled]="showSpinner">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required [disabled]="showSpinner">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Re-enter password" [(ngModel)]="re_password"type="password" name="re_password" required [disabled]="showSpinner">
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Email" [(ngModel)]="email"type="email" name="email" required [disabled]="showSpinner" email>
+                        </mat-form-field>
+                    </td>
+                </tr>
+
+            </table>
+            </form>
+            
+          </mat-card-content>
+  
+
+            <mat-card-actions style="display: inline-block">
+              <button mat-raised-button (click)="register()" color="primary" [disabled]="showSpinner">Register</button>
+            </mat-card-actions>
+
+        </div>
+        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'" style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%);"></mat-spinner>
+      </mat-card>
+</div>
+    
