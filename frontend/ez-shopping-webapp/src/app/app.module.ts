@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { JWTTokenService } from './services/jwttoken.service';
 import { LocalStorageService } from './services/local-storage.service';
+import { RegisterComponent } from './login/register/register.component';
 //import { ProductsComponent } from './products/products.component';
 
 
@@ -30,7 +31,8 @@ import { LocalStorageService } from './services/local-storage.service';
     PageNotFoundComponent,
     MainComponent,
     MenuComponent,
-    LoginComponent//,
+    LoginComponent,
+    RegisterComponent//,
    // ProductsComponent
 
   ],
