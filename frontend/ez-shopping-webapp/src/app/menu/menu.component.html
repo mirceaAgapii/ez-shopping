@@ -19,9 +19,9 @@
       <mat-icon (click)="toProducts()">shopping_cart</mat-icon>
       <span (click)="toProducts()">Products</span>
     </button>
-    <button mat-menu-item *ngIf="isUserLoggedIn" >
-      <mat-icon (click)="logOff()">account_circle</mat-icon>
-      <span (click)="logOff()">Log off</span>
+    <button mat-menu-item *ngIf="isUserLoggedIn" (click)="logOff()">
+      <mat-icon >account_circle</mat-icon>
+      <span >Log off</span>
     </button>
   </mat-menu>
 
@@ -32,4 +32,4 @@
 
 </mat-toolbar-row>
 
-
+</mat-toolbar>

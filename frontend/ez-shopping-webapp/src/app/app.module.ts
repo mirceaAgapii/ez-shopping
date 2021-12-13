@@ -17,12 +17,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { JWTTokenService } from './services/jwttoken.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { RegisterComponent } from './login/register/register.component';
-//import { ProductsComponent } from './products/products.component';
+import { ProductsComponent } from './products/products.component';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 
 @NgModule({
@@ -32,8 +33,8 @@ import { RegisterComponent } from './login/register/register.component';
     MainComponent,
     MenuComponent,
     LoginComponent,
-    RegisterComponent//,
-   // ProductsComponent
+    RegisterComponent,
+    ProductsComponent
 
   ],
   imports: [
@@ -64,7 +65,12 @@ import { RegisterComponent } from './login/register/register.component';
     MatProgressSpinnerModule
   ],
   providers: [JWTTokenService,
-  LocalStorageService
+  LocalStorageService,
+  {
+    provide : HTTP_INTERCEPTORS,
+    useClass : TokenInterceptorService,
+    multi : true
+  }
   ],
   bootstrap: [AppComponent]
 })

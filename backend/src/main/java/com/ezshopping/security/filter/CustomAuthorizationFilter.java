@@ -3,6 +3,9 @@ package com.ezshopping.security.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import static com.ezshopping.api.EndpointsAPI.*;
@@ -36,13 +39,23 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         if (!request.getServletPath().equals(API + LOGIN) && !request.getServletPath().equals(API + USERS + TOKEN + REFRESH)) {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if (checkAuthorisationHeader(authorizationHeader)) {
-                DecodedJWT decodedJWT = decodedJWTFromAuthorizationHeader(authorizationHeader);
-                String username = decodedJWT.getSubject();
-                String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-                Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                Arrays.stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority((role))));
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                DecodedJWT decodedJWT = null;
+                try {
+                    decodedJWT = decodedJWTFromAuthorizationHeader(authorizationHeader);
+                    String username = decodedJWT.getSubject();
+                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+                    Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                    Arrays.stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority((role))));
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                } catch (JWTVerificationException ex) {
+                    final String expiredMsg = ex.getMessage();
+                    logger.warn(expiredMsg);
+
+                    final String msg = (expiredMsg != null) ? expiredMsg : "Unauthorized";
+                    response.sendError(HttpStatus.UNAUTHORIZED.value(), msg);
+                    return;
+                }
             }
         }
         filterChain.doFilter(request, response);
@@ -52,7 +65,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         return authorizationHeader != null && authorizationHeader.startsWith(REQUEST_HEADER_PREFIX);
     }
 
-    private DecodedJWT decodedJWTFromAuthorizationHeader(String authorizationHeader) {
+    private DecodedJWT decodedJWTFromAuthorizationHeader(String authorizationHeader) throws JWTDecodeException, TokenExpiredException {
         String token = getRefreshToken(authorizationHeader);
         Algorithm algorithm = getSecretAlgorithm();
         JWTVerifier verifier = JWT.require(algorithm).build();

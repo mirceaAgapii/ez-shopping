@@ -8,6 +8,7 @@ import com.ezshopping.user.model.User;
 import com.ezshopping.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.*;
 
 @Slf4j
@@ -24,6 +26,9 @@ public class SecurityService {
 
     private final UserService userService;
     private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer ";
+
+    @Value("${jwt.token.expired}")
+    private int ACCESS_TOKEN_VALIDITY;
 
     public boolean checkAuthorisationHeader(String authorizationHeader) {
         return authorizationHeader != null && authorizationHeader.startsWith(AUTHORIZATION_HEADER_PREFIX);
@@ -54,7 +59,7 @@ public class SecurityService {
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
                         //TODO: using currentTimeMillis is not the best option
-                        .withExpiresAt(new Date((System.currentTimeMillis() + 10 * 60 * 1000)))
+                        .withExpiresAt(new Date((System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY)))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", new ArrayList<>(Collections.singleton(user.getRole())))
                         .sign(getSecretAlgorithm());

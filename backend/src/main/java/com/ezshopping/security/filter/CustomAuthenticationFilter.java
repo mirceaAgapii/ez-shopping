@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     private final AuthenticationManager authenticationManager;
 
+    private int ACCESS_TOKEN_VALIDITY = 86400000;
+    private int REFRESH_TOKEN_VALIDITY = 86400000;
+
     public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -43,19 +48,19 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = getSecretAlgorithm();
         //timeout just to simulate connection to database and show spinner on front
         try {
-            Thread.sleep(1000);
+            Thread.sleep(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date((System.currentTimeMillis() + 10 * 60 * 1000)))
+                .withExpiresAt(new Date((System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY)))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         String refresh_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date((System.currentTimeMillis() + 30 * 60 * 1000)))
+                .withExpiresAt(new Date((System.currentTimeMillis() + REFRESH_TOKEN_VALIDITY)))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
