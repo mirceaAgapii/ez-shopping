@@ -72,11 +72,22 @@ export class UserRestService {
     });
   }
 
-  /*refreshToken()  {
-     return this.http.post<HttpResponse<Object>>(environment.restUrl + '/users/token/refresh', {
-       headers: this.getRefreshTokenHeader()
-      })
-  }*/
+  refreshToken()  {
+    let token: string | null;
+     return this.http.get<HttpResponse<Object>>(environment.restUrl + '/users/token/refresh', {
+       headers: this.getRefreshTokenHeader(),
+       observe: 'response'
+      }).subscribe(
+          data => { 
+            console.log(data.headers.get('access_token'));
+            token = data.headers.get('access_token')
+            if(token) {
+              this.jwtTokenService.saveAccessToken(token);
+            }
+            
+        }
+        );
+  }
 
   getAllUsers(): Observable<Array<User>> 
   {
@@ -84,13 +95,13 @@ export class UserRestService {
 
   }
 
- /* private getRefreshTokenHeader(): HttpHeaders {
+  private getRefreshTokenHeader(): HttpHeaders {
     let header = new HttpHeaders().set(
       "Authorization",
       'Bearer ' + this.jwtTokenService.getRefreshToken()
     );
     return header;
-  }*/
+  }
 
 
 }

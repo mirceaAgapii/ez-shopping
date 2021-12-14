@@ -67,7 +67,7 @@ public class UserControllerREST {
     }
 
 
-    @PostMapping("/token/refresh")
+    @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.info("UserControllerREST.refreshToken: received a GET request");
         securityService.getNewAccessToken(request, response);

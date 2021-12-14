@@ -19,7 +19,7 @@ export class TokenInterceptorService implements HttpInterceptor{
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return next.handle(this.setAuthHeader(req))/*.pipe(
+    return next.handle(this.setAuthHeader(req)).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           console.log('in intercept 1 ' + error.status);
@@ -32,10 +32,10 @@ export class TokenInterceptorService implements HttpInterceptor{
           return throwError(error);
         }
       })
-    );*/
+    );
   }
 
- /* handle401Error(req: HttpRequest<any>, next: HttpHandler) {
+  handle401Error(req: HttpRequest<any>, next: HttpHandler) {
     //if(!this.isRefreshing) {
       console.log('in 401 1');
       //this.isRefreshing = true;
@@ -44,12 +44,12 @@ export class TokenInterceptorService implements HttpInterceptor{
       const token = this.jwtService.getRefreshToken();
 
       if (token) {
-       this.userRestService.refreshToken().pipe(
+       this.userRestService.refreshToken()/*.pipe(
         switchMap((token: any) => {
           this.isRefreshing = false;
-
-          this.jwtService.saveAccessToken(token.accessToken);
-          this.refreshTokenSubject.next(token.accessToken);
+          console.log('token ' +token)
+          //this.jwtService.saveAccessToken(token.accessToken);
+          //this.refreshTokenSubject.next(token.accessToken);
           
           return next.handle(this.setAuthHeader(req));
         }),
@@ -59,36 +59,36 @@ export class TokenInterceptorService implements HttpInterceptor{
           
           this.jwtService.signOut();
           return throwError(err);
-        }));
-      }
+        }))
+      }*/
     //}
+      }
 
     return this.refreshTokenSubject.pipe(
       filter(token => token !== null),
       take(1),
       switchMap((token) => next.handle(this.setAuthHeader(req)))
     );
-  }*/
+  }
     
 
   setAuthHeader(req: HttpRequest<any>): HttpRequest<any> {
-    /*if(req.headers.has('Authorization')){
+    if(req.url === 'http://localhost:8080/api/users/token/refresh') {
       return req.clone({
         setHeaders: {
           Authorization: `Bearer ${this.jwtService.getRefreshToken()}`
         }
       })
-    } else {*/
-      if(this.jwtService.getAccessToken()) {
-        return req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${this.jwtService.getAccessToken()}`
-          }
-        })
-      } else {
-        return req;
-      }
-     
-    //}
+    }
+
+    if(this.jwtService.getAccessToken()) {
+      return req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this.jwtService.getAccessToken()}`
+        }
+      })
+    } else {
+      return req;
+    }
   }
 }
