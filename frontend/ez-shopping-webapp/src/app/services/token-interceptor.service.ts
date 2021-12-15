@@ -1,7 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import { JWTTokenService } from './jwttoken.service';
 import { LocalStorageService } from './local-storage.service';
 import { UserRestService } from './user.rest.service';
@@ -15,7 +16,8 @@ export class TokenInterceptorService implements HttpInterceptor{
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(private jwtService: JWTTokenService,
-    private userRestService: UserRestService) { }
+    private userRestService: UserRestService,
+    private messageService: MessageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -36,33 +38,25 @@ export class TokenInterceptorService implements HttpInterceptor{
   }
 
   handle401Error(req: HttpRequest<any>, next: HttpHandler) {
-    //if(!this.isRefreshing) {
-      console.log('in 401 1');
-      //this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+    this.refreshTokenSubject.next(null);
 
-      const token = this.jwtService.getRefreshToken();
+    const token = this.jwtService.getRefreshToken();
 
-      if (token) {
-       this.userRestService.refreshToken()/*.pipe(
-        switchMap((token: any) => {
-          this.isRefreshing = false;
-          console.log('token ' +token)
-          //this.jwtService.saveAccessToken(token.accessToken);
-          //this.refreshTokenSubject.next(token.accessToken);
-          
-          return next.handle(this.setAuthHeader(req));
-        }),
-        catchError((err) => {
-          console.log('in new token 1');
-          this.isRefreshing = false;
-          
-          this.jwtService.signOut();
-          return throwError(err);
-        }))
-      }*/
-    //}
-      }
+    if (token) {
+      this.userRestService.refreshToken().subscribe(
+      data => { 
+        console.log(data.headers.get('access_token'));
+        const newToken = data.headers.get('access_token');
+        if(newToken) {
+          this.jwtService.saveAccessToken(newToken);
+          this.messageService.add({severity:'error', summary: 'Something went wrong, try one more time', detail:''});
+         //next.handle(this.setAuthHeader(req));
+        } 
+    });
+  }
+    
+    
+      
 
     return this.refreshTokenSubject.pipe(
       filter(token => token !== null),

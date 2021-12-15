@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { catchError, switchMap, timeout } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpResponse, HttpRequest, HttpHandler } from '@angular/common/http';
 import { BehaviorSubject, concat, Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../Model/User';
@@ -16,7 +16,7 @@ import { UserService } from './user.service';
 })
 export class UserRestService {
   constructor(private http: HttpClient,
-    private jwtTokenService: JWTTokenService,
+    private jwtService: JWTTokenService,
     private localStorageService: LocalStorageService,
     private router: Router, private userService: UserService) { 
 
@@ -28,20 +28,26 @@ export class UserRestService {
     let body = new HttpParams();
     body = body.set('username', username);
     body = body.set('password', password);
-    this.http.post(environment.restUrl + '/login', body, {observe: 'response'})
+    return this.http.post<HttpResponse<Object>>(environment.restUrl + '/login', body, {observe: 'response'})/*
     .subscribe(
       data => {
         this.saveTokens(data);
         this.router.navigate(['']);
         let user: User = new User();
-        user.username = this.jwtTokenService.getUser();
-        user.role = this.jwtTokenService.getUserRoles();
+        user.username = this.jwtService.getUser();
+        user.role = this.jwtService.getUserRoles();
         this.userService.setCurrentUser(user);
       },
       error => {
-        throwError(error);
+        if(error.error.status === 461) {
+          this.router.navigate(['/login']);
+          alert("User " + username +" not found");
+          
+        }
+
       }
-    )
+    )*/
+
   }
 
   saveTokens(data: HttpResponse<Object>) {
@@ -50,8 +56,8 @@ export class UserRestService {
     token = data.headers.get("access_token");
     refresh_token = data.headers.get("refresh_token");
     if(token && refresh_token) {
-      this.jwtTokenService.saveAccessToken(token);
-      this.jwtTokenService.saveRefreshToken(refresh_token);
+      this.jwtService.saveAccessToken(token);
+      this.jwtService.saveRefreshToken(refresh_token);
     }
   }
 
@@ -73,20 +79,10 @@ export class UserRestService {
   }
 
   refreshToken()  {
-    let token: string | null;
      return this.http.get<HttpResponse<Object>>(environment.restUrl + '/users/token/refresh', {
        headers: this.getRefreshTokenHeader(),
        observe: 'response'
-      }).subscribe(
-          data => { 
-            console.log(data.headers.get('access_token'));
-            token = data.headers.get('access_token')
-            if(token) {
-              this.jwtTokenService.saveAccessToken(token);
-            }
-            
-        }
-        );
+      });
   }
 
   getAllUsers(): Observable<Array<User>> 
@@ -98,10 +94,8 @@ export class UserRestService {
   private getRefreshTokenHeader(): HttpHeaders {
     let header = new HttpHeaders().set(
       "Authorization",
-      'Bearer ' + this.jwtTokenService.getRefreshToken()
+      'Bearer ' + this.jwtService.getRefreshToken()
     );
     return header;
   }
-
-
 }

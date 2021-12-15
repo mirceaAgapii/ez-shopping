@@ -13,7 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,20 @@ import { LocalStorageService } from './services/local-storage.service';
 import { RegisterComponent } from './login/register/register.component';
 import { ProductsComponent } from './products/products.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-
+import { MenubarModule } from 'primeng/menubar';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -51,7 +64,20 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     MatMenuModule,
     MatProgressSpinnerModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MenubarModule,
+    ToastModule,
+    BlockUIModule,
+    ProgressSpinnerModule,
+    TableModule,
+    DropdownModule,
+    DialogModule,
+    RadioButtonModule,
+    InputTextModule,
+    InputTextareaModule,
+    InputNumberModule,
+    RippleModule,
+    ButtonModule
   ],
   exports: [
     MatButtonModule,
@@ -66,6 +92,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
   ],
   providers: [JWTTokenService,
   LocalStorageService,
+  MessageService,
   {
     provide : HTTP_INTERCEPTORS,
     useClass : TokenInterceptorService,

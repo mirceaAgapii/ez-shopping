@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
 import { UserRestService } from 'src/app/services/user.rest.service';
 
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
   invalid_input: boolean = false;
 
 
-  constructor(private userRestService: UserRestService) { }
+  constructor(private userRestService: UserRestService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -50,4 +52,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  backToLogin() {
+    this.router.navigate(['/login']);
+  }
 }
