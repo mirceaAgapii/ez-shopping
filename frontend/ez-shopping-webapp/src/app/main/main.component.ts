@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../Model/User';
-import { LocalStorageService } from '../services/local-storage.service';
-import { UserRestService } from '../services/user.rest.service';
-import { UserService } from '../services/user.service';
+import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { UserRestService } from '../services/rest/user/user.rest.service';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-main',

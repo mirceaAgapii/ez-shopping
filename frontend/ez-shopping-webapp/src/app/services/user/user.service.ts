@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { JwtPayload } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../Model/User';
-import { JWTTokenService } from './jwttoken.service';
-import { LocalStorageService } from './local-storage.service';
+import { User } from '../../Model/User';
+import { JWTTokenService } from '../auth/jwttoken.service';
+import { LocalStorageService } from '../interceptor/storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'

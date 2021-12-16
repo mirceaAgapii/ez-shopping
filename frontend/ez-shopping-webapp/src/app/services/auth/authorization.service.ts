@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { JWTTokenService } from '../jwttoken.service';
-import { UserRestService } from '../user.rest.service';
+import { JWTTokenService } from './jwttoken.service';
+import { UserRestService } from '../rest/user/user.rest.service';
 
 @Injectable({
   providedIn: 'root'

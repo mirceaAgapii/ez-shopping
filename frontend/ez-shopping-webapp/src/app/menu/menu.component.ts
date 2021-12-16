@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { User } from '../Model/User';
 import { AuthorizationService } from '../services/auth/authorization.service';
-import { JWTTokenService } from '../services/jwttoken.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { UserService } from '../services/user.service';
+import { JWTTokenService } from '../services/auth/jwttoken.service';
+import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -84,9 +84,12 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-calendar',
         items: [
           {
-            label: 'Check price',
-            icon: 'pi pi-fw pi-money-bill',
+            label: 'Products',
             command: () => this.toProducts()
+          },
+          {
+            label: 'Check price',
+            icon: 'pi pi-fw pi-money-bill'
           },
           {
             label: 'Check stock',

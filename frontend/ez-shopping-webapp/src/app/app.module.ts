@@ -19,11 +19,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { JWTTokenService } from './services/jwttoken.service';
-import { LocalStorageService } from './services/local-storage.service';
+import { JWTTokenService } from './services/auth/jwttoken.service';
+import { LocalStorageService } from './services/interceptor/storage/local-storage.service';
 import { RegisterComponent } from './login/register/register.component';
 import { ProductsComponent } from './products/products.component';
-import { TokenInterceptorService } from './services/token-interceptor.service';
+import { TokenInterceptorService } from './services/interceptor/token-interceptor.service';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -38,6 +38,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
+import { AddProductComponent } from './products/add-product/add-product.component';
+import { TreeTableModule } from 'primeng/treetable';
+import { TreeNode } from 'primeng/api';
+import { LoadDataResolver } from './guard/load-data.resolver';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,8 @@ import { ButtonModule } from 'primeng/button';
     MenuComponent,
     LoginComponent,
     RegisterComponent,
-    ProductsComponent
+    ProductsComponent,
+    AddProductComponent
 
   ],
   imports: [
@@ -77,7 +82,8 @@ import { ButtonModule } from 'primeng/button';
     InputTextareaModule,
     InputNumberModule,
     RippleModule,
-    ButtonModule
+    ButtonModule,
+    TreeTableModule
   ],
   exports: [
     MatButtonModule,
@@ -97,7 +103,8 @@ import { ButtonModule } from 'primeng/button';
     provide : HTTP_INTERCEPTORS,
     useClass : TokenInterceptorService,
     multi : true
-  }
+  },
+  LoadDataResolver
   ],
   bootstrap: [AppComponent]
 })

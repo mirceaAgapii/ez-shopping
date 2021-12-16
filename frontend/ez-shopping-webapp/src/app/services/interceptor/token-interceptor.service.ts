@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
-import { JWTTokenService } from './jwttoken.service';
-import { LocalStorageService } from './local-storage.service';
-import { UserRestService } from './user.rest.service';
+import { JWTTokenService } from '../auth/jwttoken.service';
+import { LocalStorageService } from './storage/local-storage.service';
+import { UserRestService } from '../rest/user/user.rest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +50,9 @@ export class TokenInterceptorService implements HttpInterceptor{
         if(newToken) {
           this.jwtService.saveAccessToken(newToken);
           this.messageService.add({severity:'error', summary: 'Something went wrong, try one more time', detail:''});
-         //next.handle(this.setAuthHeader(req));
-        } 
+          //next.handle(this.setAuthHeader(req))
+        }
+        //return next.handle(req) ;
     });
   }
     

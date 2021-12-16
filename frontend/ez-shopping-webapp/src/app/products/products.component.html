@@ -1,1 +1,33 @@
-<p>products works!</p>
+<app-add-product [hidden]="!addNewProduct" style="position: absolute; margin-top: 2rem; margin-left: 50%; transform: translateX(-50%); z-index: 10;" (submitted)="closeComp()"></app-add-product>
+
+<div class="card" [ngClass]="addNewProduct ? 'content' : ''">
+ 
+
+    <p-table [value]="products" [paginator]="true" [rows]="10" [totalRecords]="products.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.inventoryStatus}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.quantity}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" (onClick)="enableAddProductComp()"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" (onClick)="loadProducts()"></p-button>
+        </ng-template>
+    </p-table>
+</div>

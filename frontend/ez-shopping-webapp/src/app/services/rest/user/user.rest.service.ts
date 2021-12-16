@@ -3,12 +3,12 @@ import { catchError, switchMap, timeout } from 'rxjs/internal/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpResponse, HttpRequest, HttpHandler } from '@angular/common/http';
 import { BehaviorSubject, concat, Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../Model/User';
+import { User } from '../../../Model/User';
 import { environment } from 'src/environments/environment';
-import { JWTTokenService } from './jwttoken.service';
-import { LocalStorageService } from './local-storage.service';
+import { JWTTokenService } from '../../auth/jwttoken.service';
+import { LocalStorageService } from '../../interceptor/storage/local-storage.service';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
+import { UserService } from '../../user/user.service';
 
 
 @Injectable({

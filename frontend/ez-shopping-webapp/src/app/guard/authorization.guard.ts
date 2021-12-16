@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs'; 
 
-import { LocalStorageService } from '../services/local-storage.service';
-import { JWTTokenService } from '../services/jwttoken.service';
-import { UserRestService } from '../services/user.rest.service';
+import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { JWTTokenService } from '../services/auth/jwttoken.service';
+import { UserRestService } from '../services/rest/user/user.rest.service';
 import { AuthorizationService } from '../services/auth/authorization.service';
 
 @Injectable({

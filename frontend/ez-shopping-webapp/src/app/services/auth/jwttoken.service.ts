@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from "jwt-decode";
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from '../interceptor/storage/local-storage.service';
 
 @Injectable()
 export class JWTTokenService {
