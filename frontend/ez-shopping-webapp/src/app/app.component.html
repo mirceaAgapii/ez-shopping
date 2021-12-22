@@ -1,4 +1,17 @@
-<div class="container p-0">
-  <app-menu *ngIf="userLoggedIn"></app-menu>
+<div class="main">
+  <app-menu *ngIf="isUserLoggedIn"></app-menu>
+  <header *ngIf="isUserLoggedIn"><img class="logo" src="../assets/img/logo_name.png"></header>
+
   <router-outlet></router-outlet>
+  <footer *ngIf="isUserLoggedIn">
+    <nav>
+      <ul class="">
+        <li (click)="navigateToMain()"><i class="fas fa-home nav_icon" ></i></li>
+        <li (click)="toAccount()"><i class="fas fa-user nav_icon" ></i></li>
+        <li><i class="fas fa-cash-register nav_icon" ></i></li>
+        <li (click)="toProducts()"><i class="fas fa-apple-alt nav_icon" ></i></li>
+        <li><i class="fas fa-sign-out-alt nav_icon" (click)="logOff()"></i></li>
+      </ul>
+    </nav>
+  </footer>
 </div>

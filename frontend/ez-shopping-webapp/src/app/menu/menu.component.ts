@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { User } from '../Model/User';
 import { AuthorizationService } from '../services/auth/authorization.service';
 import { JWTTokenService } from '../services/auth/jwttoken.service';
 import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
@@ -36,74 +35,7 @@ export class MenuComponent implements OnInit {
       }
     )
     this.currentUser = this.jwtService.getUser();
-
-    this.items = [
-      {
-        label: 'Checkout',
-        icon: 'pi pi-fw pi-qrcode'
-      },
-      {
-      
-        label: 'My Account',
-        icon: 'pi pi-fw pi-user',
-        items: [
-          {
-            label: 'Settings',
-            icon: 'pi pi-fw pi-cog',
-
-          },
-          {
-            label: 'Delete',
-            icon: 'pi pi-fw pi-user-minus',
-
-          },
-          {
-            label: 'Search',
-            icon: 'pi pi-fw pi-users',
-            items: [
-              {
-                label: 'Filter',
-                icon: 'pi pi-fw pi-filter',
-                items: [
-                  {
-                    label: 'Print',
-                    icon: 'pi pi-fw pi-print'
-                  }
-                ]
-              },
-              {
-                icon: 'pi pi-fw pi-bars',
-                label: 'List'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Articles',
-        icon: 'pi pi-fw pi-calendar',
-        items: [
-          {
-            label: 'Products',
-            command: () => this.toProducts()
-          },
-          {
-            label: 'Check price',
-            icon: 'pi pi-fw pi-money-bill'
-          },
-          {
-            label: 'Check stock',
-            icon: 'pi pi-fw pi-shopping-bag'
-          }
-        ]
-      },
-      {
-        label: 'Quit',
-        icon: 'pi pi-fw pi-power-off',
-        command: () => this.logOff()
-      }
-    ];
-}
+  }
 
   
     
@@ -129,6 +61,10 @@ export class MenuComponent implements OnInit {
 
   toAccount(){
     console.log('toAccount clicked');
+  }
+
+  toAdmin() {
+    this.router.navigate(['/admin']);
   }
 
 }

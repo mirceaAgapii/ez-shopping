@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { AuthorizationGuard } from './guard/authorization.guard';
 import { LoadDataResolver } from './guard/load-data.resolver';
@@ -10,15 +11,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
+  {path: 'admin', component: AdminComponent},
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {
     path: 'products', 
-    component: ProductsComponent, 
-    canActivate: [AuthorizationGuard], 
-    resolve: {
-      products: LoadDataResolver
-    }
+    component: ProductsComponent
   },
   {path: '404', component: PageNotFoundComponent},
   {path: '', component: MainComponent, canActivate: [AuthorizationGuard]},

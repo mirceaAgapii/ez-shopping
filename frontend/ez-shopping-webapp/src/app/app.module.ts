@@ -42,6 +42,8 @@ import { AddProductComponent } from './products/add-product/add-product.componen
 import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { LoadDataResolver } from './guard/load-data.resolver';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { LoadDataResolver } from './guard/load-data.resolver';
     LoginComponent,
     RegisterComponent,
     ProductsComponent,
-    AddProductComponent
+    AddProductComponent,
+    AdminComponent
 
   ],
   imports: [
@@ -83,7 +86,8 @@ import { LoadDataResolver } from './guard/load-data.resolver';
     InputNumberModule,
     RippleModule,
     ButtonModule,
-    TreeTableModule
+    TreeTableModule,
+    NgbModule
   ],
   exports: [
     MatButtonModule,

@@ -5,7 +5,7 @@
 
 <div>
   <img class="mt-5" [ngClass]="showSpinner ? 'content' : ''" src="../../assets/img/logo.png" style="width: 200px; height: 130px; position: relative; left: 50%; transform: translateX(-50%);"/>
-  <mat-card class="example-card" style="width: 215px; height: 180px; position: relative; left: 50%; transform: translateX(-50%);">
+  <mat-card class="card" style="width: 215px; height: 180px; position: relative; left: 50%; transform: translateX(-50%); ">
     <div [ngClass]="showSpinner ? 'content' : ''">
       <mat-card-header style="position: relative; left: 75%; transform: translateX(-50%);">
         <mat-card-title>Login</mat-card-title>
@@ -16,14 +16,14 @@
             <tr>
               <td>
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" required [disabled]="showSpinner">
+                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" [disabled]="showSpinner">
                 </mat-form-field>
               </td>
             </tr>
             <tr>
               <td>
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required [disabled]="showSpinner">
+                  <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" [disabled]="showSpinner">
                 </mat-form-field>
               </td>
             </tr>

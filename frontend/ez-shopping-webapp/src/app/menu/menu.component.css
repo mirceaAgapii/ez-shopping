@@ -1,115 +1,199 @@
-.fa-user {
-    font-size: 1rem;
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&family=Montserrat+Alternates:wght@600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #24252A;
+ 
+}
+
+a {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none; 
+}
+
+.nav_icon {
+  color: rgb(236, 188, 129);
+  display: none;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px 5%;
+  width: 100%;
+  z-index: 10;
+}
+
+.logo {
+  width: 13rem;
+  height: 2.5rem;
+  cursor: pointer;
+  margin-right: auto;
+}
+
+
+
+a, li, button {
+  color: #edf0f1;
+}
+
+a {
+  cursor: pointer;
+}
+
+.nav_links {
+  list-style: none;
+}
+
+.nav_links li {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease 0s;
+  color: #000;
+}
+
+.nav_links li a:hover {
+  color: rgb(189, 120, 41);
+  transition: all 0.3s ease 0s;
+}
+
+nav ul ul {
+  position: absolute;
+  border: 1px solid gray;
+  display: none;
+  z-index: 10;
+}
+
+
+
+nav ul ul {
+  width: 8.5rem;
+}
+
+
+@media only screen and (min-width: 1000px) {
+  nav ul ul.article_dropdwn {
+    top: 5rem;
+    right: 10rem;
+
+    
+  }
+
+  nav ul ul.account_dropdwn {
+    top: 5rem;
+    right: 25rem;
+
+    
+  }
+
+  nav ul li:hover > ul {
+    display: block;
   }
   
-  .logo img {
-    width: 131px;
-    height: 131px;
+}
+
+@media only screen and (max-width: 1000px) {
+  nav ul ul.article_dropdwn {
+    top: 104px;
+    right: 266px;
   }
-  
-  @media (max-width: 525px) {
-    .logo img {
-      width: 75px;
-      height: 75px;
-    }
+
+  .nav_links > li {
+    display: block;
+    padding: 10px 20px;
+    transition: all 0.3s ease 0s;
+    color: #000;
   }
-  
-  .app-name {
-    text-align: center;
+
+  nav ul li:hover > ul {
+    display: block;
   }
-  
-  .user, a {
-    cursor: pointer;
+
+  nav ul li:hover > ul li {
+    display: inline-block;
+
   }
-  
-  
-  @media (min-width: 992px) {
-    .dropdown:hover .dropdown-menu {
-      display: block;
-    }
+
+  nav ul ul.account_dropdwn {
+    top: 25px;
+    right: 266px;
+
   }
-  
-  @media (min-width: 992px) {
-    .dropdown:hover .dropdown-menu {
-      display: block;
-      top: 95%;
-    }
+}
+
+@media only screen and (max-width: 480px) {
+
+  .nav_links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
-  
-  .dropdown-item {
-    transition:  1s;
-  }
-  .dropdown-item:hover {
-    color: black!important;
-  }
-  
-  .dropdown-menu {
+
+  .nav_links li {
     padding: 0;
-    -webkit-box-shadow: 0px 11px 12px 12px rgba(50, 50, 50, 0.2);
-    -moz-box-shadow: 0px 11px 12px 12px rgba(50, 50, 50, 0.2);
-    box-shadow: 0px 11px 12px 12px rgba(50, 50, 50, 0.2);
-    border-radius: 0;
+    font-size: 35px;
   }
-  
-  .dropdown-divider {
-    margin: 0;
+
+  .nav_icon {
+    display: inline-block;
   }
-  @media (min-width: 768px) {
-    .navbar-brand.abs
-    {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+
+  .nav_text {
+    display: none;
   }
-  
-  .appname-logo {
-    width: 10rem;
+
+  .logo {
+    display: none;
   }
-  
-  .navbar-brand.abs:hover {
-    cursor: default;
+
+  header {
+    justify-content: space-between;
+
   }
-  
-  
-  .isd-navbar {
-    background-color: white!important;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: bold;
-    /*border-bottom: 3px solid rgb(241, 93, 34) !important;*/
+
+
+
+  nav {
+    width: 100%;
   }
-  
-  .isd-navbar a {
-    color: #919495 !important;
-    transition: 0.4s;
+
+  nav ul ul.article_dropdwn {
+    top: 6.7rem;
+    right: 11rem;
+
   }
-  
-  .isd-navbar  a:hover{
-    color: #f44e00!important;
+
+  nav ul ul.account_dropdwn {
+    top: 1.5rem;
+    right: 11em;
+ 
   }
-  
-  
-  #navbarNav > ul > li > div > a:hover{
-    color: #f44e00!important;
-    padding-left: 30px;
-  }
-  
-  @media (max-width: 992px) {
-    .dropdown-toggle {
-        display: none;
-    }
-  
-    .dropdown-menu {
-        display: block;
-        position: relative;
-        border-width: 0;
-        padding: 0;
-        margin: 0;
-    }
-  
-    .dropdown-item {
-        padding: 5px;
-        color: rgba(0,0,0,.5);
-    }
-  }
-  
+}
+
+nav ul ul li {
+  padding: 15px 15px;
+}
+
+
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: rgba(67, 93, 226, 1);
+  padding: 10px 20px;
+  border-radius: 7px;
+}
+
+button:hover {
+  background-color: rgba(67, 93, 226, 0.6);
+  transition: all 0.3s ease 0s;
+}
+
+.btn_quit {
+  margin-left: 3rem;
+}
