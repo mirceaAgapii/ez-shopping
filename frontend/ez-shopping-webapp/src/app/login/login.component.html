@@ -1,0 +1,41 @@
+<p-toast></p-toast>
+<mat-card-actions style="position: absolute;">
+  <button mat-raised-button (click)="autoLogin()" color="primary" [disabled]="showSpinner">DEV Login</button>
+</mat-card-actions>
+
+<div>
+  <img class="mt-5" [ngClass]="showSpinner ? 'content' : ''" src="../../assets/img/logo.png" style="width: 200px; height: 130px; position: relative; left: 50%; transform: translateX(-50%);"/>
+  <mat-card class="card" style="width: 215px; height: 180px; position: relative; left: 50%; transform: translateX(-50%); ">
+    <div [ngClass]="showSpinner ? 'content' : ''">
+      <mat-card-header style="position: relative; left: 75%; transform: translateX(-50%);">
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="example-form" >
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" [disabled]="showSpinner">
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" [disabled]="showSpinner">
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </mat-card-content>
+      <div class="grid mt-4">
+        <button mat-raised-button class="col mr-2" (click)="login()" color="primary" [disabled]="showSpinner">Login</button>
+        <button mat-raised-button class="col" (click)="register()" color="primary" [disabled]="showSpinner">Register</button>
+      </div>
+    </div>
+    <p-progressSpinner [style.display]="showSpinner ? 'block' : 'none'" ></p-progressSpinner>
+  </mat-card>
+</div>
+  

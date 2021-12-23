@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'primeng/resources/themes/saga-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.css';
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&family=Montserrat+Alternates:wght@600&display=swap');
+
+
+
+html, body { height: 100%; }
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    /*font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none; */
+}
+

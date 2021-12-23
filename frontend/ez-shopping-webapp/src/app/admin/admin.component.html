@@ -1,0 +1,13 @@
+<nav class="">
+    <ul class="bookmarks blue">
+        <li (click)="viewDashboard()"><a><span>Dashboard</span></a></li>
+        <li (click)="viewUsers()"><a><span>Users</span></a></li>
+        <li (click)="viewProducts()"><a><span>Products</span></a></li>
+        <li (click)="viewStores()"><a><span>Stores</span></a></li>
+    </ul>
+</nav>
+
+<app-dashboard [hidden]="!showDashboard"></app-dashboard>
+<app-users-admin [hidden]="!showUsers"></app-users-admin>
+<app-products-admin [hidden]="!showProducts"></app-products-admin>
+<app-stores-admin [hidden]="!showStores"></app-stores-admin>

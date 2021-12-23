@@ -6,65 +6,95 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet id="2" author="mag">
 
+        <addPrimaryKey
+                tableName="ez_cart"
+                columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_user"
+                columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_store"
+                columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_stock"
+                columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_product"
+                columnNames="id"/>
+        <addPrimaryKey
+                tableName="ez_location"
+                columnNames="id" />
+        <addPrimaryKey
+                tableName="ez_order"
+                columnNames="id" />
+        <addPrimaryKey
+                tableName="ez_order_line"
+                columnNames="id"/>
+
         <addUniqueConstraint
-                columnNames="role_id"
-                tableName="ez_role"/>
-        <addUniqueConstraint
-                columnNames="type_id"
-                tableName="ez_locationtype"/>
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_location"/>
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_store"/>
-        <addUniqueConstraint
-                columnNames="id"
-                tableName="ez_cart"/>
-        <addUniqueConstraint
-                columnNames="id"
+                columnNames="username"
                 tableName="ez_user"/>
         <addUniqueConstraint
-                columnNames="id"
+                columnNames="email"
+                tableName="ez_user"/>
+        <addUniqueConstraint
+                columnNames="barcode"
                 tableName="ez_product"/>
 
-        <addForeignKeyConstraint constraintName="fk_location2type"
-                                 baseTableName="ez_location"
-                                 baseColumnNames="type"
-                                 referencedTableName="ez_locationtype"
-                                 referencedColumnNames="type_id"/>
-        <addForeignKeyConstraint constraintName="fk_stock2locationtype"
-                                 baseTableName="ez_stock"
-                                 baseColumnNames="location_type"
-                                 referencedTableName="ez_locationtype"
-                                 referencedColumnNames="type_id"/>
-        <addForeignKeyConstraint constraintName="fk_store2location"
-                                 baseTableName="ez_store"
-                                 baseColumnNames="id"
-                                 referencedTableName="ez_location"
-                                 referencedColumnNames="id"/>
-        <addForeignKeyConstraint constraintName="fk_cart2location"
-                                 baseTableName="ez_cart"
-                                 baseColumnNames="id"
-                                 referencedTableName="ez_location"
-                                 referencedColumnNames="id"/>
-        <addForeignKeyConstraint constraintName="fk_user2role"
-                                 baseTableName="ez_user"
-                                 baseColumnNames="role"
-                                 referencedTableName="ez_role"
-                                 referencedColumnNames="role_id"/>
-        <addForeignKeyConstraint constraintName="fk_stock2store"
-                                 baseTableName="ez_stock"
-                                 baseColumnNames="location_id"
-                                 referencedTableName="ez_location"
-                                 referencedColumnNames="id"/>
+
         <addForeignKeyConstraint constraintName="fk_stock2product"
                                  baseTableName="ez_stock"
                                  baseColumnNames="product_id"
                                  referencedTableName="ez_product"
                                  referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_cart2location"
+                                 baseTableName="ez_cart"
+                                 baseColumnNames="id"
+                                 referencedTableName="ez_location"
+                                 referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_store2location"
+                                 baseTableName="ez_store"
+                                 baseColumnNames="id"
+                                 referencedTableName="ez_location"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint constraintName="fk_product2cart_product"
+                                 baseTableName="ez_cart_product"
+                                 baseColumnNames="product_id"
+                                 referencedTableName="ez_product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_cart2cart_product"
+                                 baseTableName="ez_cart_product"
+                                 baseColumnNames="cart_id"
+                                 referencedTableName="ez_cart"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_product2order_line"
+                                 baseTableName="ez_order_line"
+                                 baseColumnNames="product_id"
+                                 referencedTableName="ez_product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_order2order_line"
+                                 baseTableName="ez_order_line"
+                                 baseColumnNames="order_id"
+                                 referencedTableName="ez_order"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_location2stock"
+                                 baseTableName="ez_stock"
+                                 baseColumnNames="location_id"
+                                 referencedTableName="ez_location"
+                                 referencedColumnNames="id"/>
+
         <addForeignKeyConstraint constraintName="fk_cart2user"
                                  baseTableName="ez_cart"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="ez_user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_order2user"
+                                 baseTableName="ez_order"
                                  baseColumnNames="user_id"
                                  referencedTableName="ez_user"
                                  referencedColumnNames="id"/>
