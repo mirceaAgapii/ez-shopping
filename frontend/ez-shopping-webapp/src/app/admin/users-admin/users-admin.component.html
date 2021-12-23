@@ -1,0 +1,20 @@
+<button class="btn btn-primary" (click)="fetchUsers()">Refresh</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>N#</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let user of users">
+        <tr>
+            <td>1</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+        </tr>
+    </tbody>
+</table>

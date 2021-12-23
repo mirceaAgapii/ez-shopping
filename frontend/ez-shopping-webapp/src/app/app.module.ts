@@ -44,6 +44,10 @@ import { TreeNode } from 'primeng/api';
 import { LoadDataResolver } from './guard/load-data.resolver';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin/admin.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
+import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
+import { StoresAdminComponent } from './admin/stores-admin/stores-admin.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +59,11 @@ import { AdminComponent } from './admin/admin.component';
     RegisterComponent,
     ProductsComponent,
     AddProductComponent,
-    AdminComponent
+    AdminComponent,
+    DashboardComponent,
+    UsersAdminComponent,
+    ProductsAdminComponent,
+    StoresAdminComponent
 
   ],
   imports: [
