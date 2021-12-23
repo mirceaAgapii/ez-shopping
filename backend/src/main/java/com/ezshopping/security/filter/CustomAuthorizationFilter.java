@@ -36,10 +36,12 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (!request.getServletPath().equals(API + LOGIN) && !request.getServletPath().equals(API + USERS + TOKEN + REFRESH)) {
+        if (!request.getServletPath().equals(API + LOGIN)
+                && !request.getServletPath().equals(API + USERS + TOKEN + REFRESH)
+                && !request.getServletPath().equals(API + USERS + REGISTRATION)) {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if (checkAuthorisationHeader(authorizationHeader)) {
-                DecodedJWT decodedJWT = null;
+                DecodedJWT decodedJWT;
                 try {
                     decodedJWT = decodedJWTFromAuthorizationHeader(authorizationHeader);
                     String username = decodedJWT.getSubject();

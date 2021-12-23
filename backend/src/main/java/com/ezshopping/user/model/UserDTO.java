@@ -1,5 +1,6 @@
 package com.ezshopping.user.model;
 
+import com.ezshopping.user.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 import javax.validation.constraints.Email;
@@ -22,4 +23,6 @@ public class UserDTO {
     @NotNull
     @Email(message = "Wrong email format")
     private String email;
+
+    private String role;
 }

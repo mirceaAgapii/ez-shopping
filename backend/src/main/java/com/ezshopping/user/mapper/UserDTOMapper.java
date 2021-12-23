@@ -14,6 +14,7 @@ class UserDTOMapper implements Mapper<User, UserDTO> {
                 .password(entity.getPassword())
                 .email(entity.getEmail())
                 .id(entity.getId())
+                .role(entity.getRole())
                 .build();
     }
 }
