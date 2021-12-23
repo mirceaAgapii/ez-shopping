@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SystemlHealth } from '../Model/system-health';
 import { SystemCPU } from '../Model/system-cpu';
 import { DashboardService } from '../services/admin/dashboard.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-admin',
@@ -26,6 +27,7 @@ export class AdminComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    //this.systemCPU.measurements[0] = {statistic : 'test', value: 10};
     this.getTraces();
     this.getCpuUsage();
     this.getSystemHealth();
@@ -122,7 +124,12 @@ export class AdminComponent implements OnInit {
   onSelectTrace(trace: any) {
     this.selectedTrace = trace;
     this.viewTrace = true;
-    document.getElementById('trace-modal')?.click();
+
+  }
+
+  closeTrace() {
+    this.selectedTrace = undefined;
+    this.viewTrace = false;
 
   }
 

@@ -1,0 +1,10 @@
+.trace-modal {
+    position: fixed;
+    top: 100px;
+    background-color: #babbc4;
+
+}
+
+main {
+    overflow-y: hidden;
+}

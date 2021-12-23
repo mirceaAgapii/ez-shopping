@@ -1,11 +1,11 @@
-<div class="">
+<main class="main">
     <!-- Alert-->
     <div class="row">
         <div class="alert alert-info dash-alert">
             <span><i class="fa fa-server"></i> System: {{ systemHealth?.status }}</span>&nbsp;&nbsp;
             <span><i class="fa fa-database"></i> DB: {{ systemHealth?.components?.db?.details?.database }} - {{ systemHealth?.components?.db?.status }}</span>&nbsp;
             <span><i class="fa fa-hdd-o"></i> Disk Space: {{ systemHealth?.components?.diskSpace?.details?.free }}</span>&nbsp;&nbsp;
-            <span [ngClass]="{'text-danger' : systemCPU.measurements[0].value < 2}"><i class="fa fa-microchip"></i> Processors: {{ systemCPU.measurements[0].value }}</span>&nbsp;&nbsp;
+            <span><i class="fa fa-microchip"></i> Processors: {{ systemCPU.measurements[0].value }}</span>&nbsp;&nbsp;
             <span><i class="fa fa-clock-o"></i> Up Time: {{processUptime}}</span>
 
             <button (click)="onRefreshData()" type="button" class="btn btn-primary btn-sm pull-right">
@@ -100,74 +100,74 @@
     <button  type="button" id="trace-modal" class="btn btn-primary" data-toggle="modal"
         data-target="#trace-info-modal"></button>
 
-</div>
+</main>
 
 <!-- Trace Details Modal -->
-
-            <div class="modal-body right-left-margin">
-                <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href="#request">
-                            <i class="fa fa-sitemap"></i> Request</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#response">
-                            <i class="fa fa-sliders"></i> Response</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="request">
-                        <p>
-                            <strong>Time Stamp:</strong>
-                            {{selectedTrace?.timestamp | date:'medium'}}
-                        </p>
-                        <p>
-                            <strong>Time Taken(ms):</strong>
-                            {{selectedTrace?.timeTaken}}
-                        </p>
-                        <p>
-                            <strong>Request Method:</strong>
-                            {{selectedTrace?.request.method}}
-                        </p>
-                        <p>
-                            <strong>Remote Address:</strong>
-                            {{selectedTrace?.request.remoteAddress}}
-                        </p>
-                        <p>
-                            <strong>URI:</strong>
-                            {{selectedTrace?.request.uri}}
-                        </p>
-                        <p>
-                            <strong>Origin:</strong>
-                            {{selectedTrace?.request.headers['origin']}}
-                        </p>
-                        <p>
-                            <strong>User Agent (Web Client):</strong>
-                            {{selectedTrace?.request.headers['user-agent']}}
-                        </p>
-                    </div>
-
-                    <div class="tab-pane fade" id="response">
-                        <dl>
-                            <dt>Status:</dt>
-                            <dd>{{selectedTrace?.response.status}}</dd>
-                        </dl>
-                        <dl>
-                            <dt>Date:</dt>
-                            <dd>{{selectedTrace?.response.headers['Date']}}</dd>
-                        </dl>
-                        <dl>
-                            <dt>Content Type:</dt>
-                            <dd>{{selectedTrace?.response.headers['Content-Type']}}</dd>
-                        </dl>
-                        <p>
-                            <strong>Server Allowed Origins:</strong>
-                            {{selectedTrace?.response.headers['Access-Control-Allow-Origin']}}
-                        </p>
-                    </div>
-                </div>
+<div class="trace-modal" [hidden]="!viewTrace">
+    <div class="modal-body right-left-margin">
+        <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" >
+                    <i class="fa fa-sitemap"></i> Request</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" >
+                    <i class="fa fa-sliders"></i> Response</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="request">
+                <p>
+                    <strong>Time Stamp:</strong>
+                    {{selectedTrace?.timestamp | date:'medium'}}
+                </p>
+                <p>
+                    <strong>Time Taken(ms):</strong>
+                    {{selectedTrace?.timeTaken}}
+                </p>
+                <p>
+                    <strong>Request Method:</strong>
+                    {{selectedTrace?.request.method}}
+                </p>
+                <p>
+                    <strong>Remote Address:</strong>
+                    {{selectedTrace?.request.remoteAddress}}
+                </p>
+                <p>
+                    <strong>URI:</strong>
+                    {{selectedTrace?.request.uri}}
+                </p>
+                <p>
+                    <strong>Origin:</strong>
+                    {{selectedTrace?.request.headers['origin']}}
+                </p>
+                <p>
+                    <strong>User Agent (Web Client):</strong>
+                    {{selectedTrace?.request.headers['user-agent']}}
+                </p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            <div class="tab-pane fade" id="response">
+                <dl>
+                    <dt>Status:</dt>
+                    <dd>{{selectedTrace?.response.status}}</dd>
+                </dl>
+                <dl>
+                    <dt>Date:</dt>
+                    <dd>{{selectedTrace?.response.headers['Date']}}</dd>
+                </dl>
+                <dl>
+                    <dt>Content Type:</dt>
+                    <dd>{{selectedTrace?.response.headers['Content-Type']}}</dd>
+                </dl>
+                <p>
+                    <strong>Server Allowed Origins:</strong>
+                    {{selectedTrace?.response.headers['Access-Control-Allow-Origin']}}
+                </p>
             </div>
-       
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeTrace()">Close</button>
+    </div>
+</div>
