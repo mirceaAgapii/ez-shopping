@@ -11,12 +11,12 @@ import { LocalStorageService } from '../interceptor/storage/local-storage.servic
 export class UserService {
 
   currentUser!: User;
-  currentUserSubject = new BehaviorSubject(new User('User'));
+  currentUserSubject = new BehaviorSubject(new User());
   private userLoggedIn: boolean;
-  
+
   constructor(private localStorageService: LocalStorageService,
     private jwtService: JWTTokenService) {
-    this.userLoggedIn = false; 
+    this.userLoggedIn = false;
    }
 
   public getUserLoggedIn(): boolean {
@@ -36,5 +36,5 @@ export class UserService {
     this.currentUserSubject.next(this.currentUser);
   }
 
-  
+
 }

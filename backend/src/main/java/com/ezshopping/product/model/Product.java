@@ -28,8 +28,20 @@ public class Product extends AbstractEntity {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "quantity")
+    private Double quantity;
+
     @Column(name = "barcode")
     private String barcode;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "category")
+    private String category;
+
+    @Column(name = "brand")
+    private String brand;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")

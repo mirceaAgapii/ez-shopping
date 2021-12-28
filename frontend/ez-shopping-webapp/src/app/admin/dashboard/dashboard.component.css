@@ -56,13 +56,14 @@ div.container {
     margin: auto;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 889px) {
     .status_bar {
         flex-direction: column;
         align-items: flex-start;
-        height: auto;
+        height: 100%;
+        gap: 0;
     }
-    
+
     .btn_refresh {
         margin: 10px 0 0 0;
     }

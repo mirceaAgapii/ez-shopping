@@ -20,5 +20,17 @@ public class ProductDTO {
     private Double price;
 
     @NotNull
+    private Double quantity;
+
+    @NotNull
     private String barcode;
+
+    @NotNull
+    private String status;
+
+    @NotNull
+    private String category;
+
+    @NotNull
+    private String brand;
 }

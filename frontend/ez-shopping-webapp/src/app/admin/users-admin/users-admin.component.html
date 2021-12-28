@@ -1,20 +1,32 @@
-<button class="btn btn-primary" (click)="fetchUsers()">Refresh</button>
+<app-add-new-user class="comp" [hidden]="!addNewUser" (submitted)="closeAddUserComp()"></app-add-new-user>
+<app-user-info class="comp" [hidden]="!showInfo" [user]="selectedUser" (submitted)="closeInfoUserComp()"></app-user-info>
+<div class="card" [ngClass]="addNewUser ? 'content' : ''">
+  <div class="">
+    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" (onClick)="openAddUserComp()"></p-button>
+    <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" (onClick)="fetchUsers()"></p-button>
+    <p-button class="delete" type="button" icon="pi pi-minus" styleClass="p-button-text" (onClick)="deleteUser()" [disabled]="disableDelete"></p-button>
+  </div>
 
-<table>
-    <thead>
+  <p-table [value]="users" [paginator]="true" [rows]="10" [totalRecords]="users.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>View</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
         <tr>
-            <th>N#</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
+          <input #checkboxes type="checkbox" (click)="selectUsers(user)">
+          <td>{{user.username}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td (click)="openInfoUserComp(user)"><i class="pi pi-eye"></i></td>
         </tr>
-    </thead>
-    <tbody *ngFor="let user of users">
-        <tr>
-            <td>1</td>
-            <td>{{user.username}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.role}}</td>
-        </tr>
-    </tbody>
-</table>
+    </ng-template>
+  </p-table>
+</div>
+

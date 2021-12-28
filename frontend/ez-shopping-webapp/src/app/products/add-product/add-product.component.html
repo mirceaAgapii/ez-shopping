@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <mat-card class="add_prod" >
 
-  <!--img src="../../assets/img/mizuno_wave2.jpg"  class="article-image" style="width: 415px;"-->
+  <h3 class="title">Add new article</h3>
   <div class="field grid">
     <label class="col" for="name">Name</label>
     <input class="col" type="text" pInputText id="name" [(ngModel)]="defaultProduct.name" autofocus />
@@ -12,8 +12,8 @@
       cols="20"></textarea>
   </div>
   <div class="field grid">
-    <label class="col" for="inventoryStatus" style="padding-right: 0px;">Inventory Status</label>
-    <p-dropdown class="col" [(ngModel)]="defaultProduct.inventoryStatus" inputId="inventoryStatus" [options]="statuses"
+    <label class="col" for="status" style="padding-right: 0px;">Inventory Status</label>
+    <p-dropdown class="col" [(ngModel)]="defaultProduct.status" inputId="status" [options]="statuses"
       placeholder="Select">
       <ng-template let-option pTemplate="item">
         <span [class]="'article-badge status-' + option.value">{{option.label}}</span>

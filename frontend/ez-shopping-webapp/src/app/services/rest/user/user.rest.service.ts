@@ -9,6 +9,7 @@ import { JWTTokenService } from '../../auth/jwttoken.service';
 import { LocalStorageService } from '../../interceptor/storage/local-storage.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
+import {AuthorizationService} from "../../auth/authorization.service";
 
 
 @Injectable({
@@ -18,35 +19,16 @@ export class UserRestService {
   constructor(private http: HttpClient,
     private jwtService: JWTTokenService,
     private localStorageService: LocalStorageService,
-    private router: Router, private userService: UserService) { 
+    private router: Router, private userService: UserService,
+    private authenticationService: AuthorizationService) {
 
   }
 
   login(username: string, password: string) {
-
-
     let body = new HttpParams();
     body = body.set('username', username);
     body = body.set('password', password);
-    return this.http.post<HttpResponse<Object>>(environment.restUrl + '/login', body, {observe: 'response'})/*
-    .subscribe(
-      data => {
-        this.saveTokens(data);
-        this.router.navigate(['']);
-        let user: User = new User();
-        user.username = this.jwtService.getUser();
-        user.role = this.jwtService.getUserRoles();
-        this.userService.setCurrentUser(user);
-      },
-      error => {
-        if(error.error.status === 461) {
-          this.router.navigate(['/login']);
-          alert("User " + username +" not found");
-          
-        }
-
-      }
-    )*/
+    return this.http.post<HttpResponse<Object>>(environment.restUrl + '/login', body, {observe: 'response'});
 
   }
 
@@ -70,7 +52,9 @@ export class UserRestService {
     this.http.post<any>(environment.restUrl + '/users/save', body).subscribe({
       next: data => {
         console.log('success');
-        this.router.navigate(['/login']);
+        if(!this.authenticationService.isAuthenticated()) {
+          this.router.navigate(['/login']);
+        }
       },
       error: error => {
         console.log(error);
@@ -85,10 +69,17 @@ export class UserRestService {
       });
   }
 
-  getAllUsers(): Observable<Array<User>> 
+  getAllUsers(): Observable<Array<User>>
   {
     return this.http.get<Array<User>>(environment.restUrl + '/users');
 
+  }
+
+  deleteUsers(user: User) {
+    console.log(environment.restUrl + '/users/user?id=' + user.id);
+    this.http.delete<any>(environment.restUrl + '/users/user?id=' + user.id).subscribe(
+      data => console.log(data)
+    );
   }
 
   private getRefreshTokenHeader(): HttpHeaders {

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import static java.util.Objects.*;
 
 @Service
 @RequiredArgsConstructor
@@ -114,16 +115,12 @@ class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
-        try {
-            //TODO: think of a better way to check user exists by checking the email too
-            if(Objects.nonNull(getUserByUsername(userDTO.getUsername()))) {
-                return true;
-            }
-            getUserByEmail(userDTO.getEmail());
-        } catch (UserNotFoundException ex) {
-            return false;
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
+            return true;
+        } else if (userRepository.existsByEmail(userDTO.getEmail())) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     private User getUserById(String id) throws UserNotFoundException {

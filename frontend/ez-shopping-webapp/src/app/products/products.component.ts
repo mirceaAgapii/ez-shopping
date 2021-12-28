@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-      this.products = this.productService.getProducts();
+
 
   }
 

@@ -1,0 +1,12 @@
+.comp {
+  position: absolute;
+  top: 190px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  min-width: 300px;
+}
+
+.delete:disabled {
+  background: #49535a;
+}

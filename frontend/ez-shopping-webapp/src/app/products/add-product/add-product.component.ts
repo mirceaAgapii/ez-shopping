@@ -36,7 +36,7 @@ export class AddProductComponent implements OnInit {
       product.category = this.defaultProduct.category;
       product.description = this.defaultProduct.description;
       product.image = this.defaultProduct.image;
-      product.inventoryStatus = this.defaultProduct.inventoryStatus;
+      product.status = this.defaultProduct.status;
       product.name = this.defaultProduct.name;
       product.price = this.defaultProduct.price;
       product.quantity = this.defaultProduct.quantity;

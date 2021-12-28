@@ -10,8 +10,7 @@ export class AuthorizationService {
 
   isUserAuthenticated = new BehaviorSubject<boolean>(false);
 
-  constructor(private jwtTokeService: JWTTokenService,
-    private userRestService: UserRestService) { }
+  constructor(private jwtTokeService: JWTTokenService) { }
 
   public isAuthenticated(): boolean {
     const rawToken = localStorage.getItem('access_token');

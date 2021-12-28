@@ -1,7 +1,7 @@
 export class Product {
     image!: string;
     name!: string;
-    inventoryStatus!: string;
+    status!: string;
     description!: string;
     category!: string;
     price!: number;

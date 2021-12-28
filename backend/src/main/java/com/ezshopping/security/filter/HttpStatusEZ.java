@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum HttpStatusEZ {
 
-    USER_NOT_FOUND(461, HttpStatus.Series.CLIENT_ERROR, "User not found");
+    USER_NOT_FOUND(461, HttpStatus.Series.CLIENT_ERROR, "User not found"),
+    USER_EXISTS(462, HttpStatus.Series.CLIENT_ERROR, "User already in database");
 
     private final int value;
     private final HttpStatus.Series series;

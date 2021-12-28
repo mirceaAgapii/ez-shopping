@@ -2,6 +2,8 @@ package com.ezshopping;
 
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.ezshopping.security.filter.HttpStatusEZ;
+import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,13 @@ public class RestResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(JWTDecodeException.class)
-    public  ResponseEntity<String> handleJWTDecodeException(JWTDecodeException jwtDecodeException) {
+    public ResponseEntity<String> handleJWTDecodeException(JWTDecodeException jwtDecodeException) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jwtDecodeException.getMessage());
+    }
+
+    @ExceptionHandler(UserAlreadyInDatabaseException.class)
+    public ResponseEntity<String> handleUserAlreadyInDatabaseException(UserAlreadyInDatabaseException userAlreadyInDatabaseException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userAlreadyInDatabaseException.getMessage());
     }
 
 }

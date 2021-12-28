@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscriber, Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { SystemCPU } from 'src/app/Model/system-cpu';
 import { SystemlHealth } from 'src/app/Model/system-health';
 import { DashboardService } from 'src/app/services/admin/dashboard.service';
+import { Subscription, timer } from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private getCpuUsage(): void {
     this.dashboardService.getSystemCPU().subscribe(
       (response: SystemCPU) => {
-        console.log(response);
+        //console.log(response);
         this.systemCPU = response;
       },
       (error: HttpErrorResponse) => {
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private getSystemHealth(): void {
     this.dashboardService.getSystemHealth().subscribe(
       (response: SystemlHealth) => {
-        console.log(response);
+        //console.log(response);
         this.systemHealth = response;
         this.systemHealth.components.diskSpace.details.free = this.formatBytes(this.systemHealth.components.diskSpace.details.free);
       },
@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private getProcessUpTime(isUpdateTime: boolean): void {
     this.dashboardService.getProcessUptime().subscribe(
       (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.timeStamp = Math.round(response.measurements[0].value);
         this.processUptime = this.formateUptime(this.timeStamp);
         if (isUpdateTime) {
@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private getTraces(): void {
     this.dashboardService.getHttpTraces().subscribe(
       (response: any) => {
-        console.log(response.traces);
+        //console.log(response.traces);
         this.processTraces(response.traces);
       },
       (error: HttpErrorResponse) => {
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       minutes.toString().padStart(2, '0') + 'm' + seconds.toString().padStart(2, '0') + 's';
   }
 
-  // every 1 second call this function 
+  // every 1 second call this function
   updateTime(): void {
     setInterval(() => {
       this.processUptime = this.formateUptime(this.timeStamp + 1);

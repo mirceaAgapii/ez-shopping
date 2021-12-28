@@ -40,7 +40,6 @@ import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { TreeTableModule } from 'primeng/treetable';
-import { TreeNode } from 'primeng/api';
 import { LoadDataResolver } from './guard/load-data.resolver';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin/admin.component';
@@ -48,6 +47,8 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
 import { StoresAdminComponent } from './admin/stores-admin/stores-admin.component';
+import { AddNewUserComponent } from './admin/users-admin/add-new-user/add-new-user.component';
+import { UserInfoComponent } from './admin/users-admin/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,9 @@ import { StoresAdminComponent } from './admin/stores-admin/stores-admin.componen
     DashboardComponent,
     UsersAdminComponent,
     ProductsAdminComponent,
-    StoresAdminComponent
+    StoresAdminComponent,
+    AddNewUserComponent,
+    UserInfoComponent
 
   ],
   imports: [

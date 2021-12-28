@@ -40,7 +40,11 @@ export class LoginComponent implements OnInit {
     this.messageService.add({severity:'error', summary:`User ${this.username} wasn't found`, detail:''});
   }
 
-  ngOnDestroy() {
+  onKeydown(event: { key: string; }) {
+    console.log(event.key);
+    if (event.key === "F6") {
+      this.autoLogin();
+    }
   }
 
 
@@ -74,12 +78,12 @@ export class LoginComponent implements OnInit {
 
   }
 
-  
+
 
   register() {
     this.router.navigate(['/registration']);
   }
-  
+
   autoLogin() {
     this.username = 'Mircea';
     this.password = '12345';

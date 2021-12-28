@@ -44,7 +44,7 @@ public class UserControllerREST {
     }
 
     @DeleteMapping("/user")
-    public ResponseEntity<UserDTO> deleteUserById(@RequestParam(name = "id") String id) {
+    public ResponseEntity<UserDTO> deleteUserById(@RequestParam(name = "id", required = false) String id) {
         log.info("UserControllerREST.deleteUserById: received a DELETE request");
         return ResponseEntity.ok().body(userService.deleteUserById(id));
 
