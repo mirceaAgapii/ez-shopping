@@ -1,0 +1,30 @@
+<form class="add_user container">
+  <h3 class="title">Add new user</h3>
+  <div class="form-group">
+    <div>
+      <label class="form form-label" for="username">Username</label>
+      <input id="username" class="form-control" type="text"  name="username" [(ngModel)]="newUser.username" >
+      <span>Username: {{this.newUser.username}}</span>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input id="password" class="form-control" type="password" name="password" [(ngModel)]="newUser.password">
+    </div>
+    <div>
+      <label for="re-password">Re-enter Password</label>
+      <input id="re-password" class="form-control" type="password" name="password" [(ngModel)]="checkPassword">
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" class="form-control" type="email" name="email" [(ngModel)]="newUser.email">
+    </div>
+    <div>
+      <label for="role">Select user role</label>
+      <select id="role" class="form-control" name="role" [(ngModel)]="newUser.role">
+        <option *ngFor="let role of roles">{{role}}</option>
+      </select>
+    </div>
+  </div>
+  <button type="reset" class="btn btn-primary" (click)="cancel()">Cancel</button>
+  <button type="submit" class="btn btn-primary" (click)="addUser()">Create</button>
+</form>
