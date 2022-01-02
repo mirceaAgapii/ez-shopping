@@ -1,0 +1,11 @@
+.cont {
+    opacity: 20%;
+}
+
+.add_prod {
+  position: absolute;
+  top: 150px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}

@@ -34,15 +34,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.getTraces();
     this.getCpuUsage();
     this.getSystemHealth();
-    this.getProcessUpTime(true);
+    this.getProcessUpTime(false);
 
-    this.subscription = timer(0, 10000).pipe(
+    /*this.subscription = timer(0, 10000).pipe(
       switchMap(async () => this.onRefreshData())
-    ).subscribe()
+    ).subscribe()*/
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    /*this.subscription.unsubscribe();*/
   }
 
   private getCpuUsage(): void {

@@ -2,6 +2,8 @@ package com.ezshopping.user.service;
 
 import com.ezshopping.common.Mapper;
 import com.ezshopping.user.UserRole;
+import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
+import com.ezshopping.user.model.PasswordChangeDTO;
 import com.ezshopping.user.model.UserDTO;
 import com.ezshopping.user.model.User;
 import com.ezshopping.user.repository.UserRepository;
@@ -114,7 +116,19 @@ class UserServiceImpl implements UserDetailsService, UserService {
         userRepository.save(userEntity);
     }
 
+    @Override
+    @Transactional
+    public void changePassword(String id, PasswordChangeDTO passwordChangeDTO) {
+        User user = getUserById(id);
+        if (passwordEncoder.matches(passwordChangeDTO.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
+        } else {
+            throw new WrongPasswordProvidedException("Wrong password");
+        }
+    }
+
     private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
+        //TODO: make difference between cases with username already exists and email already exists
         if (userRepository.existsByUsername(userDTO.getUsername())) {
             return true;
         } else if (userRepository.existsByEmail(userDTO.getEmail())) {

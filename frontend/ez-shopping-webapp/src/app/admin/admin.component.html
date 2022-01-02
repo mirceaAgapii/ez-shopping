@@ -7,7 +7,4 @@
     </ul>
 </nav>
 
-<app-dashboard [hidden]="!showDashboard"></app-dashboard>
-<app-users-admin [hidden]="!showUsers"></app-users-admin>
-<app-products-admin [hidden]="!showProducts"></app-products-admin>
-<app-stores-admin [hidden]="!showStores"></app-stores-admin>
+<router-outlet></router-outlet>

@@ -8,6 +8,7 @@ import { User } from '../Model/User';
 import { UserService } from '../services/user/user.service';
 import { HttpResponse } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private authorizationService: AuthorizationService,
     private jwtService: JWTTokenService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private localStorageService: LocalStorageService) {
     }
 
   showSpinner = false;
@@ -54,11 +56,10 @@ export class LoginComponent implements OnInit {
         data => {
           this.saveTokens(data);
           this.router.navigate(['']);
-          let user: User = new User();
-          user.username = this.jwtService.getUser();
-          user.role = this.jwtService.getUserRoles();
-          this.userService.setCurrentUser(user);
-          this.addSingle();
+          const userId = data.headers.get("userId");
+          if(userId !== null) {
+            this.localStorageService.set('userId', userId);
+          }
         },
         error => {
           if(error.error.status === 461) {
@@ -77,8 +78,6 @@ export class LoginComponent implements OnInit {
     }
 
   }
-
-
 
   register() {
     this.router.navigate(['/registration']);

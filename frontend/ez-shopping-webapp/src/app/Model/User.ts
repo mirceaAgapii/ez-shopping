@@ -1,5 +1,5 @@
 export class User {
-    id: string | null = '';
+    id!: string;
     role: string | null = '';
     username: string | null = '';
     password: string | null = '';

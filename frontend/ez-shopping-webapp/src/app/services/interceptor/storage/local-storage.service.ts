@@ -7,8 +7,12 @@ export class LocalStorageService {
         localStorage.setItem(key, value);
     }
 
-    get(key: string) {
-        return localStorage.getItem(key);
+    get(key: string): string {
+        const result = localStorage.getItem(key);
+        if (result) {
+            return result;
+        }
+        return "";
     }
 
     remove(key: string) {

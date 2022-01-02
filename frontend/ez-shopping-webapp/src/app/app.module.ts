@@ -38,9 +38,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import { AddProductComponent } from './products/add-product/add-product.component';
+import { AddProductComponent } from './admin/products-admin/add-product/add-product.component';
 import { TreeTableModule } from 'primeng/treetable';
-import { LoadDataResolver } from './guard/load-data.resolver';
+import { PrefetchUserResolver } from './guard/prefetch-user.resolver';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
@@ -49,6 +49,7 @@ import { ProductsAdminComponent } from './admin/products-admin/products-admin.co
 import { StoresAdminComponent } from './admin/stores-admin/stores-admin.component';
 import { AddNewUserComponent } from './admin/users-admin/add-new-user/add-new-user.component';
 import { UserInfoComponent } from './admin/users-admin/user-info/user-info.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { UserInfoComponent } from './admin/users-admin/user-info/user-info.compo
     ProductsAdminComponent,
     StoresAdminComponent,
     AddNewUserComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    UserAccountComponent
 
   ],
   imports: [
@@ -119,7 +121,7 @@ import { UserInfoComponent } from './admin/users-admin/user-info/user-info.compo
     useClass : TokenInterceptorService,
     multi : true
   },
-  LoadDataResolver
+  PrefetchUserResolver
   ],
   bootstrap: [AppComponent]
 })

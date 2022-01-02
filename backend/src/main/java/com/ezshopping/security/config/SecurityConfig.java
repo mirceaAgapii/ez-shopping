@@ -4,6 +4,7 @@ import static com.ezshopping.api.EndpointsAPI.*;
 import com.ezshopping.security.filter.CustomAuthenticationFilter;
 import com.ezshopping.security.filter.CustomAuthorizationFilter;
 import com.ezshopping.user.UserRole;
+import com.ezshopping.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -33,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), userService);
         customAuthenticationFilter.setFilterProcessesUrl(API + LOGIN);
 
         http.cors().and()
@@ -49,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/instances/**").permitAll()
                 .antMatchers("/applications/**").permitAll()
                 .antMatchers("/error/**").permitAll()
+                .antMatchers(HttpMethod.GET, API + USERS + "/user*").hasAnyAuthority(UserRole.ADMINISTRATOR.getValue(), UserRole.CLIENT.getValue())
+                .antMatchers(HttpMethod.PATCH, API + USERS + "/user/password*").hasAnyAuthority(UserRole.ADMINISTRATOR.getValue(), UserRole.CLIENT.getValue())
                 .antMatchers(HttpMethod.GET, API + ALL).hasAnyAuthority(UserRole.ADMINISTRATOR.getValue())
                 .antMatchers(HttpMethod.POST, API + ALL).hasAnyAuthority(UserRole.ADMINISTRATOR.getValue())
                 .antMatchers(HttpMethod.PATCH, API + ALL).hasAnyAuthority(UserRole.ADMINISTRATOR.getValue())

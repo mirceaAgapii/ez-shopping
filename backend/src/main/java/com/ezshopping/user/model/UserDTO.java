@@ -1,6 +1,5 @@
 package com.ezshopping.user.model;
 
-import com.ezshopping.user.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 import javax.validation.constraints.Email;

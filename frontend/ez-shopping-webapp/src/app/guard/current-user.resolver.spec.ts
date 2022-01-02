@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoadDataResolver } from './load-data.resolver';
+import { CurrentUserResolver } from './current-user.resolver';
 
-describe('LoadDataResolver', () => {
-  let resolver: LoadDataResolver;
+describe('CurrentUserResolver', () => {
+  let resolver: CurrentUserResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    resolver = TestBed.inject(LoadDataResolver);
+    resolver = TestBed.inject(CurrentUserResolver);
   });
 
   it('should be created', () => {

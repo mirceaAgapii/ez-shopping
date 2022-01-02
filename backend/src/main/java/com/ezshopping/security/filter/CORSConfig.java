@@ -12,7 +12,7 @@ public class CORSConfig implements WebMvcConfigurer {
 
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                .exposedHeaders("access_token","refresh_token")
+                .exposedHeaders("access_token","refresh_token", "userId")
                 .allowedHeaders("Origin", "Content-Type", "Accept",
                                 "Authorization", "Access-Control-Allow-Origin",
                                 "Access-Control-Request-Method", "Access-Control-Request-Headers",

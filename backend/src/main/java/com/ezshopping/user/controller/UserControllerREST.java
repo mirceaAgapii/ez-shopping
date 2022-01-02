@@ -4,6 +4,7 @@ import static com.ezshopping.api.EndpointsAPI.*;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.ezshopping.security.service.SecurityService;
+import com.ezshopping.user.model.PasswordChangeDTO;
 import com.ezshopping.user.model.UserDTO;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
@@ -66,18 +67,19 @@ public class UserControllerREST {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PatchMapping("/user/password")
+    public ResponseEntity<Void> changePassword(@RequestParam(name="id") String id,
+                                               @RequestBody PasswordChangeDTO passwordChangeDTO) {
+        log.info("UserControllerREST.changePassword: received a PATCH request for user [{}]", id);
+        userService.changePassword(id, passwordChangeDTO);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         log.info("UserControllerREST.refreshToken: received a GET request");
         securityService.getNewAccessToken(request, response);
     }
-//TODO: move to controllerAdvice
-    @ExceptionHandler(UserAlreadyInDatabaseException.class)
-    public  ResponseEntity<String> handleUserAlreadyInDatabaseException(UserAlreadyInDatabaseException ex) {
-        //TODO: send a DTO instead: with timestamp, endpoint/operation name, exception message
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-    }
-
 
 }

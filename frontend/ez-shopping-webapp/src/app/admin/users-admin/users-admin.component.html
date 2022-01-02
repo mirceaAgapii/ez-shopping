@@ -19,7 +19,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-user>
-        <tr>
+        <tr class="user_row" align="center">
           <input #checkboxes type="checkbox" (click)="selectUsers(user)">
           <td>{{user.username}}</td>
           <td>{{user.email}}</td>

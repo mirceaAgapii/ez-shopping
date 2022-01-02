@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit {
   items!: MenuItem[];
   currentUser!: string | null;
   isUserLoggedIn!: boolean;
+  isUserAdmin = false;
 
   constructor(private router: Router,
     private localStorageService: LocalStorageService,
@@ -35,15 +36,16 @@ export class MenuComponent implements OnInit {
       }
     )
     this.currentUser = this.jwtService.getUser();
-  }
-
-  
+    const userRoles = this.jwtService.getUserRoles();
+    if(userRoles !== null) {
+      this.isUserAdmin = userRoles.includes('ADMINISTRATOR');
+    }
     
+  }
 
   navigateToMain() {
     this.router.navigate(['']);
   }
-
 
   logOff() {
     console.log('logoff - clicked');
@@ -60,11 +62,11 @@ export class MenuComponent implements OnInit {
   }
 
   toAccount(){
-    console.log('toAccount clicked');
+    this.router.navigate(['/account']);
   }
 
   toAdmin() {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin/dashboard']);
   }
 
 }

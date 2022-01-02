@@ -22,12 +22,12 @@ canActivate(
   route: ActivatedRouteSnapshot, 
   state: RouterStateSnapshot
 ): boolean {
-if (!this.authService.isAuthenticated()) {
-  this.router.navigate(['/login']);
-  return false;
-}
+  if (!this.authService.isAuthenticated()) {
+    this.router.navigate(['/login']);
+    return false;
+  }
 
-return true;
+  return true;
 }
   
 }

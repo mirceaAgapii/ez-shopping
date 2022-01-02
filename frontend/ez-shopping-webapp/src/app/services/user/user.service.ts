@@ -27,13 +27,12 @@ export class UserService {
   }
 
   getCurrentUser(): User {
-    this.currentUser.username = this.jwtService.getUser();
     return this.currentUser;
   }
 
   setCurrentUser(user: User) {
     this.currentUser = user;
-    this.currentUserSubject.next(this.currentUser);
+    this.localStorageService.set('userId', user.id);
   }
 
 

@@ -7,10 +7,11 @@
     <nav>
       <ul class="">
         <li (click)="navigateToMain()"><i class="fas fa-home nav_icon" ></i></li>
-        <li (click)="toAccount()"><i class="fas fa-user nav_icon" ></i></li>
+        <li (click)="toAdmin()" [hidden]="!isUserAdmin"><i class="fas fa-user-cog nav_icon"></i></li>
         <li><i class="fas fa-cash-register nav_icon" ></i></li>
         <li (click)="toProducts()"><i class="fas fa-apple-alt nav_icon" ></i></li>
-        <li><i class="fas fa-sign-out-alt nav_icon" (click)="logOff()"></i></li>
+        <!--li><i class="fas fa-sign-out-alt nav_icon" (click)="logOff()"></i></li-->
+        <li (click)="toAccount()"><i class="fas fa-user nav_icon"></i></li>
       </ul>
     </nav>
   </footer>

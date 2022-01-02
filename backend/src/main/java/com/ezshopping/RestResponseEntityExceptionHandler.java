@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.ezshopping.security.filter.HttpStatusEZ;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
+import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
-
+    //TODO: send a DTO instead: with timestamp, endpoint/operation name, exception message
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List<String>> handleConstraintValidationException(ConstraintViolationException ex) {
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
@@ -44,6 +45,11 @@ public class RestResponseEntityExceptionHandler
     @ExceptionHandler(UserAlreadyInDatabaseException.class)
     public ResponseEntity<String> handleUserAlreadyInDatabaseException(UserAlreadyInDatabaseException userAlreadyInDatabaseException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userAlreadyInDatabaseException.getMessage());
+    }
+
+    @ExceptionHandler(WrongPasswordProvidedException.class)
+    public  ResponseEntity<String> handleWrongPasswordProvidedException(WrongPasswordProvidedException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
 }

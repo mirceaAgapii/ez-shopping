@@ -1,4 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import {Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
 import { UserRestService } from 'src/app/services/rest/user/user.rest.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -19,10 +21,12 @@ export class UsersAdminComponent implements OnInit {
   @ViewChildren("checkboxes")
   checkboxes!: QueryList<ElementRef>;
 
-  constructor(private userService: UserRestService) { }
+  constructor(private userService: UserRestService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.fetchUsers();
+    this.users = this.route.snapshot.data['users'];
   }
 
   uncheckAll() {

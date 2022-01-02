@@ -11,11 +11,11 @@ import { ProductRestService } from '../services/rest/product/product-rest.servic
 @Injectable({
   providedIn: 'root'
 })
-export class LoadDataResolver implements Resolve<Product[]> {
+export class PrefetchProductsResolver implements Resolve<Product[]> {
 
-  constructor(private productService: ProductRestService) {}
+  constructor(private productRestService: ProductRestService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product[]> | Promise<Product[]> | Product[] {
-    return this.productService.getAllProducts();
+    return this.productRestService.getAllProducts();
   }
 }

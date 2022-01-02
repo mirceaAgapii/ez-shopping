@@ -75,11 +75,24 @@ export class UserRestService {
 
   }
 
+  getUserById(id: string) {
+    return this.http.get<User>(environment.restUrl + '/users/user?id=' + id);
+  }
+
   deleteUsers(user: User) {
     console.log(environment.restUrl + '/users/user?id=' + user.id);
     this.http.delete<any>(environment.restUrl + '/users/user?id=' + user.id).subscribe(
       data => console.log(data)
     );
+  }
+
+  updatePassword(oldPass: string, newPass: string, userId: string) {
+    const body = {
+      oldPassword : oldPass,
+      newPassword : newPass
+    }
+
+    return this.http.patch<any>(environment.restUrl + '/users/user/password?id=' + userId, body);
   }
 
   private getRefreshTokenHeader(): HttpHeaders {

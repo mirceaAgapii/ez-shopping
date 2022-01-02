@@ -1,0 +1,20 @@
+<p-toast></p-toast>
+<h3>My account</h3>
+<span>{{user.email}}</span>
+<button class="btn btn-primary" (click)="logOff()">Logout</button>
+
+<h4>Change password</h4>
+<form class="grid">
+    
+    <label class="col-5" for="old_pass">Old password</label>
+    <input class="col-5" id="old_pass" type="password" name="oldPassword" [(ngModel)]="oldPassword">
+
+    <label class="col-5" for="new_pass">New password</label>
+    <input class="col-5" id="new_pass" type="password" name="newPassword" [(ngModel)]="newPassword" (keyup)="onKeyUp()">
+
+    <label class="col-5" for="re_new_pass">Re-enter password</label>
+    <input class="col-5" id="re_new_pass" type="password" name="reNewPassword" [(ngModel)]="reNewPassword" (keyup)="onKeyUp()">
+
+    <div class="col-5"></div>
+    <button class="btn btn-primary col-5" type="submit" [disabled]="!passwordsMatch" (click)="updatePassword()">Confirm</button>
+</form>

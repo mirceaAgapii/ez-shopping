@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import com.ezshopping.user.exceptions.UserNotFoundException;
+import com.ezshopping.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -30,12 +31,14 @@ import java.util.stream.Collectors;
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     private final int ACCESS_TOKEN_VALIDITY = 86400000;
     private final int REFRESH_TOKEN_VALIDITY = 86400000;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     @Override
@@ -99,6 +102,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         response.setHeader("access_token", access_token);
         response.setHeader("refresh_token", refresh_token);
+        response.setHeader("userId", userService.getUserByUsername(user.getUsername()).getId());
     }
 
     @Override
