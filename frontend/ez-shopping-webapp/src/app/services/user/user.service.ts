@@ -3,7 +3,7 @@ import { JwtPayload } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../../Model/User';
 import { JWTTokenService } from '../auth/jwttoken.service';
-import { LocalStorageService } from '../interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../auth/storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'

@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { User } from '../Model/User';
-import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 import { UserRestService } from '../services/rest/user/user.rest.service';
 import { UserService } from '../services/user/user.service';
 

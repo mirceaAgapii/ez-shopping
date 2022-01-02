@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { AuthorizationService } from '../services/auth/authorization.service';
 import { JWTTokenService } from '../services/auth/jwttoken.service';
-import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'

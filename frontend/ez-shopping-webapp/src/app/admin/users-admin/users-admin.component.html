@@ -1,6 +1,6 @@
 <app-add-new-user class="comp" [hidden]="!addNewUser" (submitted)="closeAddUserComp()"></app-add-new-user>
 <app-user-info class="comp" [hidden]="!showInfo" [user]="selectedUser" (submitted)="closeInfoUserComp()"></app-user-info>
-<div class="card" [ngClass]="addNewUser ? 'content' : ''">
+<div class="card" [ngClass]="showInfo ? 'card_fade' : ''" [ngClass]="addNewUser ? 'content' : ''">
   <div class="">
     <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" (onClick)="openAddUserComp()"></p-button>
     <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" (onClick)="fetchUsers()"></p-button>

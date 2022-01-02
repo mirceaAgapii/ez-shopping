@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthorizationService } from '../services/auth/authorization.service';
 import { JWTTokenService } from '../services/auth/jwttoken.service';
-import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 import { UserService } from '../services/user/user.service';
 
 @Component({

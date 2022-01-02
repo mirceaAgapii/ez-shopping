@@ -8,7 +8,7 @@ import { User } from '../Model/User';
 import { UserService } from '../services/user/user.service';
 import { HttpResponse } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
-import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 
 @Component({
   selector: 'app-login',

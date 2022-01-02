@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { JWTTokenService } from './services/auth/jwttoken.service';
-import { LocalStorageService } from './services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from './services/auth/storage/local-storage.service';
 import { RegisterComponent } from './login/register/register.component';
 import { ProductsComponent } from './products/products.component';
 import { TokenInterceptorService } from './services/interceptor/token-interceptor.service';

@@ -6,10 +6,11 @@ import { map } from 'rxjs/operators';
 import { User } from '../../../Model/User';
 import { environment } from 'src/environments/environment';
 import { JWTTokenService } from '../../auth/jwttoken.service';
-import { LocalStorageService } from '../../interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../../auth/storage/local-storage.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../user/user.service';
 import {AuthorizationService} from "../../auth/authorization.service";
+
 
 
 @Injectable({
@@ -28,8 +29,11 @@ export class UserRestService {
     let body = new HttpParams();
     body = body.set('username', username);
     body = body.set('password', password);
-    return this.http.post<HttpResponse<Object>>(environment.restUrl + '/login', body, {observe: 'response'});
-
+    return this.http.post<HttpResponse<Object>>(
+        environment.restUrl + '/login', 
+        body, 
+        {observe: 'response'}
+      );
   }
 
   saveTokens(data: HttpResponse<Object>) {
@@ -60,6 +64,24 @@ export class UserRestService {
         console.log(error);
       }
     });
+  }
+
+  updateUser(user: User) {
+    const body = {
+      id : user.id,
+      username : user.username,
+      password : user.password,
+      email : user.email,
+      role : user.role
+    }
+    this.http.patch<any>(environment.restUrl + '/users/user', body).subscribe({
+      next: data => {
+        console.log('successful update');
+      },
+      error: error => {
+        console.log(error);
+      }
+    })
   }
 
   refreshToken()  {

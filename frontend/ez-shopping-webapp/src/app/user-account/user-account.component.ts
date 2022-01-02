@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { User } from '../Model/User';
 import { AuthorizationService } from '../services/auth/authorization.service';
 import { JWTTokenService } from '../services/auth/jwttoken.service';
-import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 import { UserRestService } from '../services/rest/user/user.rest.service';
 import { UserService } from '../services/user/user.service';
 

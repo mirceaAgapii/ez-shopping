@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './services/auth/authorization.service';
 import { JWTTokenService } from './services/auth/jwttoken.service';
-import { LocalStorageService } from './services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from './services/auth/storage/local-storage.service';
 
 @Component({
   selector: 'app-root',

@@ -1,6 +1,7 @@
 import { Route } from '@angular/compiler/src/core';
 import {Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { User } from 'src/app/Model/User';
 import { UserRestService } from 'src/app/services/rest/user/user.rest.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -37,7 +38,10 @@ export class UsersAdminComponent implements OnInit {
 
   fetchUsers() {
     this.userService.getAllUsers().subscribe(
-      data => this.users = data
+      data =>  {
+        setTimeout(() => {}, 500);
+        this.users = data;
+      }
     ),
     (error: any) => (
       console.log(error)
@@ -50,10 +54,13 @@ export class UsersAdminComponent implements OnInit {
       this.selectedUsers.pop();
     }
     this.uncheckAll();
+    this.fetchUsers();
   }
 
   closeAddUserComp() {
     this.addNewUser = false;
+    this.router.navigate(['/admin/users']);
+    this.fetchUsers();
   }
 
   openAddUserComp() {
@@ -85,6 +92,7 @@ export class UsersAdminComponent implements OnInit {
 
   closeInfoUserComp() {
     this.showInfo = false;
+    this.router.navigate(['/admin/users']);
   }
 
 }

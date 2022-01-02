@@ -112,6 +112,7 @@ class UserServiceImpl implements UserDetailsService, UserService {
         userEntity.setEmail(updatedUser.getEmail());
         userEntity.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         userEntity.setUsername(updatedUser.getUsername());
+        userEntity.setRole(updatedUser.getRole());
 
         userRepository.save(userEntity);
     }

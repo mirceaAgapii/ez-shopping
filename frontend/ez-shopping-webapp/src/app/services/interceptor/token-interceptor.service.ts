@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import { JWTTokenService } from '../auth/jwttoken.service';
-import { LocalStorageService } from './storage/local-storage.service';
+import { LocalStorageService } from '../auth/storage/local-storage.service';
 import { UserRestService } from '../rest/user/user.rest.service';
 
 @Injectable({
