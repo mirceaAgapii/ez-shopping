@@ -20,11 +20,7 @@ export class MainComponent implements OnInit {
   showSpinner: boolean;
 
   constructor(private userSrvice: UserService,
-    private router: Router,
-    private restService: UserRestService,
-    private userService: UserService,
-    private localStorageService: LocalStorageService) { 
-      console.log('in constructor');
+    private restService: UserRestService) { 
       this.showSpinner = false;
     }
 

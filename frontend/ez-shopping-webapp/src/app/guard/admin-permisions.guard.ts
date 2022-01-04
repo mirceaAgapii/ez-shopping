@@ -10,10 +10,8 @@ import { LocalStorageService } from '../services/auth/storage/local-storage.serv
 })
 export class AdminPermisionsGuard implements CanActivate {
 
-  constructor(private authService: AuthorizationService,
-    private localStorageService: LocalStorageService,
-    private jwtService: JWTTokenService,
-    private router: Router) {
+  constructor(
+    private jwtService: JWTTokenService) {
   }
 
   canActivate(

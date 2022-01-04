@@ -2,21 +2,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { JWTTokenService } from './jwttoken.service';
-import { LocalStorageService } from './storage/local-storage.service';
+import { PrefetchDashboardResolver } from './prefetch-dashboard.resolver';
 
-describe('JWTTokenService', () => {
-  let service: JWTTokenService;
+describe('PrefetchDashboardResolver', () => {
+  let resolver: PrefetchDashboardResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LocalStorageService, JWTTokenService],
       imports: [HttpClientModule, RouterTestingModule]
     });
-    service = TestBed.inject(JWTTokenService);
+    resolver = TestBed.inject(PrefetchDashboardResolver);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(resolver).toBeTruthy();
   });
 });

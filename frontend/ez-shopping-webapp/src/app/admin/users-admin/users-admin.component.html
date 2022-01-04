@@ -7,7 +7,7 @@
     <p-button class="delete" type="button" icon="pi pi-minus" styleClass="p-button-text" (onClick)="deleteUser()" [disabled]="disableDelete"></p-button>
   </div>
 
-  <p-table [value]="users" [paginator]="true" [rows]="10" [totalRecords]="users.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
+  <p-table [value]="users" [paginator]="true" [rows]="10" [totalRecords]="users!.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
     <ng-template pTemplate="header">
       <tr>

@@ -7,7 +7,7 @@
 <form class="grid">
     
     <label class="col-5" for="old_pass">Old password</label>
-    <input class="col-5" id="old_pass" type="password" name="oldPassword" [(ngModel)]="oldPassword">
+    <input class="col-5" id="old_pass" type="password" name="oldPassword" [(ngModel)]="oldPassword" (keyup)="onKeyUp()">
 
     <label class="col-5" for="new_pass">New password</label>
     <input class="col-5" id="new_pass" type="password" name="newPassword" [(ngModel)]="newPassword" (keyup)="onKeyUp()">
@@ -16,5 +16,5 @@
     <input class="col-5" id="re_new_pass" type="password" name="reNewPassword" [(ngModel)]="reNewPassword" (keyup)="onKeyUp()">
 
     <div class="col-5"></div>
-    <button class="btn btn-primary col-5" type="submit" [disabled]="!passwordsMatch" (click)="updatePassword()">Confirm</button>
+    <button id="submit-btn" class="btn btn-primary col-5" type="submit" [disabled]="!passwordsMatch" (click)="updatePassword()">Confirm</button>
 </form>

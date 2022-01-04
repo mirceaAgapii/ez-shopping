@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
     private restService: UserRestService,
-    private userService: UserService,
     private authorizationService: AuthorizationService,
     private jwtService: JWTTokenService,
     private messageService: MessageService,

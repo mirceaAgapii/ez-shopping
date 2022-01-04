@@ -19,8 +19,7 @@ import {AuthorizationService} from "../../auth/authorization.service";
 export class UserRestService {
   constructor(private http: HttpClient,
     private jwtService: JWTTokenService,
-    private localStorageService: LocalStorageService,
-    private router: Router, private userService: UserService,
+    private router: Router,
     private authenticationService: AuthorizationService) {
 
   }

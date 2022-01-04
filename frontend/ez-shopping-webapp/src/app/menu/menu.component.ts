@@ -20,7 +20,6 @@ export class MenuComponent implements OnInit {
 
   constructor(private router: Router,
     private localStorageService: LocalStorageService,
-    private authorizationService: AuthorizationService,
     private userService: UserService, 
     private jwtService: JWTTokenService) { }
 
@@ -47,17 +46,8 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  logOff() {
-    console.log('logoff - clicked');
-    this.localStorageService.remove('access_token');
-    this.localStorageService.remove('refresh_token');
-    this.authorizationService.isAuthenticated();
-    this.isUserLoggedIn = false;
-    this.router.navigate(['/login']);
-  }
 
   toProducts() {
-    console.log('clicked on Products');
     this.router.navigate(['/products']);
   }
 

@@ -14,8 +14,7 @@ export class UserService {
   currentUserSubject = new BehaviorSubject(new User());
   private userLoggedIn: boolean;
 
-  constructor(private localStorageService: LocalStorageService,
-    private jwtService: JWTTokenService) {
+  constructor(private localStorageService: LocalStorageService) {
     this.userLoggedIn = false;
    }
 

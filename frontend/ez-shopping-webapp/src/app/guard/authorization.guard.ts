@@ -13,8 +13,6 @@ import { AuthorizationService } from '../services/auth/authorization.service';
 export class AuthorizationGuard implements CanActivate {
 
   constructor(private authService: AuthorizationService,
-    private localStorageService: LocalStorageService,
-    private jwtService: JWTTokenService,
     private router: Router) {
 }
 

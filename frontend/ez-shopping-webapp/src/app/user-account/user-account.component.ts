@@ -36,10 +36,7 @@ export class UserAccountComponent implements OnInit {
     this.user = this.route.snapshot.data['user'];
   }
 
-
-  
   logOff() {
-    console.log('logoff - clicked');
     this.localStorageService.remove('access_token');
     this.localStorageService.remove('refresh_token');
     this.localStorageService.remove('userId');
@@ -54,6 +51,8 @@ export class UserAccountComponent implements OnInit {
       } else {
         this.passwordsMatch = true;
       }
+    } else {
+      this.passwordsMatch = false;
     }
 
   }

@@ -17,7 +17,6 @@ export class AppComponent implements OnInit{
 
   constructor(private authorizationService: AuthorizationService,
     private router: Router,
-    private localStorageService: LocalStorageService,
     private jwtService: JWTTokenService) {}
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import { AuthorizationGuard } from './guard/authorization.guard';
 import { CurrentUserResolver } from './guard/current-user.resolver';
 import { PrefetchProductsResolver } from './guard/prefetch-products.resolver';
 import { PrefetchUserResolver } from './guard/prefetch-user.resolver';
+import { PrefetchDashboardResolver } from './guard/resolvers/prefetch-dashboard.resolver';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { MainComponent } from './main/main.component';
@@ -19,7 +20,7 @@ import { DashboardService } from './services/admin/dashboard.service';
 import { AuthorizationService } from './services/auth/authorization.service';
 import { UserAccountComponent } from './user-account/user-account.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'admin', 
     component: AdminComponent,
@@ -36,7 +37,8 @@ const routes: Routes = [
     },
     {
       path: 'dashboard',
-      component: DashboardComponent
+      component: DashboardComponent,
+      resolve: {systemCPU : PrefetchDashboardResolver}
     }
   ],
   canActivate: [AuthorizationGuard, AdminPermisionsGuard]
