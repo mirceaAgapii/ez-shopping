@@ -7,4 +7,6 @@ import java.util.List;
 public interface ProductService {
 
     List<ProductDTO> getAll();
+
+    void saveArticle(ProductDTO productDTO);
 }

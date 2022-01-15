@@ -64,5 +64,10 @@
             <column name="barcode" value="1000000000003"/>
         </insert>
 
+        <insert tableName="ez_iot_controller">
+            <column name="id" value="ac92c0cf-417e-4915-8520-0a8f2fb2b4ef"/>
+            <column name="workstation_name" value="WS01"/>
+        </insert>
+
     </changeSet>
 </databaseChangeLog>

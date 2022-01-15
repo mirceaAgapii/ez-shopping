@@ -1,4 +1,4 @@
-package com.ezshopping.security.filter;
+package com.ezshopping.config.security.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -13,7 +13,6 @@ import static com.ezshopping.api.EndpointsAPI.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +37,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         if (!request.getServletPath().equals(API + LOGIN)
                 && !request.getServletPath().equals(API + USERS + TOKEN + REFRESH)
-                && !request.getServletPath().equals(API + USERS + REGISTRATION)) {
+                && !request.getServletPath().equals(API + USERS + REGISTRATION)
+                && !request.getServletPath().equals(API + "/arduino")
+                && !request.getServletPath().equals("/web-socket")) {
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             if (checkAuthorisationHeader(authorizationHeader)) {
                 DecodedJWT decodedJWT;

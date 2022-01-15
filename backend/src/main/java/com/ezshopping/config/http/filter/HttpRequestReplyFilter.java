@@ -1,4 +1,4 @@
-package com.ezshopping.security.filter;
+package com.ezshopping.config.http.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

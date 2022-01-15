@@ -2,12 +2,9 @@ package com.ezshopping.user.controller;
 
 import static com.ezshopping.api.EndpointsAPI.*;
 
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.ezshopping.security.service.SecurityService;
+import com.ezshopping.config.security.service.SecurityService;
 import com.ezshopping.user.model.PasswordChangeDTO;
 import com.ezshopping.user.model.UserDTO;
-import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
-import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(API + USERS)

@@ -1,4 +1,4 @@
-package com.ezshopping.security.filter;
+package com.ezshopping.config.http.filter;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -1,9 +1,12 @@
 export class Product {
-    image!: string;
+    id!: string;
     name!: string;
-    status!: string;
     description!: string;
-    category!: string;
     price!: number;
     quantity!: number;
+    barcode!: string;
+    status!: string;
+    category!: string;
+    brand!: string;
+    rfId!: string;
 }

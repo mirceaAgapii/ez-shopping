@@ -1,14 +1,11 @@
-package com.ezshopping.security.filter;
+package com.ezshopping.config.security.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
-import com.ezshopping.user.exceptions.UserNotFoundException;
+import com.ezshopping.config.http.filter.HttpStatusEZ;
 import com.ezshopping.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

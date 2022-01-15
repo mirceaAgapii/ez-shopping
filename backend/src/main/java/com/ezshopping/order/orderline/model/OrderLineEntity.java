@@ -1,7 +1,7 @@
-package com.ezshopping.order.orderline;
+package com.ezshopping.order.orderline.model;
 
 import com.ezshopping.common.AbstractEntity;
-import com.ezshopping.order.OrderEntity;
+import com.ezshopping.order.model.OrderEntity;
 import com.ezshopping.product.model.Product;
 import lombok.*;
 

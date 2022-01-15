@@ -1,4 +1,4 @@
-package com.ezshopping.order;
+package com.ezshopping.order.model;
 
 import com.ezshopping.common.AbstractEntity;
 import com.ezshopping.user.model.User;

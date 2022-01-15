@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../Model/User';
-import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 import { UserRestService } from '../services/rest/user/user.rest.service';
 import { UserService } from '../services/user/user.service';
 
@@ -20,17 +18,16 @@ export class MainComponent implements OnInit {
   showSpinner: boolean;
 
   constructor(private userSrvice: UserService,
-    private restService: UserRestService) { 
+    private restService: UserRestService) {
       this.showSpinner = false;
     }
 
   ngOnInit(): void {
     console.log('User logged in: ' + this.userSrvice.getUserLoggedIn());
-   
+
   }
 
   getAllUsers() {
     this.loadData =  this.restService.getAllUsers().subscribe(data => this.users = data);
   }
-
 }

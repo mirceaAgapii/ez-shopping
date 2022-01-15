@@ -34,7 +34,7 @@
    .main::after {
         content: '';
         display: block;
-        height: 50px; /* Set same as footer's height */
+        height: 450px; /* Set same as footer's height */
     }
 
     app-menu {

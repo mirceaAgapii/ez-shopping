@@ -1,13 +1,2 @@
 <p-toast></p-toast>
 <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-<table>
-    <tr>
-      <td>Username</td>
-    </tr>
-    
-    <tr *ngFor="let user of users; index as i">
-      <td>
-        {{user.username}}
-      </td>
-    </tr>
-  </table>

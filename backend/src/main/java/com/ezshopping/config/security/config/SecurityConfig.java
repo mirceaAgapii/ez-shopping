@@ -1,8 +1,8 @@
-package com.ezshopping.security.config;
+package com.ezshopping.config.security.config;
 
 import static com.ezshopping.api.EndpointsAPI.*;
-import com.ezshopping.security.filter.CustomAuthenticationFilter;
-import com.ezshopping.security.filter.CustomAuthorizationFilter;
+import com.ezshopping.config.security.filters.CustomAuthenticationFilter;
+import com.ezshopping.config.security.filters.CustomAuthorizationFilter;
 import com.ezshopping.user.UserRole;
 import com.ezshopping.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(API + LOGIN + ALL, API + USERS + TOKEN + REFRESH + ALL, API + USERS + REGISTRATION + ALL).permitAll()
+                .antMatchers(API + LOGIN + ALL, API + USERS + TOKEN + REFRESH + ALL, API + USERS + REGISTRATION + ALL, "/iot").permitAll()
+                .antMatchers(API + "/arduino/**").permitAll()
+                .antMatchers(API + "/arduino").permitAll()
+                .antMatchers("/web-socket/**").permitAll()
+                .antMatchers("/web-socket").permitAll()
                 .antMatchers(HttpMethod.GET,"/actuator/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS,"/actuator/**").permitAll()
                 .antMatchers("/instances").permitAll()

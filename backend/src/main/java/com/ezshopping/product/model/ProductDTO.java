@@ -31,6 +31,8 @@ public class ProductDTO {
     @NotNull
     private String category;
 
-    @NotNull
     private String brand;
+
+    @NotNull
+    private String rfId;
 }
