@@ -1,16 +1,2 @@
 <p-toast></p-toast>
-<mat-card-actions>
-    <button class="btn btn-primary"  (click)="getAllUsers()" >Get users</button>
-  </mat-card-actions>
-  <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-<table>
-    <tr>
-      <td>Username</td>
-    </tr>
-    
-    <tr *ngFor="let user of users; index as i">
-      <td>
-        {{user.username}}
-      </td>
-    </tr>
-  </table>
+<mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>

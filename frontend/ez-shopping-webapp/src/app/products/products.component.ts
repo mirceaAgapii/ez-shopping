@@ -20,13 +20,11 @@ export class ProductsComponent implements OnInit {
 
   rows = 10;
 
-  constructor(private productRestService: ProductRestService,
-    private productService: ProductService,
-    private route: ActivatedRoute) { }
+  constructor(private productRestService: ProductRestService) { }
 
   ngOnInit() {
-      this.products = this.productService.getProducts();
-      
+
+
   }
 
   next() {

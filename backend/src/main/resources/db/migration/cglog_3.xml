@@ -32,21 +32,41 @@
         <!-- Add products -->
         <insert tableName="ez_product">
             <column name="id" value="1"/>
-            <column name="name" value="Apple"/>
-            <column name="description" value="Golden"/>
-            <column name="price" valueNumeric="10.00"/>
+            <column name="name" value="Mizuno Waveknit v2"/>
+            <column name="status" value="inStock"/>
+            <column name="category" value="Sport"/>
+            <column name="description" value="Running shoes"/>
+            <column name="price" valueNumeric="150.00"/>
+            <column name="quantity" valueNumeric="5"/>
+            <column name="brand" value="Mizuno"/>
+            <column name="barcode" value="1000000000001"/>
         </insert>
         <insert tableName="ez_product">
             <column name="id" value="2"/>
-            <column name="name" value="Banana"/>
-            <column name="description" value="Sweet bananas"/>
+            <column name="name" value="Mizuno Sorts"/>
+            <column name="status" value="inStock"/>
+            <column name="category" value="Sport"/>
+            <column name="description" value="Shorts for running"/>
             <column name="price" valueNumeric="25.00"/>
+            <column name="quantity" valueNumeric="3"/>
+            <column name="brand" value="Mizuno"/>
+            <column name="barcode" value="1000000000002"/>
         </insert>
         <insert tableName="ez_product">
             <column name="id" value="3"/>
-            <column name="name" value="Potatoes"/>
-            <column name="description" value="Din sera"/>
-            <column name="price" valueNumeric="7.50"/>
+            <column name="name" value="Asics GT2000"/>
+            <column name="status" value="inStock"/>
+            <column name="category" value="Sport"/>
+            <column name="description" value="Running shoes"/>
+            <column name="price" valueNumeric="95.00"/>
+            <column name="quantity" valueNumeric="3"/>
+            <column name="brand" value="Asics"/>
+            <column name="barcode" value="1000000000003"/>
+        </insert>
+
+        <insert tableName="ez_iot_controller">
+            <column name="id" value="ac92c0cf-417e-4915-8520-0a8f2fb2b4ef"/>
+            <column name="workstation_name" value="WS01"/>
         </insert>
 
     </changeSet>

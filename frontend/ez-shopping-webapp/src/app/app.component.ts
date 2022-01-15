@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './services/auth/authorization.service';
-import { LocalStorageService } from './services/interceptor/storage/local-storage.service';
+import { JWTTokenService } from './services/auth/jwttoken.service';
+import { LocalStorageService } from './services/auth/storage/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,13 @@ import { LocalStorageService } from './services/interceptor/storage/local-storag
 })
 export class AppComponent implements OnInit{
   title = 'ez-shopping-webapp';
-  isUserLoggedIn!: boolean;
+  isUserLoggedIn = false;
+  isUserAdmin = false;
+  
+
   constructor(private authorizationService: AuthorizationService,
     private router: Router,
-    private localStorageService: LocalStorageService) {}
+    private jwtService: JWTTokenService) {}
 
   ngOnInit(): void {
     this.authorizationService.isUserAuthenticated.subscribe(
@@ -22,6 +26,11 @@ export class AppComponent implements OnInit{
         console.log('in app component. userLoggedIn=' + this.isUserLoggedIn);
       }
     );
+
+    const userRoles = this.jwtService.getUserRoles();
+    if(userRoles !== null) {
+      this.isUserAdmin = userRoles.includes('ADMINISTRATOR');
+    }
   }
 
   navigateToMain() {
@@ -29,14 +38,6 @@ export class AppComponent implements OnInit{
   }
 
 
-  logOff() {
-    console.log('logoff - clicked');
-    this.localStorageService.remove('access_token');
-    this.localStorageService.remove('refresh_token');
-    this.authorizationService.isAuthenticated();
-    this.isUserLoggedIn = false;
-    this.router.navigate(['/login']);
-  }
 
   toProducts() {
     console.log('clicked on Products');
@@ -44,6 +45,10 @@ export class AppComponent implements OnInit{
   }
 
   toAccount(){
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/account']);
+  }
+
+  toAdmin() {
+    this.router.navigate(['/admin/dashboard']);
   }
 }

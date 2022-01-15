@@ -1,5 +1,6 @@
 package com.ezshopping.user.service;
 
+import com.ezshopping.user.model.PasswordChangeDTO;
 import com.ezshopping.user.model.UserDTO;
 import com.ezshopping.user.model.User;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
@@ -22,4 +23,6 @@ public interface UserService {
     void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException;
     UserDTO deleteUserById(String id) throws UserNotFoundException;
     void updateUser(UserDTO updatedUser) throws UsernameNotFoundException;
+
+    void changePassword(String id, PasswordChangeDTO passwordChangeDTO);
 }

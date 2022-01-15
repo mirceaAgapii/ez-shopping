@@ -1,9 +1,5 @@
 <p-toast></p-toast>
-<mat-card-actions style="position: absolute;">
-  <button mat-raised-button (click)="autoLogin()" color="primary" [disabled]="showSpinner">DEV Login</button>
-</mat-card-actions>
-
-<div>
+<div (keydown)="onKeydown($event)" style="height: 380px">
   <img class="mt-5" [ngClass]="showSpinner ? 'content' : ''" src="../../assets/img/logo.png" style="width: 200px; height: 130px; position: relative; left: 50%; transform: translateX(-50%);"/>
   <mat-card class="card" style="width: 215px; height: 180px; position: relative; left: 50%; transform: translateX(-50%); ">
     <div [ngClass]="showSpinner ? 'content' : ''">
@@ -16,14 +12,14 @@
             <tr>
               <td>
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" [disabled]="showSpinner">
+                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" [disabled]="showSpinner"  autofocus autocomplete="on">
                 </mat-form-field>
               </td>
             </tr>
             <tr>
               <td>
                 <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" [disabled]="showSpinner">
+                  <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" [disabled]="showSpinner" autocomplete="on">
                 </mat-form-field>
               </td>
             </tr>
@@ -38,4 +34,3 @@
     <p-progressSpinner [style.display]="showSpinner ? 'block' : 'none'" ></p-progressSpinner>
   </mat-card>
 </div>
-  

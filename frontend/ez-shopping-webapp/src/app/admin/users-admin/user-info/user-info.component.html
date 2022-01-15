@@ -1,0 +1,37 @@
+
+
+<form class="card">
+  <div class="form-row">
+    <div class="col-md-12 mb-12">
+      <label for="validationServerUsername">Username</label>
+      <div class="input-group">
+        <input type="text" class="form-control" [ngClass]="{'is-invalid' : !usernameValid}" id="validationServerUsername" name="username" [(ngModel)]="username" placeholder="{{username === '' ? 'Username': username}}" aria-describedby="inputGroupPrepend3" required>
+        <div class="invalid-feedback">
+          Please choose a username.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div>
+      <label for="role">Select user role</label>
+      <select id="role" class="form-control" name="role" [(ngModel)]="role">
+        <option *ngFor="let role of roles" >{{role}}</option>
+      </select>
+    </div>
+    </div>
+    <div class="form-row">
+    <div class="col-md-12 mb-12">
+      <label for="validationServer04">Email</label>
+      <input type="text" class="form-control" [ngClass]="{'is-invalid' : !emailValid}" id="validationServer04" name="email" [(ngModel)]="email" placeholder="{{email === '' ? 'Email' : email}}" required>
+      <div class="invalid-feedback">
+        Please provide a valid email.
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <button class="btn btn-primary col-6" type="submit" (click)="close()">Close</button>
+    <button class="btn btn-primary col-6" type="submit" (click)="updateUserDetails()">Update user details</button>
+  </div>
+</form>

@@ -10,7 +10,7 @@
 }
 
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 479px) {
 
     * {
         padding: 0;
@@ -27,15 +27,16 @@
     }
 
     .main {
-        position: relative;
-      }
-      
-    .main::after {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+   .main::after {
         content: '';
         display: block;
-        height: 50px; /* Set same as footer's height */
+        height: 450px; /* Set same as footer's height */
     }
-    
+
     app-menu {
         display: none;
     }
@@ -53,7 +54,7 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        
+
     }
 
     nav ul li {
@@ -64,7 +65,7 @@
     .nav_icon {
         color: rgb(236, 188, 129);
     }
-      
+
     footer {
         align-items: center;
         height: 50px;

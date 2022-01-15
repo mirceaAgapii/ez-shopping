@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthorizationService } from '../services/auth/authorization.service';
 import { JWTTokenService } from '../services/auth/jwttoken.service';
-import { LocalStorageService } from '../services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 import { UserService } from '../services/user/user.service';
 
 @Component({
@@ -16,10 +16,10 @@ export class MenuComponent implements OnInit {
   items!: MenuItem[];
   currentUser!: string | null;
   isUserLoggedIn!: boolean;
+  isUserAdmin = false;
 
   constructor(private router: Router,
     private localStorageService: LocalStorageService,
-    private authorizationService: AuthorizationService,
     private userService: UserService, 
     private jwtService: JWTTokenService) { }
 
@@ -35,36 +35,28 @@ export class MenuComponent implements OnInit {
       }
     )
     this.currentUser = this.jwtService.getUser();
-  }
-
-  
+    const userRoles = this.jwtService.getUserRoles();
+    if(userRoles !== null) {
+      this.isUserAdmin = userRoles.includes('ADMINISTRATOR');
+    }
     
+  }
 
   navigateToMain() {
     this.router.navigate(['']);
   }
 
 
-  logOff() {
-    console.log('logoff - clicked');
-    this.localStorageService.remove('access_token');
-    this.localStorageService.remove('refresh_token');
-    this.authorizationService.isAuthenticated();
-    this.isUserLoggedIn = false;
-    this.router.navigate(['/login']);
-  }
-
   toProducts() {
-    console.log('clicked on Products');
     this.router.navigate(['/products']);
   }
 
   toAccount(){
-    console.log('toAccount clicked');
+    this.router.navigate(['/account']);
   }
 
   toAdmin() {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin/dashboard']);
   }
 
 }

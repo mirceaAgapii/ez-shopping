@@ -1,0 +1,69 @@
+<p-toast></p-toast>
+<mat-card class="add_prod" >
+
+  <h3 class="title">Add new article</h3>
+  <div class="field grid">
+    <label class="col" for="name">Name</label>
+    <input class="col" type="text" pInputText id="name" [(ngModel)]="defaultProduct.name" autofocus />
+  </div>
+  <div class="field grid">
+    <label class="col" for="description">Description</label>
+    <textarea class="col" id="description" pInputTextarea [(ngModel)]="defaultProduct.description" rows="3"
+      cols="20"></textarea>
+  </div>
+  <div class="field grid">
+    <label class="col" for="status" style="padding-right: 0px;">Inventory Status</label>
+    <p-dropdown class="col" [(ngModel)]="defaultProduct.status" inputId="status" [options]="statuses"
+      placeholder="Select">
+      <ng-template let-option pTemplate="item">
+        <span [class]="'article-badge status-' + option.value">{{option.label}}</span>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <div class="field">
+    <label class="mb-3">Category</label>
+    <div class="formgrid grid">
+      <div class="field-radiobutton col-6">
+        <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="defaultProduct.category">
+        </p-radioButton>
+        <label for="category1">Accessories</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="defaultProduct.category">
+        </p-radioButton>
+        <label for="category2">Clothing</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="defaultProduct.category">
+        </p-radioButton>
+        <label for="category3">Electronics</label>
+      </div>
+      <div class="field-radiobutton col-6">
+        <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="defaultProduct.category">
+        </p-radioButton>
+        <label for="category4">Fitness</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="formgrid grid">
+    <div class="field col">
+      <label for="price">Price</label>
+      <p-inputNumber id="price" [(ngModel)]="defaultProduct.price" mode="currency" currency="USD" locale="en-US">
+      </p-inputNumber>
+    </div>
+    <div class="field col">
+      <label for="quantity">Quantity</label>
+      <p-inputNumber id="quantity" [(ngModel)]="defaultProduct.quantity"></p-inputNumber>
+    </div>
+  </div>
+
+  <input class="col-12 mb-3" type="text" disabled placeholder="RFID" name="rfid" [(ngModel)]="defaultProduct.rfId">
+
+
+  <span class="p-buttonset">
+    <button pButton pRipple label="Cancel" class="button-text p-button-danger" style="width: 207.5px;" (click)="cancel()"></button>
+    <button pButton pRipple label="Save" class="button-text p-button-success" style="width: 207.5px;" (click)="save()"></button>
+  </span>
+</mat-card>

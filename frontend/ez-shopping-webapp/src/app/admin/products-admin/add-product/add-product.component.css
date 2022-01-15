@@ -1,0 +1,9 @@
+.add_prod {
+  border-radius: 10px;
+    width: 450px;
+    background-color: lightyellow;
+}
+
+.title {
+  text-align: center;
+}

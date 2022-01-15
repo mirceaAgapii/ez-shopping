@@ -1,0 +1,161 @@
+<main class="main">
+  <!-- Alert-->
+  <div class="row">
+    <div class="status_bar">
+      <span><i class="fa fa-server"></i> System: {{ systemHealth?.status }}</span>&nbsp;&nbsp;
+      <span><i class="fa fa-database"></i> DB: {{ systemHealth?.components?.db?.details?.database }} - {{
+        systemHealth?.components?.db?.status }}</span>&nbsp;
+      <span><i class="fa fa-hdd-o"></i> Disk Space: {{ systemHealth?.components?.diskSpace?.details?.free
+        }}</span>&nbsp;&nbsp;
+      <span><i class="fa fa-microchip"></i> Processors: {{ systemCPU.measurements[0].value }}</span>&nbsp;&nbsp;
+      <span><i class="fa fa-clock-o"></i> Up Time: {{processUptime}}</span>
+
+      <button (click)="onRefreshData()" type="button" class="btn_refresh btn btn-primary btn-sm">Refresh</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-xl-3 ">
+      <div class="card bg-c-yellow order-card">
+        <div class="card-block http404">
+          <h6 class="m-b-20">404 Response</h6>
+          <h2 class="text-right"><i class="fa fa-times-circle f-left"></i><span>{{http404Traces?.length}}</span></h2>
+          <p class="m-b-0">Updated<span class="f-right">{{ http404Traces[0]?.timestamp | date:
+              'short'}}</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-xl-3 ">
+      <div class="card bg-c-green order-card">
+        <div class="card-block http200">
+          <h6 class="m-b-20">200 Respose</h6>
+          <h2 class="text-right"><i class="fa fa-check-square-o f-left"></i><span>{{http200Traces?.length}}</span></h2>
+          <p class="m-b-0">Updated<span class="f-right">{{ http200Traces[0]?.timestamp | date:
+              'short'}}</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-xl-3 ">
+      <div class="card bg-c-blue order-card">
+        <div class="card-block http400">
+          <h6 class="m-b-20">400 Respose</h6>
+          <h2 class="text-right"><i class="fa fa-exclamation-circle f-left"></i><span>{{http400Traces?.length}}</span>
+          </h2>
+          <p class="m-b-0">Updated<span class="f-right">{{ http200Traces[0]?.timestamp | date:
+              'short'}}</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-xl-3 ">
+      <div class="card bg-c-pink order-card">
+        <div class="card-block http500">
+          <h6 class="m-b-20">500 Response</h6>
+          <h2 class="text-right"><i class="fa fa-bug f-left"></i><span>{{http500Traces?.length}}</span></h2>
+          <p class="m-b-0">Updated<span class="f-right">{{ http200Traces[0]?.timestamp | date:
+              'short'}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row container ">
+    <div class="col-sm-12 col-md-12 col-lg-12 mt-50">
+      <p-table class="table table-bordered text-center" id="httptrace-table" [value]="tracesList" [paginator]="true"
+        [rows]="10" [totalRecords]="tracesList.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Time Stamp</th>
+            <th>Method</th>
+            <th>Time Taken(ms)</th>
+            <th>Status</th>
+            <th class="hide_on_sm">URI</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-trace>
+          <tr>
+            <td (click)="onSelectTrace(trace)">{{ trace?.timestamp | date: 'medium'}}</td>
+            <td (click)="onSelectTrace(trace)">{{ trace?.request.method }}</td>
+            <td (click)="onSelectTrace(trace)">{{ trace?.timeTaken }}</td>
+            <td (click)="onSelectTrace(trace)">{{trace?.response.status}}</td>
+            <td class="hide_on_sm" (click)="onSelectTrace(trace)">{{ trace?.request.uri }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</main>
+
+<!-- Trace Details Modal -->
+<div class="trace-modal" [hidden]="!viewTrace">
+  <div class="modal-body right-left-margin">
+    <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="pill">
+          <i class="fa fa-sitemap"></i> Request</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill">
+          <i class="fa fa-sliders"></i> Response</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="request">
+        <p>
+          <strong>Time Stamp:</strong>
+          {{selectedTrace?.timestamp | date:'medium'}}
+        </p>
+        <p>
+          <strong>Time Taken(ms):</strong>
+          {{selectedTrace?.timeTaken}}
+        </p>
+        <p>
+          <strong>Request Method:</strong>
+          {{selectedTrace?.request.method}}
+        </p>
+        <p>
+          <strong>Remote Address:</strong>
+          {{selectedTrace?.request.remoteAddress}}
+        </p>
+        <p>
+          <strong>URI:</strong>
+          {{selectedTrace?.request.uri}}
+        </p>
+        <p>
+          <strong>Origin:</strong>
+          {{selectedTrace?.request.headers['origin']}}
+        </p>
+        <p>
+          <strong>User Agent (Web Client):</strong>
+          {{selectedTrace?.request.headers['user-agent']}}
+        </p>
+      </div>
+
+      <div class="tab-pane fade" id="response">
+        <dl>
+          <dt>Status:</dt>
+          <dd>{{selectedTrace?.response.status}}</dd>
+        </dl>
+        <dl>
+          <dt>Date:</dt>
+          <dd>{{selectedTrace?.response.headers['Date']}}</dd>
+        </dl>
+        <dl>
+          <dt>Content Type:</dt>
+          <dd>{{selectedTrace?.response.headers['Content-Type']}}</dd>
+        </dl>
+        <p>
+          <strong>Server Allowed Origins:</strong>
+          {{selectedTrace?.response.headers['Access-Control-Allow-Origin']}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeTrace()">Close</button>
+  </div>
+</div>

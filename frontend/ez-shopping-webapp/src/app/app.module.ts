@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { JWTTokenService } from './services/auth/jwttoken.service';
-import { LocalStorageService } from './services/interceptor/storage/local-storage.service';
+import { LocalStorageService } from './services/auth/storage/local-storage.service';
 import { RegisterComponent } from './login/register/register.component';
 import { ProductsComponent } from './products/products.component';
 import { TokenInterceptorService } from './services/interceptor/token-interceptor.service';
@@ -38,12 +38,18 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import { AddProductComponent } from './products/add-product/add-product.component';
+import { AddProductComponent } from './admin/products-admin/add-product/add-product.component';
 import { TreeTableModule } from 'primeng/treetable';
-import { TreeNode } from 'primeng/api';
-import { LoadDataResolver } from './guard/load-data.resolver';
+import { PrefetchUserResolver } from './guard/prefetch-user.resolver';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin/admin.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
+import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
+import { StoresAdminComponent } from './admin/stores-admin/stores-admin.component';
+import { AddNewUserComponent } from './admin/users-admin/add-new-user/add-new-user.component';
+import { UserInfoComponent } from './admin/users-admin/user-info/user-info.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,14 @@ import { AdminComponent } from './admin/admin.component';
     RegisterComponent,
     ProductsComponent,
     AddProductComponent,
-    AdminComponent
+    AdminComponent,
+    DashboardComponent,
+    UsersAdminComponent,
+    ProductsAdminComponent,
+    StoresAdminComponent,
+    AddNewUserComponent,
+    UserInfoComponent,
+    UserAccountComponent
 
   ],
   imports: [
@@ -108,7 +121,7 @@ import { AdminComponent } from './admin/admin.component';
     useClass : TokenInterceptorService,
     multi : true
   },
-  LoadDataResolver
+  PrefetchUserResolver
   ],
   bootstrap: [AppComponent]
 })

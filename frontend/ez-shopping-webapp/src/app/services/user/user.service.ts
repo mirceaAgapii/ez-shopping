@@ -3,7 +3,7 @@ import { JwtPayload } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../../Model/User';
 import { JWTTokenService } from '../auth/jwttoken.service';
-import { LocalStorageService } from '../interceptor/storage/local-storage.service';
+import { LocalStorageService } from '../auth/storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,11 @@ import { LocalStorageService } from '../interceptor/storage/local-storage.servic
 export class UserService {
 
   currentUser!: User;
-  currentUserSubject = new BehaviorSubject(new User('User'));
+  currentUserSubject = new BehaviorSubject(new User());
   private userLoggedIn: boolean;
-  
-  constructor(private localStorageService: LocalStorageService,
-    private jwtService: JWTTokenService) {
-    this.userLoggedIn = false; 
+
+  constructor(private localStorageService: LocalStorageService) {
+    this.userLoggedIn = false;
    }
 
   public getUserLoggedIn(): boolean {
@@ -27,14 +26,13 @@ export class UserService {
   }
 
   getCurrentUser(): User {
-    this.currentUser.username = this.jwtService.getUser();
     return this.currentUser;
   }
 
   setCurrentUser(user: User) {
     this.currentUser = user;
-    this.currentUserSubject.next(this.currentUser);
+    this.localStorageService.set('userId', user.id);
   }
 
-  
+
 }

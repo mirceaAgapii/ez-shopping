@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import { JWTTokenService } from '../auth/jwttoken.service';
-import { LocalStorageService } from './storage/local-storage.service';
+import { LocalStorageService } from '../auth/storage/local-storage.service';
 import { UserRestService } from '../rest/user/user.rest.service';
 
 @Injectable({
@@ -24,13 +24,8 @@ export class TokenInterceptorService implements HttpInterceptor{
     return next.handle(this.setAuthHeader(req)).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          console.log('in intercept 1 ' + error.status);
-         
-      
-      
          return this.handle401Error(req, next);
         } else {
-          console.log('in intercept 1');
           return throwError(error);
         }
       })
@@ -50,9 +45,7 @@ export class TokenInterceptorService implements HttpInterceptor{
         if(newToken) {
           this.jwtService.saveAccessToken(newToken);
           this.messageService.add({severity:'error', summary: 'Something went wrong, try one more time', detail:''});
-          //next.handle(this.setAuthHeader(req))
         }
-        //return next.handle(req) ;
     });
   }
     

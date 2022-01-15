@@ -30,6 +30,9 @@
         <addPrimaryKey
                 tableName="ez_order_line"
                 columnNames="id"/>
+        <addUniqueConstraint
+                tableName="ez_iot_controller"
+                columnNames="id"/>
 
         <addUniqueConstraint
                 columnNames="username"
@@ -40,6 +43,7 @@
         <addUniqueConstraint
                 columnNames="barcode"
                 tableName="ez_product"/>
+
 
 
         <addForeignKeyConstraint constraintName="fk_stock2product"

@@ -41,12 +41,12 @@
         <appender-ref ref="Console" />
         <appender-ref ref="RollingFile" />
     </root>
-    <logger name="com.ezshopping.security.filter.HttpRequestReplyFilter"
+    <logger name="com.ezshopping.config.http.filter.HttpRequestReplyFilter"
             additivity="false"
             level="INFO">
         <appender-ref ref="RequestResponse"/>
     </logger>
-    <logger name="org.springframework.security" additivity="false" level="debug">
+    <logger name="org.springframework.security" additivity="false" level="info">
         <appender-ref ref="RollingFile" />
     </logger>
 </configuration>

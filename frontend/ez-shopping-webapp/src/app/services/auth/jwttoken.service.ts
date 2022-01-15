@@ -1,6 +1,8 @@
+import { Route } from '@angular/compiler/src/core';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
-import { LocalStorageService } from '../interceptor/storage/local-storage.service';
+import { LocalStorageService } from './storage/local-storage.service';
 
 @Injectable()
 export class JWTTokenService {
@@ -11,7 +13,8 @@ export class JWTTokenService {
     ACCESS_TOKEN = 'access_token';
     REFRESH_TOKEN = 'refresh_token'
 
-    constructor(private localStorageService: LocalStorageService) {
+    constructor(private localStorageService: LocalStorageService,
+      private router: Router) {
     }
 
     setToken(token: string) {
@@ -38,15 +41,18 @@ export class JWTTokenService {
 
 
     decodeToken() {
-      if (!this.jwtToken) {
-        const token = this.localStorageService.get('access_token');
-        if(token !== null) {
-          this.jwtToken = token;
-        } else {
-          this.jwtToken = '';
-        }
+      
+      const token = this.localStorageService.get('access_token');
+      if(token) {
+        this.decodedToken = jwt_decode(token);
       }
-      this.decodedToken = jwt_decode(this.jwtToken);
+      else {
+        this.localStorageService.remove('refresh_token');
+        this.localStorageService.remove('access_token');
+        this.localStorageService.remove('userId');
+        this.router.navigate(['/login'])
+      }
+      
     }
 
     getDecodeToken() {
@@ -56,6 +62,11 @@ export class JWTTokenService {
     getUser() {
       this.decodeToken();
       return this.decodedToken ? this.decodedToken.sub : null;
+    }
+
+    getUserId() {
+      this.decodeToken();
+      return this.decodedToken ? this.decodedToken.userId : null;
     }
 
     getUserRoles() {

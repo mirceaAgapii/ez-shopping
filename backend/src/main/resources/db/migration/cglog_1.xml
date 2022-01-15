@@ -17,9 +17,14 @@
         <createTable tableName="ez_product">
             <column name="id" type="varchar(36)"/>
             <column name="name" type="varchar(50)"/>
+            <column name="status" type="varchar(20)"/>
+            <column name="category" type="varchar(20)"/>
             <column name="description" type="varchar(100)"/>
             <column name="price" type="double"/>
+            <column name="quantity" type="double"/>
             <column name="barcode" type="varchar(20)"/>
+            <column name="brand" type="varchar(50)"/>
+            <column name="rf_id" type="varchar(36)"/>
         </createTable>
 
 
@@ -61,6 +66,10 @@
             <column name="order_id" type="varchar(36)"/>
             <column name="product_id" type="varchar(36)"/>
             <column name="quantity" type="double"/>
+        </createTable>
+        <createTable tableName="ez_iot_controller">
+            <column name="id" type="varchar(36)"/>
+            <column name="workstation_name" type="varchar(10)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

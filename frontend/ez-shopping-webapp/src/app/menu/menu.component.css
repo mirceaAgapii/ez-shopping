@@ -126,7 +126,7 @@ nav ul ul {
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 479px) {
 
   .nav_links {
     display: flex;
@@ -156,29 +156,15 @@ nav ul ul {
 
   }
 
-
-
   nav {
     width: 100%;
   }
 
-  nav ul ul.article_dropdwn {
-    top: 6.7rem;
-    right: 11rem;
-
-  }
-
-  nav ul ul.account_dropdwn {
-    top: 1.5rem;
-    right: 11em;
- 
-  }
 }
 
 nav ul ul li {
   padding: 15px 15px;
 }
-
 
 
 button {

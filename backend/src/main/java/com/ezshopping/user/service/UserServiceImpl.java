@@ -2,6 +2,8 @@ package com.ezshopping.user.service;
 
 import com.ezshopping.common.Mapper;
 import com.ezshopping.user.UserRole;
+import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
+import com.ezshopping.user.model.PasswordChangeDTO;
 import com.ezshopping.user.model.UserDTO;
 import com.ezshopping.user.model.User;
 import com.ezshopping.user.repository.UserRepository;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import static java.util.Objects.*;
 
 @Service
 @RequiredArgsConstructor
@@ -109,21 +112,30 @@ class UserServiceImpl implements UserDetailsService, UserService {
         userEntity.setEmail(updatedUser.getEmail());
         userEntity.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         userEntity.setUsername(updatedUser.getUsername());
+        userEntity.setRole(updatedUser.getRole());
 
         userRepository.save(userEntity);
     }
 
-    private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
-        try {
-            //TODO: think of a better way to check user exists by checking the email too
-            if(Objects.nonNull(getUserByUsername(userDTO.getUsername()))) {
-                return true;
-            }
-            getUserByEmail(userDTO.getEmail());
-        } catch (UserNotFoundException ex) {
-            return false;
+    @Override
+    @Transactional
+    public void changePassword(String id, PasswordChangeDTO passwordChangeDTO) {
+        User user = getUserById(id);
+        if (passwordEncoder.matches(passwordChangeDTO.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
+        } else {
+            throw new WrongPasswordProvidedException("Wrong password");
         }
-        return true;
+    }
+
+    private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
+        //TODO: make difference between cases with username already exists and email already exists
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
+            return true;
+        } else if (userRepository.existsByEmail(userDTO.getEmail())) {
+            return true;
+        }
+        return false;
     }
 
     private User getUserById(String id) throws UserNotFoundException {

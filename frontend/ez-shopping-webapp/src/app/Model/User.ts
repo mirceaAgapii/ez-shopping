@@ -1,12 +1,15 @@
 export class User {
+    id: string = '';
     role: string | null = '';
     username: string | null = '';
     password: string | null = '';
     email: string | null = '';
 
-    constructor(username?: string) {}
-        if(username: string | null) {
-            this.username = username;
-        }
+    constructor(
+        id: string = '',
+        role: string | null = '',
+        username: string | null = '',
+        password: string | null = '',
+        email: string | null = '') {}
+
    }
-  
