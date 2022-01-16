@@ -11,38 +11,21 @@ import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import static java.util.Objects.*;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserServiceImpl implements UserDetailsService, UserService {
+class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final Mapper<User, UserDTO> mapper;
-
-    //TODO: move to a separate service
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username [" + username + "] not found in database"));
-        log.info("User found in database: {}", username);
-
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -76,7 +59,6 @@ class UserServiceImpl implements UserDetailsService, UserService {
         User user = getUserById(id);
         return mapper.map(user);
     }
-
 
     @Override
     @Transactional

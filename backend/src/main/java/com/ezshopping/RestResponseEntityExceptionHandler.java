@@ -2,9 +2,11 @@ package com.ezshopping;
 
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
+import org.hibernate.procedure.NoSuchParameterException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -45,7 +47,17 @@ public class RestResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(WrongPasswordProvidedException.class)
-    public  ResponseEntity<String> handleWrongPasswordProvidedException(WrongPasswordProvidedException exception) {
+    public ResponseEntity<String> handleWrongPasswordProvidedException(WrongPasswordProvidedException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(NoSuchParameterException.class)
+    public ResponseEntity<String> handleNoSuchParameterException(NoSuchParameterException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 

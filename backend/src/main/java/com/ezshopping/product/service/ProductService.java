@@ -8,5 +8,9 @@ public interface ProductService {
 
     List<ProductDTO> getAll();
 
+    ProductDTO getProductByBarcode(String barcode);
+
+    ProductDTO getProductByRfId(String rfId);
+
     void saveArticle(ProductDTO productDTO);
 }

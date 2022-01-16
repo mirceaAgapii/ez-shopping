@@ -1,6 +1,7 @@
 package com.ezshopping.product.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.product.model.Product;
 import com.ezshopping.product.model.ProductDTO;
 import com.ezshopping.product.repository.ProductRepository;
@@ -26,6 +27,22 @@ public class ProductServiceImpl implements ProductService {
                 .stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO getProductByBarcode(String barcode) {
+        Product product = productRepository
+                .findByBarcode(barcode)
+                .orElseThrow(() -> new ProductNotFoundException("Product with provided barcode [" + barcode + "] doesn't exist"));
+        return mapper.map(product);
+    }
+
+    @Override
+    public ProductDTO getProductByRfId(String rfId) {
+        Product product = productRepository
+                .findByRfId(rfId)
+                .orElseThrow(() -> new ProductNotFoundException("Product with provided rfId [" + rfId + "] doesn't exist"));
+        return mapper.map(product);
     }
 
     @Override

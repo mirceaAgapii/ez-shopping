@@ -10,6 +10,7 @@ import { HttpResponse } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { LocalStorageService } from '../services/auth/storage/local-storage.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private router: Router,
-    private restService: UserRestService,
+    private userRestService: UserRestService,
+    private userService: UserService,
     private authorizationService: AuthorizationService,
     private jwtService: JWTTokenService,
     private messageService: MessageService,
@@ -51,13 +53,14 @@ export class LoginComponent implements OnInit {
 
   login() : void {
     if(this.username && this.password) {
-      this.restService.login(this.username, this.password).subscribe(
+      this.userRestService.login(this.username, this.password).subscribe(
         data => {
           this.saveTokens(data);
           this.router.navigate(['']);
           const userId = data.headers.get("userId");
           if(userId !== null) {
             this.localStorageService.set('userId', userId);
+            this.saveCurrentUser(userId);
           }
         },
         error => {
@@ -98,6 +101,17 @@ export class LoginComponent implements OnInit {
       this.jwtService.saveAccessToken(token);
       this.jwtService.saveRefreshToken(refresh_token);
     }
+  }
+
+  saveCurrentUser(userId: string) {
+    this.userRestService.getUserById(userId).subscribe(
+      data => {
+        this.userService.setCurrentUser(data);
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 }

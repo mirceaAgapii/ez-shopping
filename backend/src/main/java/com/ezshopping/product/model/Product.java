@@ -42,7 +42,7 @@ public class Product extends AbstractEntity {
 
     @Column(name = "brand")
     private String brand;
-
+//TODO: add unique constraint
     @Column(name = "rf_id")
     private String rfId;
 
