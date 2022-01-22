@@ -15,6 +15,8 @@ public class ArduinoServiceImpl implements ArduinoService {
     private final ArduinoRepository arduinoRepository;
     private final TextWebSocketHandlerEZ textWebSocketHandler;
 
+    private static final String STATION_ATTRIBUTE = "station";
+
     @Autowired
     public ArduinoServiceImpl(TextWebSocketHandlerEZ textWebSocketHandler,
                               ArduinoRepository arduinoRepository) {
@@ -40,7 +42,7 @@ public class ArduinoServiceImpl implements ArduinoService {
             String rfId = payload.substring(0, payload.indexOf(";"));
             try {
                 textWebSocketHandler
-                        .getSessionByAttributeAndValue("station", workstation)
+                        .getSessionByAttributeValue(STATION_ATTRIBUTE, workstation)
                         .sendMessage(new TextMessage("{\"payload\":\"" + rfId + "\"}"));
             } catch (IOException e) {
                 e.printStackTrace();

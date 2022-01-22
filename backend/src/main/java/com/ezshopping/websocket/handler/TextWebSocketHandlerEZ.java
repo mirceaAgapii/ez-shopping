@@ -51,7 +51,7 @@ public class TextWebSocketHandlerEZ extends TextWebSocketHandler {
      * @param value
      * @return WebSocketSession
      */
-    public WebSocketSession getSessionByAttributeAndValue(String attribute, String value) {
+    public WebSocketSession getSessionByAttributeValue(String attribute, String value) {
         return this.sessions.stream()
                 .filter(session -> session.getAttributes().get(attribute).equals(value))
                 .findFirst()

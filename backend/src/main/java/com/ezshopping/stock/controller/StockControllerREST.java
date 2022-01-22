@@ -1,7 +1,7 @@
 package com.ezshopping.stock.controller;
 
 import com.ezshopping.api.EndpointsAPI;
-import com.ezshopping.stock.model.StockEntity;
+import com.ezshopping.stock.model.Stock;
 import com.ezshopping.stock.service.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class StockControllerREST  {
     private final StockService stockService;
 
 
-    public ResponseEntity<List<StockEntity>> getAllEntities() {
+    public ResponseEntity<List<Stock>> getAllEntities() {
         return null;
     }
 }

@@ -28,7 +28,7 @@ public class UserControllerREST {
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllEntities() {
         log.info("UserControllerREST.getAllEntities: received a GET request");
-        return ResponseEntity.ok().body(userService.getAll());
+        return ResponseEntity.ok().body(userService.getAllAsDTO());
     }
 
     @GetMapping("/user")

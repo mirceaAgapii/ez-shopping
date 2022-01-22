@@ -14,7 +14,6 @@ public class ProductDTOMapper implements Mapper<Product, ProductDTO> {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .price(entity.getPrice())
-                .quantity(entity.getQuantity())
                 .barcode(entity.getBarcode())
                 .category(entity.getCategory())
                 .status(entity.getStatus())

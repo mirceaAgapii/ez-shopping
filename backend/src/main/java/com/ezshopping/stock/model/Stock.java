@@ -1,8 +1,9 @@
 package com.ezshopping.stock.model;
 
-import com.ezshopping.location.LocationEntity;
+import com.ezshopping.location.model.Location;
 import com.ezshopping.common.AbstractEntity;
 import com.ezshopping.product.model.Product;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,14 +16,15 @@ import javax.persistence.*;
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = false)
-public class StockEntity extends AbstractEntity {
+@Builder
+public class Stock extends AbstractEntity {
 
     @Column(name = "location_type")
     private String locationType;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private LocationEntity location;
+    private Location location;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")

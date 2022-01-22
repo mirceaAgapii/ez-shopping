@@ -3,6 +3,7 @@ package com.ezshopping;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
+import com.ezshopping.stock.exceptions.StockNotFoundException;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
@@ -58,6 +59,11 @@ public class RestResponseEntityExceptionHandler
 
     @ExceptionHandler(NoSuchParameterException.class)
     public ResponseEntity<String> handleNoSuchParameterException(NoSuchParameterException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(StockNotFoundException.class)
+    public  ResponseEntity<String> handleStockNotFoundException(StockNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 

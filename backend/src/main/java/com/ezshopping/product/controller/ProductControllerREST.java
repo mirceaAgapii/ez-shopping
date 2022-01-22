@@ -44,7 +44,7 @@ public class ProductControllerREST {
     @PostMapping("/save")
     public ResponseEntity<Void> saveProduct(@RequestBody ProductDTO productDTO) {
         log.info("saveProduct: received POST request for product [{}]", productDTO.getName());
-        productService.saveArticle(productDTO);
+        productService.saveProduct(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

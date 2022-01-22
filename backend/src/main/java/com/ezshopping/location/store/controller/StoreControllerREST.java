@@ -1,4 +1,4 @@
-package com.ezshopping.location.cart;
+package com.ezshopping.location.store.controller;
 
 import com.ezshopping.api.EndpointsAPI;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(EndpointsAPI.API + EndpointsAPI.CARTS)
+@RequestMapping(EndpointsAPI.API + EndpointsAPI.STORES)
 @Slf4j
-public class CartControllerREST {
+public class StoreControllerREST {
+
 
     public ResponseEntity<List> getAllEntities() {
         return null;

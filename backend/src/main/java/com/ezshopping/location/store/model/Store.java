@@ -1,6 +1,6 @@
-package com.ezshopping.location.store;
+package com.ezshopping.location.store.model;
 
-import com.ezshopping.location.LocationEntity;
+import com.ezshopping.location.model.Location;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class StoreEntity extends LocationEntity {
+public class Store extends Location {
 
     @Column(name = "store_id")
     private String storeName;

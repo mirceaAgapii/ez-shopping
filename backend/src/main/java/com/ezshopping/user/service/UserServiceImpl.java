@@ -28,13 +28,16 @@ class UserServiceImpl implements  UserService {
     private final Mapper<User, UserDTO> mapper;
 
     @Override
-    @Transactional(readOnly = true)
-    public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(mapper::map).collect(Collectors.toList());
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public List<UserDTO> getAllAsDTO() {
+        return getAll().stream().map(mapper::map).collect(Collectors.toList());
+    }
+
+    @Override
     public User getUserByUsername(String username) throws UserNotFoundException{
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username [" + username + "] not found"));
@@ -47,7 +50,6 @@ class UserServiceImpl implements  UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDTO getUserByEmail(String email) throws UserNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with email [" + email + "] not found"));
@@ -120,7 +122,7 @@ class UserServiceImpl implements  UserService {
         return false;
     }
 
-    private User getUserById(String id) throws UserNotFoundException {
+    User getUserById(String id) throws UserNotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }

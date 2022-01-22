@@ -1,9 +1,9 @@
 package com.ezshopping.product.model;
 
-import com.ezshopping.location.cart.CartEntity;
+import com.ezshopping.location.cart.model.Cart;
 import com.ezshopping.common.AbstractEntity;
 import com.ezshopping.order.orderline.model.OrderLineEntity;
-import com.ezshopping.stock.model.StockEntity;
+import com.ezshopping.stock.model.Stock;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;
@@ -28,9 +28,6 @@ public class Product extends AbstractEntity {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "quantity")
-    private Double quantity;
-
     @Column(name = "barcode")
     private String barcode;
 
@@ -48,11 +45,11 @@ public class Product extends AbstractEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private Set<StockEntity> stockEntities;
+    private Set<Stock> stockEntities;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "productList")
-    private List<CartEntity> cartList;
+    private List<Cart> cartList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")

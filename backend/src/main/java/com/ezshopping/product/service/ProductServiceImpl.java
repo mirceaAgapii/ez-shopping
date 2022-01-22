@@ -1,6 +1,7 @@
 package com.ezshopping.product.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.product.exceptions.ProductAlreadyInDatabaseException;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.product.model.Product;
 import com.ezshopping.product.model.ProductDTO;
@@ -21,7 +22,6 @@ public class ProductServiceImpl implements ProductService {
     private final Mapper<Product, ProductDTO> mapper;
 
     @Override
-    @Transactional(readOnly = true)
     public List<ProductDTO> getAll() {
         return productRepository.findAll()
                 .stream()
@@ -38,6 +38,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getById(String id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with id [" + id + "] doesn't exist"));
+    }
+
+    @Override
     public ProductDTO getProductByRfId(String rfId) {
         Product product = productRepository
                 .findByRfId(rfId)
@@ -46,17 +52,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveArticle(ProductDTO productDTO) {
-        if(!productRepository.existsByNameOrBarcodeOrRfId(
+    @Transactional
+    public void saveProduct(ProductDTO productDTO) {
+        if(productRepository.existsByNameOrBarcodeOrRfId(
                 productDTO.getName(),
                 productDTO.getBarcode(),
                 productDTO.getRfId())) {
+            throw new ProductAlreadyInDatabaseException("Product is already in database");
+        }
             Product newProduct = Product
                     .builder()
                     .name(productDTO.getName())
                     .description(productDTO.getDescription())
                     .price(productDTO.getPrice())
-                    .quantity(productDTO.getQuantity())
                     .barcode(productDTO.getBarcode())
                     .status(productDTO.getStatus())
                     .category(productDTO.getCategory())
@@ -65,6 +73,27 @@ public class ProductServiceImpl implements ProductService {
                     .build();
             newProduct.setId(UUID.randomUUID().toString());
             productRepository.save(newProduct);
-        }
+    }
+
+    @Override
+    @Transactional
+    public void updateProduct(ProductDTO productDTO) {
+        Product product = getById(productDTO.getId());
+        product.setBarcode(productDTO.getBarcode());
+        product.setBrand(productDTO.getBrand());
+        product.setCategory(productDTO.getCategory());
+        product.setPrice(productDTO.getPrice());
+        product.setDescription(productDTO.getDescription());
+        product.setName(productDTO.getName());
+        product.setRfId(productDTO.getRfId());
+        product.setStatus(productDTO.getStatus());
+
+        productRepository.save(product);
+    }
+
+    @Override
+    public ProductDTO getProductDTOById(String id) {
+        Product product = getById(id);
+        return mapper.map(product);
     }
 }
