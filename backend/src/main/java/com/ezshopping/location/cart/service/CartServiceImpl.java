@@ -8,6 +8,7 @@ import com.ezshopping.product.model.Product;
 import com.ezshopping.product.service.ProductService;
 import com.ezshopping.user.model.User;
 import com.ezshopping.user.service.UserService;
+import com.ezshopping.util.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +23,17 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final ProductService productService;
     private final UserService userService;
+    private final Utilities utilities;
 
     @Autowired
     public CartServiceImpl(CartRepository cartRepository,
                            ProductService productService,
-                           UserService userService) {
+                           UserService userService,
+                           Utilities utilities) {
         this.cartRepository = cartRepository;
         this.productService = productService;
         this.userService = userService;
+        this.utilities = utilities;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class CartServiceImpl implements CartService {
                 .user(user)
                 .productList(products)
                 .build();
-        newCart.setId(UUID.randomUUID().toString());
+        newCart.setId(utilities.getNewUuid());
         cartRepository.save(newCart);
     }
 

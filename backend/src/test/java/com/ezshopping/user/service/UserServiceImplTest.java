@@ -46,7 +46,6 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setup() {
-        this.userService = new UserServiceImpl(userRepository, passwordEncoder, mapper);
 
         testUser1 = new User();
         testUser1.setUsername("TestUser1");
@@ -67,10 +66,10 @@ class UserServiceImplTest {
         testUsers.add(testUser2);
 
         testUserDTO = UserDTO.builder()
-                .username("TestUserDTO")
-                .email("test3@mail.com")
+                .username("TestUser1")
+                .email("test1@mail.com")
                 .role("CLIENT")
-                .id("testId3")
+                .id("testId1")
                 .build();
     }
 
@@ -95,6 +94,7 @@ class UserServiceImplTest {
     @Test
     void getUserByEmail_whenInvoked_returnsUser() {
         when(userRepository.findByEmail(any(String.class))).thenReturn(Optional.ofNullable(testUser1));
+        when(mapper.map(testUser1)).thenReturn(testUserDTO);
 
         UserDTO user = userService.getUserByEmail("test1@mail.com");
 

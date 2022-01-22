@@ -12,6 +12,7 @@ import com.ezshopping.stock.exceptions.StockNotFoundException;
 import com.ezshopping.stock.model.StockDTO;
 import com.ezshopping.stock.model.Stock;
 import com.ezshopping.stock.repository.StockRepository;
+import com.ezshopping.util.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +27,17 @@ class StockServiceImpl implements StockService {
     private final StockRepository stockRepository;
     private final ProductService productService;
     private final LocationService locationService;
+    private final Utilities utilities;
 
     @Autowired
     public StockServiceImpl(StockRepository stockRepository,
                             ProductService productService,
-                            LocationService locationService) {
+                            LocationService locationService,
+                            Utilities utilities) {
         this.stockRepository = stockRepository;
         this.productService = productService;
         this.locationService = locationService;
+        this.utilities = utilities;
     }
 
     @Override
@@ -69,7 +73,7 @@ class StockServiceImpl implements StockService {
                 .locationType(stockDTO.getLocationType())
                 .quantity(stockDTO.getQuantity())
                 .build();
-        newStock.setId(UUID.randomUUID().toString());
+        newStock.setId(utilities.getNewUuid());
         stockRepository.save(newStock);
     }
 
@@ -83,6 +87,8 @@ class StockServiceImpl implements StockService {
         stock.setLocation(location);
         stock.setLocationType(stockDTO.getLocationType());
         stock.setProduct(product);
+
+        stockRepository.save(stock);
     }
 
     @Override
