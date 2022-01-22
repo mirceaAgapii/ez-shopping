@@ -1,8 +1,8 @@
 package com.ezshopping.user.service;
 
-import com.ezshopping.user.model.PasswordChangeDTO;
-import com.ezshopping.user.model.UserDTO;
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.dto.PasswordChangeDTO;
+import com.ezshopping.user.model.dto.UserDTO;
+import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

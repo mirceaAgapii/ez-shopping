@@ -1,7 +1,7 @@
 package com.ezshopping.product.service;
 
-import com.ezshopping.product.model.Product;
-import com.ezshopping.product.model.ProductDTO;
+import com.ezshopping.product.model.entity.Product;
+import com.ezshopping.product.model.dto.ProductDTO;
 
 import java.util.List;
 

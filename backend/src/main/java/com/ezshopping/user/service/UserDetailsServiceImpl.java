@@ -1,7 +1,7 @@
 package com.ezshopping.user.service;
 
 import com.ezshopping.user.exceptions.UserNotFoundException;
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

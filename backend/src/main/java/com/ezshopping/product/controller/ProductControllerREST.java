@@ -1,7 +1,7 @@
 package com.ezshopping.product.controller;
 
 import com.ezshopping.api.EndpointsAPI;
-import com.ezshopping.product.model.ProductDTO;
+import com.ezshopping.product.model.dto.ProductDTO;
 import com.ezshopping.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.procedure.NoSuchParameterException;
@@ -18,8 +18,12 @@ import static java.util.Objects.nonNull;
 @Slf4j
 public class ProductControllerREST {
 
-    @Autowired
     private ProductService productService;
+
+    @Autowired
+    public ProductControllerREST(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllEntities() {

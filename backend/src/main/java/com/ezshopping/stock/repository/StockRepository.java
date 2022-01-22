@@ -1,8 +1,8 @@
 package com.ezshopping.stock.repository;
 
-import com.ezshopping.location.model.Location;
-import com.ezshopping.product.model.Product;
-import com.ezshopping.stock.model.Stock;
+import com.ezshopping.location.model.entity.Location;
+import com.ezshopping.product.model.entity.Product;
+import com.ezshopping.stock.model.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

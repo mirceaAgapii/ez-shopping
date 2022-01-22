@@ -1,6 +1,6 @@
 package com.ezshopping.user.repository;
 
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

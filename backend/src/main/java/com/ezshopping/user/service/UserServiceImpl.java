@@ -3,9 +3,9 @@ package com.ezshopping.user.service;
 import com.ezshopping.common.Mapper;
 import com.ezshopping.user.UserRole;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
-import com.ezshopping.user.model.PasswordChangeDTO;
-import com.ezshopping.user.model.UserDTO;
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.dto.PasswordChangeDTO;
+import com.ezshopping.user.model.dto.UserDTO;
+import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.repository.UserRepository;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserServiceImpl implements  UserService {
+public class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -113,13 +113,9 @@ class UserServiceImpl implements  UserService {
     }
 
     private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
-        //TODO: make difference between cases with username already exists and email already exists
         if (userRepository.existsByUsername(userDTO.getUsername())) {
             return true;
-        } else if (userRepository.existsByEmail(userDTO.getEmail())) {
-            return true;
-        }
-        return false;
+        } else return userRepository.existsByEmail(userDTO.getEmail());
     }
 
     User getUserById(String id) throws UserNotFoundException {

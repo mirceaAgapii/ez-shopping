@@ -1,6 +1,6 @@
 package com.ezshopping.order.service;
 
-import com.ezshopping.order.model.OrderEntity;
+import com.ezshopping.order.model.entity.OrderEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

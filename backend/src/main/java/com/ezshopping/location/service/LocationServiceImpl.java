@@ -1,7 +1,7 @@
 package com.ezshopping.location.service;
 
 import com.ezshopping.location.exceptions.LocationNotFoundException;
-import com.ezshopping.location.model.Location;
+import com.ezshopping.location.model.entity.Location;
 import com.ezshopping.location.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

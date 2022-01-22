@@ -1,8 +1,8 @@
 package com.ezshopping.product.mapper;
 
 import com.ezshopping.common.Mapper;
-import com.ezshopping.product.model.Product;
-import com.ezshopping.product.model.ProductDTO;
+import com.ezshopping.product.model.entity.Product;
+import com.ezshopping.product.model.dto.ProductDTO;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,12 +1,12 @@
 package com.ezshopping.location.cart.service;
 
 import com.ezshopping.location.cart.exceptions.CartNotFoundException;
-import com.ezshopping.location.cart.model.Cart;
-import com.ezshopping.location.cart.model.CartDTO;
+import com.ezshopping.location.cart.model.entity.Cart;
+import com.ezshopping.location.cart.model.dto.CartDTO;
 import com.ezshopping.location.cart.repository.CartRepository;
-import com.ezshopping.product.model.Product;
+import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.service.ProductService;
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.service.UserService;
 import com.ezshopping.util.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -51,9 +50,7 @@ public class CartServiceImpl implements CartService {
     public void createCart(CartDTO cartDTO) {
         User user = userService.getUserByUsername(cartDTO.getUser().getUsername());
         Set<Product> products = new HashSet<>();
-        cartDTO.getProductList().forEach(product -> {
-            products.add(productService.getById(product.getId()));
-        });
+        cartDTO.getProductList().forEach(product -> products.add(productService.getById(product.getId())));
         Cart newCart = Cart.builder()
                 .user(user)
                 .productList(products)
@@ -67,9 +64,7 @@ public class CartServiceImpl implements CartService {
         Cart cart = getById(cartDTO.getId());
         User user = userService.getUserByUsername(cartDTO.getUser().getUsername());
         Set<Product> products = new HashSet<>();
-        cartDTO.getProductList().forEach(product -> {
-            products.add(productService.getById(product.getId()));
-        });
+        cartDTO.getProductList().forEach(product -> products.add(productService.getById(product.getId())));
         cart.setUser(user);
         cart.getProductList().addAll(products);
         cartRepository.save(cart);

@@ -1,48 +1,54 @@
 package com.ezshopping.stock.service;
 
-import com.ezshopping.location.exceptions.LocationNotFoundException;
-import com.ezshopping.location.model.Location;
-import com.ezshopping.location.repository.LocationRepository;
+import com.ezshopping.common.Mapper;
+import com.ezshopping.location.model.entity.Location;
 import com.ezshopping.location.service.LocationService;
-import com.ezshopping.product.model.Product;
-import com.ezshopping.product.repository.ProductRepository;
+import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.service.ProductService;
 import com.ezshopping.stock.exceptions.StockAlreadyExistsException;
 import com.ezshopping.stock.exceptions.StockNotFoundException;
-import com.ezshopping.stock.model.StockDTO;
-import com.ezshopping.stock.model.Stock;
+import com.ezshopping.stock.model.dto.StockDTO;
+import com.ezshopping.stock.model.entity.Stock;
 import com.ezshopping.stock.repository.StockRepository;
 import com.ezshopping.util.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-class StockServiceImpl implements StockService {
+public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
     private final ProductService productService;
     private final LocationService locationService;
     private final Utilities utilities;
+    private final Mapper<Stock, StockDTO> mapper;
 
     @Autowired
     public StockServiceImpl(StockRepository stockRepository,
                             ProductService productService,
                             LocationService locationService,
-                            Utilities utilities) {
+                            Utilities utilities,
+                            Mapper<Stock, StockDTO> mapper) {
         this.stockRepository = stockRepository;
         this.productService = productService;
         this.locationService = locationService;
         this.utilities = utilities;
+        this.mapper = mapper;
     }
 
     @Override
     public List<Stock> getAll() {
         return stockRepository.findAll();
+    }
+
+    @Override
+    public List<StockDTO> getAllAsDTO() {
+        List<Stock> all = getAll();
+        return all.stream().map(mapper::map).collect(Collectors.toList());
     }
 
     @Override
@@ -55,6 +61,12 @@ class StockServiceImpl implements StockService {
     public Stock getStockById(String id) {
         return stockRepository.findById(id)
                 .orElseThrow(() -> new StockNotFoundException("Stock for id [" + id + "] could not be found"));
+    }
+
+    @Override
+    public StockDTO getStockDTOById(String id) {
+        Stock stock = getStockById(id);
+        return mapper.map(stock);
     }
 
     @Override

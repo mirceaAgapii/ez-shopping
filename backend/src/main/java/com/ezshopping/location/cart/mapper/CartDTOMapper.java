@@ -1,8 +1,8 @@
 package com.ezshopping.location.cart.mapper;
 
 import com.ezshopping.common.Mapper;
-import com.ezshopping.location.cart.model.Cart;
-import com.ezshopping.location.cart.model.CartDTO;
+import com.ezshopping.location.cart.model.entity.Cart;
+import com.ezshopping.location.cart.model.dto.CartDTO;
 import com.ezshopping.product.service.ProductService;
 import com.ezshopping.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

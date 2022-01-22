@@ -1,10 +1,9 @@
 package com.ezshopping.location.cart.service;
 
-import com.ezshopping.location.cart.model.Cart;
-import com.ezshopping.location.cart.model.CartDTO;
+import com.ezshopping.location.cart.model.entity.Cart;
+import com.ezshopping.location.cart.model.dto.CartDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CartService {
     List<Cart> getAll();

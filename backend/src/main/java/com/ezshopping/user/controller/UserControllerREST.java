@@ -3,8 +3,8 @@ package com.ezshopping.user.controller;
 import static com.ezshopping.api.EndpointsAPI.*;
 
 import com.ezshopping.config.security.service.SecurityService;
-import com.ezshopping.user.model.PasswordChangeDTO;
-import com.ezshopping.user.model.UserDTO;
+import com.ezshopping.user.model.dto.PasswordChangeDTO;
+import com.ezshopping.user.model.dto.UserDTO;
 import com.ezshopping.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

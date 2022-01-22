@@ -1,6 +1,6 @@
 package com.ezshopping.location.cart.repository;
 
-import com.ezshopping.location.cart.model.Cart;
+import com.ezshopping.location.cart.model.entity.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
