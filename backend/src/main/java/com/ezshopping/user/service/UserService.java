@@ -7,6 +7,8 @@ import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -21,7 +23,7 @@ public interface UserService {
 
     UserDTO getUserDTOById(String id) throws UserNotFoundException;
 
-    void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException;
+    void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException, MessagingException, IOException;
     UserDTO deleteUserById(String id) throws UserNotFoundException;
     void updateUser(UserDTO updatedUser) throws UsernameNotFoundException;
 

@@ -2,12 +2,15 @@ package com.ezshopping.user.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
 @Builder
+@NoArgsConstructor
 public class UserDTO {
 
     private String id;

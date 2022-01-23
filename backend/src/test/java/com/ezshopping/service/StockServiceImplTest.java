@@ -1,5 +1,6 @@
 package com.ezshopping.service;
 
+import com.ezshopping.fixture.*;
 import com.ezshopping.location.model.entity.Location;
 import com.ezshopping.location.model.dto.LocationDTO;
 import com.ezshopping.location.service.LocationService;
@@ -42,75 +43,25 @@ class StockServiceImplTest {
     private StockServiceImpl stockService;
 
     private Stock testStock1;
-    private Stock testStock2;
     private StockDTO testStockDTO;
     private Product testProduct1;
     private ProductDTO productDTO;
     private Location testLocationStore;
-    private Location testLocationCart;
     private LocationDTO locationDTO;
 
     private List<Stock> stockList;
     @BeforeEach
     void setup() {
-        testLocationStore = new Location();
-        testLocationStore.setId("testId");
-        testLocationStore.setLocationType("STORE");
+        testLocationStore = LocationFixture.locationStore();
+        locationDTO = LocationDTOFixture.locationDTO();
+        productDTO = ProductDTOFixture.productDTO();
 
-        testLocationCart = new Location();
-        testLocationCart.setId("testId2");
-        testLocationCart.setLocationType("CART");
+        testProduct1 = ProductFixture.product();
+        testStock1 = StockFixture.stock();
 
-        locationDTO = LocationDTO.builder()
-                .locationType("STORE")
-                .id("testId")
-                .build();
+        stockList = StockFixture.stockList();
 
-        productDTO = ProductDTO.builder()
-                .name("TestProductDTO")
-                .barcode("123456789")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-
-        testProduct1 = Product.builder()
-                .name("TestProduct1")
-                .barcode("123456789")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-        testStock1 = Stock.builder()
-                .product(testProduct1)
-                .location(testLocationStore)
-                .locationType("STORE")
-                .quantity(10.00)
-                .build();
-        testStock1.setId("testId");
-        testStock2 = Stock.builder()
-                .product(testProduct1)
-                .location(testLocationCart)
-                .locationType("CART")
-                .quantity(2.00)
-                .build();
-        testStock2.setId("testId");
-
-        stockList = Arrays.asList(testStock1, testStock2);
-
-        testStockDTO = StockDTO.builder()
-                .id("testId")
-                .location(locationDTO)
-                .locationType("STORE")
-                .product(productDTO)
-                .quantity(10.00)
-                .build();
+        testStockDTO = StockDTOFixture.stockDTO();
     }
 
     @Test
@@ -122,7 +73,7 @@ class StockServiceImplTest {
 
     @Test
     void getAllByProduct_whenInvokedWithAKnownProduct_returnsAListOfStockEntities() {
-        when(stockRepository.findAllByProduct(testProduct1)).thenReturn(Optional.of(Arrays.asList(testStock1, testStock2)));
+        when(stockRepository.findAllByProduct(testProduct1)).thenReturn(Optional.of(stockList));
 
         assertThat(stockService.getAllByProduct(testProduct1)).isEqualTo(stockList);
     }

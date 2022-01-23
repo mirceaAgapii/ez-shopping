@@ -11,9 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -45,7 +48,7 @@ public class UserControllerREST {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Void> registerUser(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<Void> registerUser(@RequestBody @Valid UserDTO userDTO) throws MessagingException, IOException {
         log.info("UserControllerREST.registerUser: received a POST request");
         userService.registerUser(userDTO);
         log.info("UserControllerREST.registerUser: New user [{}] successfully saved", userDTO.getUsername());

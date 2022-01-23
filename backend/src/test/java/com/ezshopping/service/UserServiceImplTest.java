@@ -1,6 +1,8 @@
 package com.ezshopping.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.fixture.UserDTOFixture;
+import com.ezshopping.fixture.UserFixture;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;
@@ -40,38 +42,15 @@ class UserServiceImplTest {
 
 
     private User testUser1;
-    private User testUser2;
     private UserDTO testUserDTO;
     private List<User> testUsers;
     private PasswordChangeDTO testPasswordChangeDTO = new PasswordChangeDTO("oldPassword", "newPassword");
 
     @BeforeEach
     void setup() {
-
-        testUser1 = new User();
-        testUser1.setUsername("TestUser1");
-        testUser1.setPassword("testPassword1");
-        testUser1.setRole("CLIENT");
-        testUser1.setEmail("test1@mail.com");
-        testUser1.setId("testId1");
-
-        testUser2 = new User();
-        testUser2.setUsername("TestUser2");
-        testUser2.setPassword("testPassword2");
-        testUser2.setRole("CLIENT");
-        testUser2.setEmail("test2@mail.com");
-        testUser2.setId("testId2");
-
-        testUsers = new ArrayList<>();
-        testUsers.add(testUser1);
-        testUsers.add(testUser2);
-
-        testUserDTO = UserDTO.builder()
-                .username("TestUser1")
-                .email("test1@mail.com")
-                .role("CLIENT")
-                .id("testId1")
-                .build();
+        testUser1 = UserFixture.user();
+        testUsers = UserFixture.userList();
+        testUserDTO = UserDTOFixture.userDTO();
     }
 
     @Test
@@ -79,7 +58,7 @@ class UserServiceImplTest {
         when(userRepository.findAll()).thenReturn(testUsers);
 
         assertThat(userService.getAll()).isNotEmpty();
-        assertThat(userService.getAll().containsAll(Arrays.asList(testUser1, testUser2))).isTrue();
+        assertThat(userService.getAll().containsAll(testUsers)).isTrue();
     }
 
     @Test

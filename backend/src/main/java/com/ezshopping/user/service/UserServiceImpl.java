@@ -1,6 +1,7 @@
 package com.ezshopping.user.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.mail.EmailSender;
 import com.ezshopping.user.UserRole;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;
@@ -9,23 +10,34 @@ import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.repository.UserRepository;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final Mapper<User, UserDTO> mapper;
+    private final EmailSender emailSender;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           Mapper<User, UserDTO> mapper,
+                           EmailSender emailSender) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.mapper = mapper;
+        this.emailSender = emailSender;
+    }
 
     @Override
     public List<User> getAll() {
@@ -64,7 +76,7 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     @Transactional
-    public void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException {
+    public void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException, MessagingException, IOException {
         if(userExists(userDTO)) {
             log.warn("User with username [{}] or email [{}] is already in database", userDTO.getUsername(), userDTO.getEmail());
             throw new UserAlreadyInDatabaseException("User is already in db");
@@ -78,6 +90,8 @@ public class UserServiceImpl implements  UserService {
         user.setEmail(userDTO.getEmail());
         user.setRole(UserRole.CLIENT.getValue());
         userRepository.save(user);
+
+        emailSender.sendEmail(user);
     }
 
     @Override

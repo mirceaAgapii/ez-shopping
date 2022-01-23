@@ -1,5 +1,9 @@
 package com.ezshopping.service;
 
+import com.ezshopping.fixture.ProductDTOFixture;
+import com.ezshopping.fixture.ProductFixture;
+import com.ezshopping.fixture.UserDTOFixture;
+import com.ezshopping.fixture.UserFixture;
 import com.ezshopping.location.cart.exceptions.CartNotFoundException;
 import com.ezshopping.location.cart.model.entity.Cart;
 import com.ezshopping.location.cart.model.dto.CartDTO;
@@ -43,84 +47,36 @@ class CartServiceImplTest {
     private CartDTO cartDTO;
     private Product testProduct1;
     private Product testProduct2;
+    private List<Product> testProductList;
     private ProductDTO testProductDTO1;
     private ProductDTO testProductDTO2;
+    private List<ProductDTO> testProductDTOList;
     private User testUser1;
     private UserDTO testUserDTO;
     private List<Cart> cartList;
 
     @BeforeEach
     void setup() {
-        testProduct1 = Product.builder()
-                .name("TestProduct1")
-                .barcode("123456789")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-        testProduct1.setId("testId1");
-        testProduct2 = Product.builder()
-                .name("TestProduct2")
-                .barcode("987654321")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-        testProduct2.setId("testId1");
+        testProductList = ProductFixture.productList();
+        testProduct1 = testProductList.get(0);
+        testProduct2 = testProductList.get(1);
 
-        testProductDTO1 = ProductDTO.builder()
-                .id("testId1")
-                .name("TestProduct1")
-                .barcode("123456789")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-        testProductDTO2 = ProductDTO.builder()
-                .id("testId2")
-                .name("TestProduct2")
-                .barcode("987654321")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
+        testProductDTOList = ProductDTOFixture.productDTOList();
+        testProductDTO1 = testProductDTOList.get(0);
+        testProductDTO2 = testProductDTOList.get(1);
 
-        testUser1 = new User();
-        testUser1.setUsername("TestUser1");
-        testUser1.setPassword("testPassword1");
-        testUser1.setRole("CLIENT");
-        testUser1.setEmail("test1@mail.com");
-        testUser1.setId("testId1");
-
-        testUserDTO = UserDTO.builder()
-                .id("testId")
-                .role("CLIENT")
-                .username("TestUser1")
-                .email("test1@mail.com")
-                .password("testPassword1")
-                .build();
+        testUser1 = UserFixture.user();
+        testUserDTO = UserDTOFixture.userDTO();
 
         testCart = Cart.builder()
-                .productList(new HashSet<>(Arrays.asList(testProduct1, testProduct2)))
+                .productList(new HashSet<>(testProductList))
                 .user(testUser1)
                 .build();
         testCart.setId("testId");
 
         cartDTO = CartDTO.builder()
                 .id("testId")
-                .productList(new HashSet<>(Arrays.asList(testProductDTO1, testProductDTO2)))
+                .productList(new HashSet<>(testProductDTOList))
                 .user(testUserDTO)
                 .build();
 

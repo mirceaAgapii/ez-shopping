@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { User } from 'src/app/Model/User';
+import { AuthorizationService } from 'src/app/services/auth/authorization.service';
 import { UserRestService } from 'src/app/services/rest/user/user.rest.service';
 
 @Component({
@@ -19,7 +21,9 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(private userRestService: UserRestService,
-    private router: Router) { }
+    private router: Router,
+    private authorizationService: AuthorizationService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -48,7 +52,18 @@ export class RegisterComponent implements OnInit {
     user.password = this.password;
     user.email = this.email;
 
-    this.userRestService.register(user);
+    this.userRestService.register(user).subscribe({
+      next: data => {
+        console.log('success');
+        if(!this.authorizationService.isAuthenticated()) {
+          this.router.navigate(['/login']);
+        }
+      },
+      error: error => {
+        var errorMessage = error.error;
+        this.messageService.add({severity:'error', summary: errorMessage, detail:''});
+      }
+    });
 
   }
 

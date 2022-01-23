@@ -1,6 +1,8 @@
 package com.ezshopping.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.fixture.ProductDTOFixture;
+import com.ezshopping.fixture.ProductFixture;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.model.dto.ProductDTO;
@@ -38,41 +40,9 @@ class ProductServiceImplTest {
 
     @BeforeEach
     void setup() {
-        testProduct1 = Product.builder()
-                .name("TestProduct1")
-                .barcode("123456789")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-        testProduct1.setId("testId1");
-        testProduct2 = Product.builder()
-                .name("TestProduct2")
-                .barcode("987654321")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-        testProduct2.setId("testId1");
-        testProductDTO = ProductDTO.builder()
-                .id("testId1")
-                .name("TestProductDTO")
-                .barcode("123456789")
-                .brand("TestBrand")
-                .category("TestCategory")
-                .description("TestDescription")
-                .price(100.00)
-                .rfId("10 20 30 40")
-                .status("IN STOCK")
-                .build();
-
-        products = Arrays.asList(testProduct1, testProduct2);
+        testProduct1 = ProductFixture.product();
+        testProductDTO = ProductDTOFixture.productDTO();
+        products = ProductFixture.productList();
 
     }
 
