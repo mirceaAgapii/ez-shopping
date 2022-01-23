@@ -1,5 +1,6 @@
 package com.ezshopping.rest;
 
+import com.ezshopping.fixture.ProductDTOFixture;
 import com.ezshopping.product.model.dto.ProductDTO;
 import com.ezshopping.product.service.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,17 +39,7 @@ class ProductControllerRESTTest {
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        productDTO = ProductDTO.builder()
-                .barcode("test")
-                .price(20.00)
-                .name("test")
-                .description("test")
-                .status("test")
-                .brand("test")
-                .category("test")
-                .rfId("test")
-                .id("test")
-                .build();
+        productDTO = ProductDTOFixture.productDTO();
     }
 
     @Test

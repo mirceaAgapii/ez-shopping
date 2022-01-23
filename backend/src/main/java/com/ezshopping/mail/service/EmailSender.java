@@ -1,16 +1,15 @@
-package com.ezshopping.mail;
+package com.ezshopping.mail.service;
 
 import com.ezshopping.user.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
 
-@Component
+@Service
 public class EmailSender {
 
     private JavaMailSender javaMailSender;

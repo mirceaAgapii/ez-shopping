@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Builder
-@NoArgsConstructor
 public class UserDTO {
 
     private String id;

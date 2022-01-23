@@ -1,7 +1,7 @@
 package com.ezshopping.user.service;
 
 import com.ezshopping.common.Mapper;
-import com.ezshopping.mail.EmailSender;
+import com.ezshopping.mail.service.EmailSender;
 import com.ezshopping.user.UserRole;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;

@@ -1,5 +1,6 @@
 package com.ezshopping.rest;
 
+import com.ezshopping.fixture.UserDTOFixture;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;
 import com.ezshopping.user.model.dto.UserDTO;
 import com.ezshopping.user.service.UserServiceImpl;
@@ -41,13 +42,7 @@ class UserControllerRESTTest {
     {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        testUserDTO = UserDTO.builder()
-                .username("TestUser1")
-                .password("test")
-                .email("test1@mail.com")
-                .role("CLIENT")
-                .id("testId1")
-                .build();
+        testUserDTO = UserDTOFixture.userDTO();
 
         passwordChangeDTO = new PasswordChangeDTO("oldPassword", "newPassword");
     }
