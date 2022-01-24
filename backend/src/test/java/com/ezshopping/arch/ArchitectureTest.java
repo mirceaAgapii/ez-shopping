@@ -30,14 +30,14 @@ public class ArchitectureTest {
             .whereLayer("Mapper").mayOnlyBeAccessedByLayers("Mapper", "Service");
 
     @ArchTest
-    static final ArchRule dontUseFiledInjection = ArchRuleDefinition
+    static final ArchRule doNotUseFiledInjection = ArchRuleDefinition
             .noFields()
             .should(ArchConditions.beAnnotatedWith("org.springframework.beans.factory.annotation.Autowired")
-                    .as("Don't use filed injection"))
+            .as("Don't use filed injection"))
             .because("Directors said that :P");
 
     @ArchTest
-    static final ArchRule dontUseSystemOut = ArchRuleDefinition
+    static final ArchRule doNotUseSystemOut = ArchRuleDefinition
             .noClasses()
             .should()
             .accessClassesThat()

@@ -22,17 +22,14 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final ProductService productService;
     private final UserService userService;
-    private final Utilities utilities;
 
     @Autowired
     public CartServiceImpl(CartRepository cartRepository,
                            ProductService productService,
-                           UserService userService,
-                           Utilities utilities) {
+                           UserService userService) {
         this.cartRepository = cartRepository;
         this.productService = productService;
         this.userService = userService;
-        this.utilities = utilities;
     }
 
     @Override
@@ -55,7 +52,7 @@ public class CartServiceImpl implements CartService {
                 .user(user)
                 .productList(products)
                 .build();
-        newCart.setId(utilities.getNewUuid());
+        newCart.setId(Utilities.getNewUuid());
         cartRepository.save(newCart);
     }
 

@@ -6,12 +6,10 @@ import com.ezshopping.user.model.dto.PasswordChangeDTO;
 import com.ezshopping.user.model.dto.UserDTO;
 import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.service.UserService;
+import com.ezshopping.util.Utilities;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 public class UserServiceMock implements UserService {
 
@@ -79,7 +77,7 @@ public class UserServiceMock implements UserService {
                         .password(userDTO.getPassword())
                         .role(userDTO.getRole())
                         .build();
-        user.setId(UUID.randomUUID().toString());
+        user.setId(Utilities.getNewUuid());
         fakeUserRepository.add(user);
     }
 

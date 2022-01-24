@@ -1,5 +1,7 @@
 package com.ezshopping.doubles;
 
+import com.ezshopping.fixture.UserDTOFixture;
+import com.ezshopping.fixture.UserFixture;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;
@@ -14,32 +16,32 @@ import java.util.List;
 public class UserServiceFake implements UserService {
     @Override
     public UserDTO getUserDTOByUsername(String username) throws UserNotFoundException {
-        return UserDTO.builder().build();
+        return UserDTOFixture.userDTO();
     }
 
     @Override
     public User getUserByUsername(String username) throws UserNotFoundException {
-        return User.builder().build();
+        return UserFixture.user();
     }
 
     @Override
     public UserDTO getUserByEmail(String email) throws UserNotFoundException {
-        return UserDTO.builder().build();
+        return UserDTOFixture.userDTO();
     }
 
     @Override
     public List<User> getAll() {
-        return Lists.emptyList();
+        return UserFixture.userList();
     }
 
     @Override
     public List<UserDTO> getAllAsDTO() {
-        return Lists.emptyList();
+        return UserDTOFixture.userDTOList();
     }
 
     @Override
     public UserDTO getUserDTOById(String id) throws UserNotFoundException {
-        return UserDTO.builder().build();
+        return UserDTOFixture.userDTO();
     }
 
     @Override
@@ -49,7 +51,7 @@ public class UserServiceFake implements UserService {
 
     @Override
     public UserDTO deleteUserById(String id) throws UserNotFoundException {
-        return UserDTO.builder().build();
+        return UserDTOFixture.userDTO();
     }
 
     @Override

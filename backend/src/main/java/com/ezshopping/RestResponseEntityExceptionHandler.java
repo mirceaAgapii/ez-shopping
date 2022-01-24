@@ -2,6 +2,7 @@ package com.ezshopping;
 
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.ezshopping.location.cart.exceptions.CartNotFoundException;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.stock.exceptions.StockNotFoundException;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
@@ -63,8 +64,12 @@ public class RestResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(StockNotFoundException.class)
-    public  ResponseEntity<String> handleStockNotFoundException(StockNotFoundException exception) {
+    public ResponseEntity<String> handleStockNotFoundException(StockNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
+    @ExceptionHandler
+    public ResponseEntity<String> handleCartNotFoundException(CartNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
 }

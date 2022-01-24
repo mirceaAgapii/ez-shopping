@@ -10,6 +10,7 @@ import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.repository.UserRepository;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
+import com.ezshopping.util.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -84,7 +85,7 @@ public class UserServiceImpl implements  UserService {
 
         log.info("User with id [{}] is not known in database. Trying to save him", userDTO.getUsername());
         User user = new User();
-        user.setId(UUID.randomUUID().toString());
+        user.setId(Utilities.getNewUuid());
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());

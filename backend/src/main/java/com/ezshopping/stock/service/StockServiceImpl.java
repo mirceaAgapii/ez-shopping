@@ -24,19 +24,16 @@ public class StockServiceImpl implements StockService {
     private final StockRepository stockRepository;
     private final ProductService productService;
     private final LocationService locationService;
-    private final Utilities utilities;
     private final Mapper<Stock, StockDTO> mapper;
 
     @Autowired
     public StockServiceImpl(StockRepository stockRepository,
                             ProductService productService,
                             LocationService locationService,
-                            Utilities utilities,
                             Mapper<Stock, StockDTO> mapper) {
         this.stockRepository = stockRepository;
         this.productService = productService;
         this.locationService = locationService;
-        this.utilities = utilities;
         this.mapper = mapper;
     }
 
@@ -85,7 +82,7 @@ public class StockServiceImpl implements StockService {
                 .locationType(stockDTO.getLocationType())
                 .quantity(stockDTO.getQuantity())
                 .build();
-        newStock.setId(utilities.getNewUuid());
+        newStock.setId(Utilities.getNewUuid());
         stockRepository.save(newStock);
     }
 

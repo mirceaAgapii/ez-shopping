@@ -9,8 +9,6 @@ import com.ezshopping.user.service.UserService;
 import org.assertj.core.util.Lists;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.List;
 
 public class UserServiceSpy implements UserService {

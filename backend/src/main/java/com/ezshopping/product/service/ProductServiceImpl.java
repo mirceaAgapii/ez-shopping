@@ -6,6 +6,7 @@ import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.model.dto.ProductDTO;
 import com.ezshopping.product.repository.ProductRepository;
+import com.ezshopping.util.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
                     .brand(productDTO.getBrand())
                     .rfId(productDTO.getRfId())
                     .build();
-            newProduct.setId(UUID.randomUUID().toString());
+            newProduct.setId(Utilities.getNewUuid());
             productRepository.save(newProduct);
     }
 

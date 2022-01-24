@@ -57,8 +57,9 @@ class UserServiceImplTest {
     void getAll_whenInvoked_returnsAListWithTwoUsers() {
         when(userRepository.findAll()).thenReturn(testUsers);
 
-        assertThat(userService.getAll()).isNotEmpty();
-        assertThat(userService.getAll().containsAll(testUsers)).isTrue();
+        assertThat(userService.getAll())
+                .isNotEmpty()
+                .containsExactlyInAnyOrderElementsOf(testUsers);
     }
 
     @Test

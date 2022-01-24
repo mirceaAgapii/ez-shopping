@@ -1,6 +1,5 @@
 package com.ezshopping;
 
-import org.apache.tomcat.util.net.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

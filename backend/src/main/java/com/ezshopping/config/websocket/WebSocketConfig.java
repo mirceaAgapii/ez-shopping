@@ -1,6 +1,5 @@
 package com.ezshopping.config.websocket;
 
-
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
-
 
 @Configuration
 @EnableWebSocket

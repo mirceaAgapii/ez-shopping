@@ -1,6 +1,5 @@
 package com.ezshopping.util;
 
-import liquibase.pro.packaged.C;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,7 @@ import java.util.UUID;
 @Component
 public class Utilities {
 
-    public String getNewUuid() {
+    public static String getNewUuid() {
         return UUID.randomUUID().toString();
     }
 }
