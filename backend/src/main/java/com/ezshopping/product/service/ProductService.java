@@ -13,11 +13,13 @@ public interface ProductService {
 
     ProductDTO getProductByBarcode(String barcode);
 
-    ProductDTO getProductByRfId(String rfId);
+    Product getProductByRfId(String rfId);
 
     void saveProduct(ProductDTO productDTO);
 
     void updateProduct(ProductDTO productDTO);
 
     ProductDTO getProductDTOById(String id);
+
+    ProductDTO getProductDTOByRfId(String rfId);
 }

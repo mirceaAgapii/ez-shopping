@@ -126,4 +126,13 @@ public class UserServiceMock implements UserService {
             user.setPassword(passwordChangeDTO.getNewPassword());
         }
     }
+
+    @Override
+    public User getUserById(String userId) {
+        return fakeUserRepository
+                .stream()
+                .filter(u -> u.getId().equals(userId))
+                .findFirst()
+                .orElseThrow(() -> new UserNotFoundException(""));
+    }
 }

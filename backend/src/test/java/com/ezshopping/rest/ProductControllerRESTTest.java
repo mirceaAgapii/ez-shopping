@@ -61,7 +61,7 @@ class ProductControllerRESTTest {
     @Test
     @WithMockUser(username = "test", roles = "ADMINISTRATOR")
     void getProductByBarcodeOrRfId_whenInvokedWithNullBarcodeAndNonNullRfId_return200() throws Exception {
-        when(productService.getProductByRfId(productDTO.getRfId())).thenReturn(productDTO);
+        when(productService.getProductDTOByRfId(productDTO.getRfId())).thenReturn(productDTO);
 
         mockMvc.perform(get("/api/products/product")
                         .param("rfId", "test"))

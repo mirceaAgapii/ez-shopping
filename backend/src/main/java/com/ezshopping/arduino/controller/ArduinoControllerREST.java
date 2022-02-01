@@ -18,8 +18,13 @@ public class ArduinoControllerREST {
         this.arduinoService = arduinoService;
     }
 
-    @PostMapping
-    public void onScan(@RequestBody String payload) {
+    @PostMapping("/rf")
+    public void onRFRead(@RequestBody String payload) {
         arduinoService.handleRFRead(payload);
+    }
+
+    @PostMapping("/qr")
+    public void onQRCodeScan(@RequestBody String payload) {
+        arduinoService.handleQRScan(payload);
     }
 }

@@ -73,7 +73,7 @@ class ProductServiceImplTest {
         when(productRepository.findByRfId("10 20 30 40")).thenReturn(Optional.ofNullable(testProduct1));
         when(mapper.map(testProduct1)).thenReturn(testProductDTO);
 
-        assertThat(productService.getProductByRfId("10 20 30 40")).isEqualTo(testProductDTO);
+        assertThat(productService.getProductDTOByRfId("10 20 30 40")).isEqualTo(testProductDTO);
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 public class Cart extends Location {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, insertable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToMany

@@ -59,4 +59,9 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/admin/dashboard']);
   }
 
+  
+  checkout() {
+    this.router.navigate(['/checkout']);
+  }
+
 }

@@ -14,12 +14,15 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class OrderEntity extends AbstractEntity {
+public class Order extends AbstractEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, insertable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Column(name = "total")
     private Double total;
+
+    @Column(name = "finished")
+    private boolean finished;
 }

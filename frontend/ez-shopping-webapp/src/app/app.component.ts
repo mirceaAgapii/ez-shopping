@@ -51,4 +51,9 @@ export class AppComponent implements OnInit{
   toAdmin() {
     this.router.navigate(['/admin/dashboard']);
   }
+
+    
+  checkout() {
+    this.router.navigate(['/checkout']);
+  }
 }

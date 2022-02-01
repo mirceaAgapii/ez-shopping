@@ -51,6 +51,9 @@ import { AddNewUserComponent } from './admin/users-admin/add-new-user/add-new-us
 import { UserInfoComponent } from './admin/users-admin/user-info/user-info.component';
 import { UserAccountComponent } from './user-account/user-account.component';
 import { ProductInfoComponent } from './products/product-info/product-info.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { QRCodeComponent, QRCodeModule } from 'angular2-qrcode';
+import { OrderStationComponent } from './order-station/order-station.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,9 @@ import { ProductInfoComponent } from './products/product-info/product-info.compo
     AddNewUserComponent,
     UserInfoComponent,
     UserAccountComponent,
-    ProductInfoComponent
+    ProductInfoComponent,
+    CheckoutComponent,
+    OrderStationComponent
 
   ],
   imports: [
@@ -102,7 +107,8 @@ import { ProductInfoComponent } from './products/product-info/product-info.compo
     RippleModule,
     ButtonModule,
     TreeTableModule,
-    NgbModule
+    NgbModule,
+    QRCodeModule
   ],
   exports: [
     MatButtonModule,

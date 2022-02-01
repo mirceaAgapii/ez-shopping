@@ -39,7 +39,7 @@ public class ProductControllerREST {
             return ResponseEntity.ok().body(productService.getProductByBarcode(barcode));
         } else if(nonNull(rfId)) {
             log.info("getProductByBarcodeOrRfId: received GET request for rfId [{}]", rfId);
-            return ResponseEntity.ok().body(productService.getProductByRfId(rfId));
+            return ResponseEntity.ok().body(productService.getProductDTOByRfId(rfId));
         } else {
             throw new NoSuchParameterException("getProductByBarcodeOrRfId: no params provided");
         }

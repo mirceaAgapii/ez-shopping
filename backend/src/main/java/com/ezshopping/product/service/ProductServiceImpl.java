@@ -45,11 +45,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductByRfId(String rfId) {
-        Product product = productRepository
+    public ProductDTO getProductDTOByRfId(String rfId) {
+        return mapper.map(getProductByRfId(rfId));
+    }
+
+    @Override
+    public Product getProductByRfId(String rfId) {
+        return productRepository
                 .findByRfId(rfId)
                 .orElseThrow(() -> new ProductNotFoundException("Product with provided rfId [" + rfId + "] doesn't exist"));
-        return mapper.map(product);
     }
 
     @Override

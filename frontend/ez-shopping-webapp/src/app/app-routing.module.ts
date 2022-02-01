@@ -5,6 +5,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { AppComponent } from './app.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { AdminPermisionsGuard } from './guard/admin-permisions.guard';
 import { AuthorizationGuard } from './guard/authorization.guard';
 import { CurrentUserResolver } from './guard/current-user.resolver';
@@ -14,6 +15,7 @@ import { PrefetchDashboardResolver } from './guard/resolvers/prefetch-dashboard.
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { MainComponent } from './main/main.component';
+import { OrderStationComponent } from './order-station/order-station.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsComponent } from './products/products.component';
 import { DashboardService } from './services/admin/dashboard.service';
@@ -54,6 +56,14 @@ export const routes: Routes = [
   {
     path: 'products', 
     component: ProductsComponent
+  },
+  {
+    path: 'checkout', 
+    component: CheckoutComponent
+  },
+  {
+    path: 'station', 
+    component: OrderStationComponent
   },
   {path: '404', component: PageNotFoundComponent},
   {path: '', component: MainComponent, canActivate: [AuthorizationGuard]},

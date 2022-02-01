@@ -1,5 +1,6 @@
 package com.ezshopping.doubles;
 
+import com.ezshopping.fixture.UserFixture;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;
@@ -23,6 +24,7 @@ public class UserServiceSpy implements UserService {
     private int invocationsOf_deleteUserById;
     private int invocationsOf_updateUser;
     private int invocationsOf_changePassword;
+    private int invocationsOf_getUserById;
 
     public int getInvocationsOf_registerUser() {
         return invocationsOf_registerUser;
@@ -62,6 +64,10 @@ public class UserServiceSpy implements UserService {
 
     public int getInvocationsOf_getUserDTOById() {
         return invocationsOf_getUserDTOById;
+    }
+
+    public int getInvocationsOf_getUserById() {
+        return invocationsOf_getUserById;
     }
 
     @Override
@@ -120,4 +126,12 @@ public class UserServiceSpy implements UserService {
     public void changePassword(String id, PasswordChangeDTO passwordChangeDTO) {
         invocationsOf_changePassword++;
     }
+
+    @Override
+    public User getUserById(String userId) {
+        invocationsOf_getUserById++;
+        return UserFixture.user();
+    }
+
+
 }

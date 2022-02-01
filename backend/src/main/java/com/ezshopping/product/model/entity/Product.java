@@ -2,7 +2,7 @@ package com.ezshopping.product.model.entity;
 
 import com.ezshopping.location.cart.model.entity.Cart;
 import com.ezshopping.common.AbstractEntity;
-import com.ezshopping.order.orderline.model.entity.OrderLineEntity;
+import com.ezshopping.order.orderline.model.entity.OrderLine;
 import com.ezshopping.stock.model.entity.Stock;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
@@ -53,5 +53,5 @@ public class Product extends AbstractEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private Set<OrderLineEntity> orderLines;
+    private Set<OrderLine> orderLines;
 }

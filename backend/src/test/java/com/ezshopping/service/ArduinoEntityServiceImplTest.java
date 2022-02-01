@@ -1,5 +1,6 @@
 package com.ezshopping.service;
 
+import com.ezshopping.arduino.model.entity.PayloadData;
 import com.ezshopping.arduino.repository.ArduinoRepository;
 import com.ezshopping.arduino.service.ArduinoServiceImpl;
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
@@ -14,7 +15,12 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ArduinoServiceImplTest {
+class ArduinoEntityServiceImplTest {
+
+    private static final String WS_TOKEN = "WS_TOKEN";
+    private static final String WS_NAME = "WS_NAME";
+    private static final String READ_TYPE = "READ_TYPE";
+    private static final String DATA = "DATA";
 
     @Mock
     private ArduinoRepository arduinoRepository;
@@ -23,16 +29,21 @@ class ArduinoServiceImplTest {
     @InjectMocks
     private ArduinoServiceImpl arduinoService;
 
-    private String testPayload = "uuid;WS1;10 20 30 40;";
+    private PayloadData payloadData;
 
     @BeforeEach
     void setup() {
-        when(arduinoRepository.existsByIdAndWorkstationName("uuid", "WS1")).thenReturn(true);
+        when(arduinoRepository.existsByIdAndWorkstationName("testToken", "testName")).thenReturn(true);
+        payloadData = new PayloadData();
+        payloadData.setWorkstationId("testToken");
+        payloadData.setWorkstationName("testName");
+        payloadData.setReadType("testType");
+        payloadData.setData("testData");
     }
 
     @Test
     void isControllerKnown_whenInvokedWithValidPayload_returnsTrue() {
-        assertThat(arduinoService.isControllerKnown(testPayload)).isTrue();
+        assertThat(arduinoService.isControllerKnown(payloadData)).isTrue();
     }
 
 

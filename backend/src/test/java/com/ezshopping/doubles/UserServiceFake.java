@@ -63,4 +63,9 @@ public class UserServiceFake implements UserService {
     public void changePassword(String id, PasswordChangeDTO passwordChangeDTO) {
 
     }
+
+    @Override
+    public User getUserById(String userId) {
+        return UserFixture.user();
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { Product } from '../Model/Article';
 import { WebSocketMessage } from '../Model/WebSocketMessage';
@@ -50,8 +50,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   connectWS() {
     this.socket.subscribe(
       message => {
-        console.log("Response: " + message.payload);
-        this.rfId = message.payload;
+        console.log("Response: " + message.productId);
+        this.rfId = message.productId;
         this.barcode = '';
         this.placeholder = 'RFID:' + this.rfId;
         this.readyToSubmit = true;

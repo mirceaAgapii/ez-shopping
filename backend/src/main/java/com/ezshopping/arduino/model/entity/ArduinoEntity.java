@@ -15,8 +15,10 @@ import javax.persistence.Table;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class Arduino extends AbstractEntity {
+public class ArduinoEntity extends AbstractEntity {
 
     @Column(name = "workstation_name")
     private String workstationName;
+    @Column(name = "workstation_type")
+    private String workstationType;
 }

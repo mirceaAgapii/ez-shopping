@@ -28,4 +28,6 @@ public interface UserService {
     void updateUser(UserDTO updatedUser) throws UsernameNotFoundException;
 
     void changePassword(String id, PasswordChangeDTO passwordChangeDTO);
+
+    User getUserById(String userId);
 }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../Model/User';
 import { UserRestService } from '../services/rest/user/user.rest.service';
@@ -18,7 +19,8 @@ export class MainComponent implements OnInit {
   showSpinner: boolean;
 
   constructor(private userSrvice: UserService,
-    private restService: UserRestService) {
+    private restService: UserRestService,
+    private router:Router) {
       this.showSpinner = false;
     }
 
@@ -29,5 +31,9 @@ export class MainComponent implements OnInit {
 
   getAllUsers() {
     this.loadData =  this.restService.getAllUsers().subscribe(data => this.users = data);
+  }
+
+  openStation() {
+    this.router.navigate(['/station']);
   }
 }

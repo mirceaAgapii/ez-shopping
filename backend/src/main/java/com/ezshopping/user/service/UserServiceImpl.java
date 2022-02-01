@@ -133,7 +133,7 @@ public class UserServiceImpl implements  UserService {
         } else return userRepository.existsByEmail(userDTO.getEmail());
     }
 
-    User getUserById(String id) throws UserNotFoundException {
+    public User getUserById(String id) throws UserNotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }

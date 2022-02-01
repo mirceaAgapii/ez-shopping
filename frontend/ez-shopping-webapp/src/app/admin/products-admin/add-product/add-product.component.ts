@@ -72,8 +72,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   connectWS() {
     this.socket.subscribe(
       message => {
-        console.log("Response: " + message.payload);
-        this.defaultProduct.rfId = message.payload;
+        console.log("Response: " + message.productId);
+        this.defaultProduct.rfId = message.productId;
       },
       error => {
         console.error(error);

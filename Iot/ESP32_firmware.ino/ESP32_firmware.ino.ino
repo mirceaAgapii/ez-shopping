@@ -10,15 +10,15 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
 HTTPClient http;
 
 
-const char* ssid = "BioShok";
-const char* password = "07121991";
+//const char* ssid = "BioShok";
+//const char* password = "07121991";
 
-//const char*  ssid = "Inther";
-//const char*  password = "inth3rmoldova";
+const char*  ssid = "Inther";
+const char*  password = "inth3rmoldova";
 
 //Your Domain name with URL path or IP address with path
-//String serverName = "http://172.17.44.81:8080/api/arduino";
-String serverName = "http://192.168.10.110:8080/api/arduino";
+String serverName = "http://172.17.44.29:8080/api/arduino";
+//String serverName = "http://192.168.10.110:8080/api/arduino";
 
 //security:
 const char *security_token = "ac92c0cf-417e-4915-8520-0a8f2fb2b4ef";
@@ -77,10 +77,12 @@ void loop() {
   if(readData != lastRead) {
     lastRead = readData;
     Serial.println("Send request for new id");
-    sendData(readData);
+    
   } else {
     Serial.println("The same id read");
+    delay(1000);
   }
+  sendData(readData);
   
 }
 
