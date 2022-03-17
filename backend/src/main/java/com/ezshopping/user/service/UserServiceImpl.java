@@ -92,7 +92,7 @@ public class UserServiceImpl implements  UserService {
         user.setRole(UserRole.CLIENT.getValue());
         userRepository.save(user);
 
-        emailSender.sendEmail(user);
+        //emailSender.sendEmail(user);
     }
 
     @Override
