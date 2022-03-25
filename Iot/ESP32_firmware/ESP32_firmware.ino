@@ -10,19 +10,22 @@
 #define RXD2 16
 #define TXD2 17
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
+// Create MFRC522 instance.
+MFRC522 mfrc522(SS_PIN, RST_PIN);   
 
+// Create HTTP instance.
 HTTPClient http;
 
-const char* ssid = "BioShok";
-const char* password = "07121991";
+//define WiFi connection credentials
+//const char* ssid = "BioShok";
+//const char* password = "07121991";
 
-//const char*  ssid = "Inther";
-//const char*  password = "inth3rmoldova";
+const char*  ssid = "Inther";
+const char*  password = "inth3rmoldova";
 
 //Your Domain name with URL path or IP address with path
-//String serverName = "http://172.17.44.134:8080/api/arduino";
-String serverName = "http://192.168.10.105:8080/api/arduino";
+String serverName = "http://172.17.41.51:8080/api/arduino";
+//String serverName = "http://192.168.10.105:8080/api/arduino";
 
 //security:
 const char *security_token = "ac92c0cf-417e-4915-8520-0a8f2fb2b4ef";
@@ -33,8 +36,9 @@ String lastRead;
 String barcode;
 
 void setup() {
-
+  //Initialize Serial port
   Serial.begin(9600); 
+  //Initialize Serial port 2 for GM67 barcode scanner
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
   Serial.println();
   Serial.println("Serial Txd is on pin: "+String(TXD2));
@@ -49,7 +53,8 @@ void setup() {
   delay(500);   
   digitalWrite(GREEN_LED_PIN, LOW); 
   digitalWrite(RED_LED_PIN, LOW); 
-  
+
+  //Connect to WiFi
   WiFi.begin(ssid, password);
   Serial.println("Connecting");
   while(WiFi.status() != WL_CONNECTED) {
@@ -60,8 +65,10 @@ void setup() {
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
 
-  SPI.begin();      // Initiate  SPI bus
-  mfrc522.PCD_Init();   // Initiate MFRC522
+  // Initiate  SPI bus
+  SPI.begin();     
+  // Initiate MFRC522 
+  mfrc522.PCD_Init();   
 
   Serial.println("Approximate your card to the reader...");
   Serial.println("Or scan a QR code...");
@@ -74,32 +81,37 @@ void loop() {
   handleQrScan();
 }
 
+/*
+* Method to handle scans from Barcode scanner
+* 
+*/
 void handleQrScan() {
+  //Check for any barcode scans
   while (Serial2.available()) {
     barcode += char(Serial2.read());
   }
   if (barcode.length() > 0) {
-    Serial.print("Received QR scan: ");
     digitalWrite(RED_LED_PIN, HIGH);
+    //Show scanned barcode/QR on serial monitor
+    Serial.print("Received QR scan: ");
     Serial.println(barcode);
     barcode.trim();
-    delay(300);
+    //Send data to server
     sendData(barcode, "/qr");
     barcode = "";
     digitalWrite(RED_LED_PIN, LOW);
   }
 }
 
+/*
+* Method to handle reads from RF reader
+*/
 void handleRfRead() {
-    // Look for new cards
-  if (!mfrc522.PICC_IsNewCardPresent()) 
-  {
+  // Look for new cards
+  if (!(mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())) {
     return;
   }
-  if (!mfrc522.PICC_ReadCardSerial()) 
-  {
-    return;
-  }
+
   digitalWrite(GREEN_LED_PIN, HIGH);
   //Show UID on serial monitor
   Serial.print("UID tag :");
@@ -113,9 +125,6 @@ void handleRfRead() {
      content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   Serial.println();
-
-  delay(300);
-  digitalWrite(GREEN_LED_PIN, LOW);
   
   content.toUpperCase();
   String readData = content.substring(1);
@@ -123,13 +132,24 @@ void handleRfRead() {
     lastRead = readData;
     Serial.println("Send request for new id");
   } else {
+    //The last UID was scanned again. Add a delay to prevent accidental double scan
     Serial.println("The same id read");
-    delay(1000);
+    delay(500);
+    digitalWrite(GREEN_LED_PIN, LOW);
     return;
   }
+  //Send data to server
   sendData(readData, "/rf");
+
+  digitalWrite(GREEN_LED_PIN, LOW);
 }
 
+/*
+* Methond for sending data to server by using REST API
+* 
+* dataStr  data to be sent
+* mapping  enpoint suffix
+*/
 void sendData(String dataStr, String mapping) {
    //Check WiFi connection status before sending HTTP request
    if(WiFi.status()== WL_CONNECTED){
