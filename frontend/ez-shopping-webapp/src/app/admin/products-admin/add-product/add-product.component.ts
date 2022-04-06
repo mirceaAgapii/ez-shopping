@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { WebSocketMessage } from 'src/app/Model/WebSocketMessage';
 import { ProductRestService } from 'src/app/services/rest/product/product-rest.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-add-product',
@@ -16,14 +17,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   defaultProduct: Product = new Product();
   statuses!: any[];
-  socket: WebSocketSubject<WebSocketMessage> = webSocket('ws://localhost:8080/web-socket/WS01');
+  socket: WebSocketSubject<WebSocketMessage> = webSocket('ws://localhost:8080/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
 
   @Output()
   submitted = new EventEmitter();
   articleDialog: boolean = true;
 
   constructor(private productService: ProductRestService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.statuses = [
@@ -70,8 +72,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   connectWS() {
     this.socket.subscribe(
       message => {
-        console.log("Response: " + message.payload);
-        this.defaultProduct.rfId = message.payload;
+        console.log("Response: " + message.productId);
+        this.defaultProduct.rfId = message.productId;
       },
       error => {
         console.error(error);

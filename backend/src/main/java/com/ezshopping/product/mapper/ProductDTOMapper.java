@@ -1,8 +1,8 @@
 package com.ezshopping.product.mapper;
 
 import com.ezshopping.common.Mapper;
-import com.ezshopping.product.model.Product;
-import com.ezshopping.product.model.ProductDTO;
+import com.ezshopping.product.model.entity.Product;
+import com.ezshopping.product.model.dto.ProductDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,11 +14,11 @@ public class ProductDTOMapper implements Mapper<Product, ProductDTO> {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .price(entity.getPrice())
-                .quantity(entity.getQuantity())
                 .barcode(entity.getBarcode())
                 .category(entity.getCategory())
                 .status(entity.getStatus())
                 .brand(entity.getBrand())
+                .rfId(entity.getRfId())
                 .build();
     }
 }

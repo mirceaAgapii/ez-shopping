@@ -52,17 +52,7 @@ export class UserRestService {
       password : user.password,
       email : user.email
     }
-    this.http.post<any>(environment.restUrl + '/users/save', body).subscribe({
-      next: data => {
-        console.log('success');
-        if(!this.authenticationService.isAuthenticated()) {
-          this.router.navigate(['/login']);
-        }
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
+    return this.http.post<any>(environment.restUrl + '/users/save', body);
   }
 
   updateUser(user: User) {

@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping(EndpointsAPI.API + "/arduino")
 @Slf4j
@@ -19,8 +18,13 @@ public class ArduinoControllerREST {
         this.arduinoService = arduinoService;
     }
 
-    @PostMapping
-    public void onScan(@RequestBody String payload) {
+    @PostMapping("/rf")
+    public void onRFRead(@RequestBody String payload) {
         arduinoService.handleRFRead(payload);
+    }
+
+    @PostMapping("/qr")
+    public void onQRCodeScan(@RequestBody String payload) {
+        arduinoService.handleQRScan(payload);
     }
 }

@@ -1,30 +1,9 @@
-<app-add-product class="add_prod" [hidden]="!addNewProduct" (submitted)="closeComp()"></app-add-product>
+<h3>Search for a product</h3>
+<h4>Enter a barcode or scan the RFID</h4>
 
-<div class="card" [ngClass]="addNewProduct ? 'cont' : ''">
-  <div class="">
-    <p-button type="button" icon="pi pi-plus" styleClass="p-button-text" (onClick)="enableAddProductComp()"></p-button>
-    <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text" (onClick)="loadProducts()"></p-button>
-  </div>
+<input type="text" name="barcode" [(ngModel)]="barcode" [placeholder]="placeholder" [disabled]="placeholder === 'RFID scanned'"><br>
 
-  <p-table [value]="products" [paginator]="true" [rows]="10" [totalRecords]="products.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Quantity</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-product>
-      <tr>
-        <td>{{product.name}}</td>
-        <td>{{product.status}}</td>
-        <td>{{product.category}}</td>
-        <td>{{product.price}}</td>
-        <td>{{product.quantity}}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+<button class="btn btn-primary" [disabled]="!readyToSubmit" (click)="searchProduct()">Search</button>
+
+
+<app-product-info [product]="product"></app-product-info>

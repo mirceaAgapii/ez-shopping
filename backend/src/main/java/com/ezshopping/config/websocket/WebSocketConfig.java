@@ -1,6 +1,5 @@
 package com.ezshopping.config.websocket;
 
-
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
-
 
 @Configuration
 @EnableWebSocket
@@ -35,10 +33,10 @@ public class WebSocketConfig implements WebSocketConfigurer {
                                            org.springframework.web.socket.WebSocketHandler wsHandler, Map<String, Object> attributes)  {
                 // Get the URI segment corresponding to the station id during handshake
                 String path = request.getURI().getPath();
-                String auctionId = path.substring(path.lastIndexOf('/') + 1);
+                String stationId = path.substring(path.lastIndexOf('/') + 1);
 
                 // This will be added to the websocket session
-                attributes.put("station", auctionId);
+                attributes.put("station", stationId);
                 return true;
             }
 

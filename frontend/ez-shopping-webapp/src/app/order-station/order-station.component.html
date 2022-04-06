@@ -1,0 +1,14 @@
+<p>Scan QR code</p>
+
+<div [hidden]="hideCart">
+    Order no.{{orderId}}
+</div>
+
+<div class="cart" [hidden]="hideCart">
+    <ul *ngFor="let orderline of orderlines">
+        <li>{{orderline.productName}}</li>
+        <li>{{orderline.olQty}}</li>
+    </ul>
+</div>
+
+<button class="btn btn-primary" [hidden]="hideCart" (click)="finishOrder()">Finish order</button>

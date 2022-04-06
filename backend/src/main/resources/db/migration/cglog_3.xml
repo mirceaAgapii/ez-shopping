@@ -37,7 +37,6 @@
             <column name="category" value="Sport"/>
             <column name="description" value="Running shoes"/>
             <column name="price" valueNumeric="150.00"/>
-            <column name="quantity" valueNumeric="5"/>
             <column name="brand" value="Mizuno"/>
             <column name="barcode" value="1000000000001"/>
         </insert>
@@ -48,7 +47,6 @@
             <column name="category" value="Sport"/>
             <column name="description" value="Shorts for running"/>
             <column name="price" valueNumeric="25.00"/>
-            <column name="quantity" valueNumeric="3"/>
             <column name="brand" value="Mizuno"/>
             <column name="barcode" value="1000000000002"/>
         </insert>
@@ -59,7 +57,6 @@
             <column name="category" value="Sport"/>
             <column name="description" value="Running shoes"/>
             <column name="price" valueNumeric="95.00"/>
-            <column name="quantity" valueNumeric="3"/>
             <column name="brand" value="Asics"/>
             <column name="barcode" value="1000000000003"/>
         </insert>
@@ -67,6 +64,12 @@
         <insert tableName="ez_iot_controller">
             <column name="id" value="ac92c0cf-417e-4915-8520-0a8f2fb2b4ef"/>
             <column name="workstation_name" value="WS01"/>
+            <column name="workstation_type" value="RECEIVING"/>
+        </insert>
+        <insert tableName="ez_iot_controller">
+            <column name="id" value="ac92c0cf-417e-4915-8520-123456789123"/>
+            <column name="workstation_name" value="WS02"/>
+            <column name="workstation_type" value="CHECKOUT"/>
         </insert>
 
     </changeSet>

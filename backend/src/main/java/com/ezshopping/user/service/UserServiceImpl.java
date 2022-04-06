@@ -1,57 +1,56 @@
 package com.ezshopping.user.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.mail.service.EmailSender;
 import com.ezshopping.user.UserRole;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
-import com.ezshopping.user.model.PasswordChangeDTO;
-import com.ezshopping.user.model.UserDTO;
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.dto.PasswordChangeDTO;
+import com.ezshopping.user.model.dto.UserDTO;
+import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.repository.UserRepository;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
-import lombok.RequiredArgsConstructor;
+import com.ezshopping.util.Utilities;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import static java.util.Objects.*;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
-class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements  UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final Mapper<User, UserDTO> mapper;
+    private final EmailSender emailSender;
 
-    //TODO: move to a separate service
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username [" + username + "] not found in database"));
-        log.info("User found in database: {}", username);
-
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           Mapper<User, UserDTO> mapper,
+                           EmailSender emailSender) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.mapper = mapper;
+        this.emailSender = emailSender;
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(mapper::map).collect(Collectors.toList());
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public List<UserDTO> getAllAsDTO() {
+        return getAll().stream().map(mapper::map).collect(Collectors.toList());
+    }
+
+    @Override
     public User getUserByUsername(String username) throws UserNotFoundException{
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username [" + username + "] not found"));
@@ -64,7 +63,6 @@ class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDTO getUserByEmail(String email) throws UserNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with email [" + email + "] not found"));
@@ -77,10 +75,9 @@ class UserServiceImpl implements UserDetailsService, UserService {
         return mapper.map(user);
     }
 
-
     @Override
     @Transactional
-    public void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException {
+    public void registerUser(UserDTO userDTO) throws UserAlreadyInDatabaseException, MessagingException, IOException {
         if(userExists(userDTO)) {
             log.warn("User with username [{}] or email [{}] is already in database", userDTO.getUsername(), userDTO.getEmail());
             throw new UserAlreadyInDatabaseException("User is already in db");
@@ -88,12 +85,14 @@ class UserServiceImpl implements UserDetailsService, UserService {
 
         log.info("User with id [{}] is not known in database. Trying to save him", userDTO.getUsername());
         User user = new User();
-        user.setId(UUID.randomUUID().toString());
+        user.setId(Utilities.getNewUuid());
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
         user.setRole(UserRole.CLIENT.getValue());
         userRepository.save(user);
+
+        //emailSender.sendEmail(user);
     }
 
     @Override
@@ -129,16 +128,12 @@ class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     private boolean userExists(UserDTO userDTO) throws UserNotFoundException{
-        //TODO: make difference between cases with username already exists and email already exists
         if (userRepository.existsByUsername(userDTO.getUsername())) {
             return true;
-        } else if (userRepository.existsByEmail(userDTO.getEmail())) {
-            return true;
-        }
-        return false;
+        } else return userRepository.existsByEmail(userDTO.getEmail());
     }
 
-    private User getUserById(String id) throws UserNotFoundException {
+    public User getUserById(String id) throws UserNotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }

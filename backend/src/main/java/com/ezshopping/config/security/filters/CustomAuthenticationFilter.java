@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,13 +29,17 @@ import java.util.stream.Collectors;
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
     private final UserService userService;
 
     private final int ACCESS_TOKEN_VALIDITY = 86400000;
     private final int REFRESH_TOKEN_VALIDITY = 86400000;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager,
+                                      UserDetailsService userDetailsService,
+                                      UserService userService) {
         this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
         this.userService = userService;
     }
 

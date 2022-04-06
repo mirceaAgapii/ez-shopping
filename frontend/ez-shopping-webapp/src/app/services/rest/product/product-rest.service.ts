@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Product } from 'src/app/Model/Article';
 import { environment } from 'src/environments/environment';
 
@@ -12,6 +13,15 @@ export class ProductRestService {
 
   getAllProducts() {
     return this.http.get<Product[]>(environment.restUrl + '/products' );
+  }
+
+  getProduct(barcode: string, rfId: string) {
+    if(barcode) {
+      return this.http.get<Product>(environment.restUrl + '/products/product?barcode=' + barcode);
+    } else if(rfId) {
+      return this.http.get<Product>(environment.restUrl + '/products/product?rfId=' + rfId);
+    }
+    return null;
   }
 
   saveProduct(product: Product) {

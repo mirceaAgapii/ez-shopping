@@ -11,7 +11,5 @@ import static com.ezshopping.api.EndpointsAPI.*;
 @Slf4j
 public class OrderControllerREST {
 
-    public ResponseEntity getAllEntities() {
-        return null;
-    }
+
 }

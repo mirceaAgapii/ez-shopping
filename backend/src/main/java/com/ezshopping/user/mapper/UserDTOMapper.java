@@ -1,8 +1,8 @@
 package com.ezshopping.user.mapper;
 
 import com.ezshopping.common.Mapper;
-import com.ezshopping.user.model.UserDTO;
-import com.ezshopping.user.model.User;
+import com.ezshopping.user.model.dto.UserDTO;
+import com.ezshopping.user.model.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
