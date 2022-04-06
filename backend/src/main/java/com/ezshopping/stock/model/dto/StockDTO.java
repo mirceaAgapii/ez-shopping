@@ -2,12 +2,16 @@ package com.ezshopping.stock.model.dto;
 
 import com.ezshopping.location.model.dto.LocationDTO;
 import com.ezshopping.product.model.dto.ProductDTO;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class StockDTO {
 

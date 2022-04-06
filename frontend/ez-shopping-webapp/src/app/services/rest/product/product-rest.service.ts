@@ -12,14 +12,14 @@ export class ProductRestService {
   constructor(private http: HttpClient) { }
 
   getAllProducts() {
-    return this.http.get<Product[]>(environment.restUrl + '/products' );
+    return this.http.get<Product[]>(environment.restUrl + environment.api + '/products' );
   }
 
   getProduct(barcode: string, rfId: string) {
     if(barcode) {
-      return this.http.get<Product>(environment.restUrl + '/products/product?barcode=' + barcode);
+      return this.http.get<Product>(environment.restUrl + environment.api + '/products/product?barcode=' + barcode);
     } else if(rfId) {
-      return this.http.get<Product>(environment.restUrl + '/products/product?rfId=' + rfId);
+      return this.http.get<Product>(environment.restUrl + environment.api + '/products/product?rfId=' + rfId);
     }
     return null;
   }
@@ -36,7 +36,7 @@ export class ProductRestService {
       rfId: product.rfId
     }
 
-    this.http.post<any>(environment.restUrl + '/products/save', body).subscribe({
+    this.http.post<any>(environment.restUrl + environment.api + '/products/save', body).subscribe({
       next: data => {
         console.log('successful update');
       },

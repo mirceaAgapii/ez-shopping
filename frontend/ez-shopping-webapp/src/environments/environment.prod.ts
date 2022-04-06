@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  restUrl: 'https://backend-y4lsm.ondigitalocean.app',
+  api: '/api'
 };

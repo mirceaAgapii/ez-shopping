@@ -29,7 +29,7 @@ export class UserRestService {
     body = body.set('username', username);
     body = body.set('password', password);
     return this.http.post<HttpResponse<Object>>(
-        environment.restUrl + '/login', 
+        environment.restUrl + environment.api + '/login', 
         body, 
         {observe: 'response'}
       );
@@ -52,7 +52,7 @@ export class UserRestService {
       password : user.password,
       email : user.email
     }
-    return this.http.post<any>(environment.restUrl + '/users/save', body);
+    return this.http.post<any>(environment.restUrl + environment.api + '/users/save', body);
   }
 
   updateUser(user: User) {
@@ -63,7 +63,7 @@ export class UserRestService {
       email : user.email,
       role : user.role
     }
-    this.http.patch<any>(environment.restUrl + '/users/user', body).subscribe({
+    this.http.patch<any>(environment.restUrl + environment.api + '/users/user', body).subscribe({
       next: data => {
         console.log('successful update');
       },
@@ -74,7 +74,7 @@ export class UserRestService {
   }
 
   refreshToken()  {
-     return this.http.get<HttpResponse<Object>>(environment.restUrl + '/users/token/refresh', {
+     return this.http.get<HttpResponse<Object>>(environment.restUrl + environment.api + '/users/token/refresh', {
        headers: this.getRefreshTokenHeader(),
        observe: 'response'
       });
@@ -82,17 +82,17 @@ export class UserRestService {
 
   getAllUsers(): Observable<Array<User>>
   {
-    return this.http.get<Array<User>>(environment.restUrl + '/users');
+    return this.http.get<Array<User>>(environment.restUrl + environment.api + '/users');
 
   }
 
   getUserById(id: string) {
-    return this.http.get<User>(environment.restUrl + '/users/user?id=' + id);
+    return this.http.get<User>(environment.restUrl + environment.api + '/users/user?id=' + id);
   }
 
   deleteUsers(user: User) {
-    console.log(environment.restUrl + '/users/user?id=' + user.id);
-    this.http.delete<any>(environment.restUrl + '/users/user?id=' + user.id).subscribe(
+    console.log(environment.restUrl + environment.api + '/users/user?id=' + user.id);
+    this.http.delete<any>(environment.restUrl + environment.api + '/users/user?id=' + user.id).subscribe(
       data => console.log(data)
     );
   }
@@ -103,7 +103,7 @@ export class UserRestService {
       newPassword : newPass
     }
 
-    return this.http.patch<any>(environment.restUrl + '/users/user/password?id=' + userId, body);
+    return this.http.patch<any>(environment.restUrl + environment.api + '/users/user/password?id=' + userId, body);
   }
 
   private getRefreshTokenHeader(): HttpHeaders {
