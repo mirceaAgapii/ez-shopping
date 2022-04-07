@@ -39,7 +39,7 @@ pipeline {
                    //     dockerImage = docker.build("backend:v1.0", , "-f pipelines/Dockerfile .")
                    //  }
                  //}
-                sh 'docker build -t backend:v1.0 -f backend/Dockerfile .'
+                sh 'docker build -t backend:v1.0 -f backend/pipelines/Dockerfile .'
             }
         }
          stage('DigitalOcean Login') {
