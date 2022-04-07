@@ -6,6 +6,7 @@ pipeline {
     }
 
     environment {
+      def dockerImage = null;
       VERSION = VersionNumber([
         versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_ID}',
         projectStartDate : '2022-04-01'
@@ -20,24 +21,27 @@ pipeline {
                     projectArtifactId = pom.artifactId
                     projectVersion = pom.version
                 }
-                echo "Building ${projectArtifactId}:${projectVersion}"
+                echo 'Building ${projectArtifactId}:${projectVersion}'
             }
         }
         stage("Test"){
             steps {
-                sh "mvn -version"
+                sh 'mvn -version'
                // bat "mvn test"
             }
         }
         stage("Build JAR file"){
             steps{
-                sh "mvn install -f backend/pom.xml -Dmaven.test.skip=true"
+                sh 'mvn install -f backend/pom.xml -Dmaven.test.skip=true'
             }
         }
         stage("Build docker image"){
             steps {
                 echo "Building backend docker image "
-                sh   "docker build -t backend:"$VERSION" -f backend/Dockerfile ."
+                 dir('Backend/') {
+                    dockerImage = docker.build("backend", , "-f pipelines/Dockerfile .")
+                 }
+                //sh   "docker build -t backend:"$VERSION" -f backend/Dockerfile ."
             }
         }
          stage('DigitalOcean Login') {
@@ -48,13 +52,13 @@ pipeline {
          stage("Pushing backend image to DockerHub"){
              steps {
                  echo "Pushing backend image to DigitalOcean container registry"
-                 sh "docker tag backend:"$VERSION" registry.digitalocean.com/ezshopping/backend"
-                 sh "docker push registry.digitalocean.com/ezshopping/backend"
+                 sh ('docker tag backend:"$VERSION" registry.digitalocean.com/ezshopping/backend')
+                 sh 'docker push registry.digitalocean.com/ezshopping/backend'
              }
          }
         stage("Deploy"){
             steps{
-                echo "Server is fully up and running"
+                echo 'Server is fully up and running'
 
             }
         }
