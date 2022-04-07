@@ -33,13 +33,13 @@ pipeline {
         }
         stage("Build docker image"){
             steps {
-                script {
+                //script {
                      echo "Building backend docker image "
-                     dir('Backend/') {
-                        dockerImage = docker.build("backend:v1.0", , "-f pipelines/Dockerfile .")
-                     }
-                 }
-                //sh   "docker build -t backend:"$VERSION" -f backend/Dockerfile ."
+                  //   dir('Backend/') {
+                   //     dockerImage = docker.build("backend:v1.0", , "-f pipelines/Dockerfile .")
+                   //  }
+                 //}
+                sh 'docker build -t backend:v1.0 -f backend/Dockerfile .'
             }
         }
          stage('DigitalOcean Login') {
