@@ -50,21 +50,21 @@ pipeline {
                  sh ('docker push registry.digitalocean.com/ezshopping/backend')
              }
          }
-        stage('Deploy') {
-            stages {
-                stage('deploy apps') {
-                    steps {
-                        script {
-                            sh('docker stop backend')
-                            sh('docker rm backend')
-                            sh('docker image rm registry.digitalocean.com/ezshopping/backend')
-                            sh('docker pull registry.digitalocean.com/ezshopping/backend')
-                            sh('docker run -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e DB_DBNAME=$DB_DBNAME -e PSQL_DATASOURCE_USERNAME=$PSQL_DATASOURCE_USERNAME -e PSQL_DATASOURCE_PASSWORD=$PSQL_DATASOURCE_PASSWORD -e SECRET_ALGORITHM=$SECRET_ALGORITHM -p 8090:8090 --name backend -t registry.digitalocean.com/ezshopping/backend')
-                        }
-                    }
-                }
-            }
-        }
+//         stage('Deploy') {
+//             stages {
+//                 stage('deploy apps') {
+//                     steps {
+//                         script {
+//                             sh('docker stop backend')
+//                             sh('docker rm backend')
+//                             sh('docker image rm registry.digitalocean.com/ezshopping/backend')
+//                             sh('docker pull registry.digitalocean.com/ezshopping/backend')
+//                             sh('docker run -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e DB_DBNAME=$DB_DBNAME -e PSQL_DATASOURCE_USERNAME=$PSQL_DATASOURCE_USERNAME -e PSQL_DATASOURCE_PASSWORD=$PSQL_DATASOURCE_PASSWORD -e SECRET_ALGORITHM=$SECRET_ALGORITHM -p 8090:8090 --name backend -t registry.digitalocean.com/ezshopping/backend')
+//                         }
+//                     }
+//                 }
+//             }
+//         }
     }
     post {
        failure {
