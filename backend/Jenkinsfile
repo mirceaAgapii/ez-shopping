@@ -33,18 +33,14 @@ pipeline {
         }
         stage("Build docker image"){
             steps {
-                //script {
-                     echo "Building backend docker image "
-                  //   dir('Backend/') {
-                   //     dockerImage = docker.build("backend:v1.0", , "-f pipelines/Dockerfile .")
-                   //  }
-                 //}
-                sh 'docker build -t backend:v1.0 -f backend/pipelines/Dockerfile .'
+               echo "Building backend docker image "
+
+               sh 'docker build -t backend:v1.0 -f backend/pipelines/Dockerfile .'
             }
         }
          stage('DigitalOcean Login') {
            steps {
-             sh 'echo doctl registry login --access-token dop_v1_dc4f7fceee86f0e4346955144318f4be410ad3450d617e83a4bf1508e2e8415a'
+             sh 'echo docker login -u dop_v1_d5f929bb73399776d033f2d488da9ad2db23180421faecb2b6c5f9ce42682380 -p dop_v1_d5f929bb73399776d033f2d488da9ad2db23180421faecb2b6c5f9ce42682380 registry.digitalocean.com/ezshopping/backend'
            }
          }
          stage("Pushing backend image to DockerHub"){
