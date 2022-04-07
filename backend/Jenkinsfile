@@ -35,7 +35,7 @@ pipeline {
             steps {
                echo "Building backend docker image "
 
-               sh ('docker build -t backend:v1.0 -f backend/pipelines/Dockerfile .')
+               sh ('docker build -t backend -f backend/pipelines/Dockerfile .')
             }
         }
          stage('DigitalOcean Login') {
@@ -46,21 +46,29 @@ pipeline {
          stage("Pushing backend image to DigitalOcean"){
              steps {
                  echo "Pushing backend image to DigitalOcean container registry"
-                 sh ('docker tag backend:v1.0 registry.digitalocean.com/ezshopping/backend')
+                 sh ('docker tag backend registry.digitalocean.com/ezshopping/backend')
                  sh ('docker push registry.digitalocean.com/ezshopping/backend')
              }
          }
-        stage("Deploy"){
-            steps{
-                echo 'Server is fully up and running'
-
+        stage('Deploy') {
+            stages {
+                stage('deploy apps') {
+                    steps {
+                        script {
+                            sh('docker stop backend')
+                            sh('docker rm backend')
+                            sh('docker image rm registry.digitalocean.com/ezshopping/backend')
+                            sh('docker pull registry.digitalocean.com/ezshopping/backend')
+                            sh('docker run -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e DB_DBNAME=$DB_DBNAME -e PSQL_DATASOURCE_USERNAME=$PSQL_DATASOURCE_USERNAME -e PSQL_DATASOURCE_PASSWORD=$PSQL_DATASOURCE_PASSWORD -e SECRET_ALGORITHM=$SECRET_ALGORITHM -p 8090:8090 --name backend -t registry.digitalocean.com/ezshopping/backend')
+                        }
+                    }
+                }
             }
         }
     }
     post {
-        always {
-            cleanWs()
-            sh 'docker logout'
-        }
+       failure {
+           emailext body: 'Last build failed. Please check console output', subject: 'EzShopping - Build failed', to: 'ez.shopping.app@gmail.com'
+       }
     }
 }
