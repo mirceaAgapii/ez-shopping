@@ -22,12 +22,13 @@ public class ArchitectureTest {
             .layer("Config").definedBy("..config..")
             .layer("Entities").definedBy("..entity..")
             .layer("Mapper").definedBy("..mapper..")
+            .layer("Handler").definedBy("..handler..")
 
             .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
-            .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller", "Service", "Mapper", "Config")
+            .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller", "Service", "Mapper", "Config", "Handler")
             .whereLayer("Repository").mayOnlyBeAccessedByLayers("Service")
             .whereLayer("Entities").mayOnlyBeAccessedByLayers("Repository", "Service", "Mapper", "Config")
-            .whereLayer("Mapper").mayOnlyBeAccessedByLayers("Mapper", "Service");
+            .whereLayer("Mapper").mayOnlyBeAccessedByLayers("Mapper", "Service", "Handler");
 
     @ArchTest
     static final ArchRule doNotUseFiledInjection = ArchRuleDefinition

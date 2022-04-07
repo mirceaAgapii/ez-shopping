@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  frontend: 
+    image: registry.digitalocean.com/ezshopping/frontend
+    build: 
+      context: ../frontend/ez-shopping-webapp
+      dockerfile: pipelines/Dockerfile
+      args:
+        configuration: development
+    ports:
+      - 4200:4200
+    expose:
+      - 4200
+    depends_on:
+      - backend
+
+  backend:
+    image: registry.digitalocean.com/ezshopping/backend
+    build:
+      context: ../backend
+      dockerfile: pipelines/Dockerfile
+    environment:
+      DB_HOST: 'localhost'
+      DB_DBNAME: 'ezdb'
+      DB_USERNAME: 'ez_user'
+      DB_PASSWORD: 'ez_password'
+      HTTP_PORT: 8080
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13.6
+    restart: always
+    environment:
+      POSTGRES_DATABASE: 'ezdb'
+      # So you don't have to use root, but you can if you like
+      POSTGRES_USER: 'ez_user'
+      # You can use whatever password you like
+      POSTGRES_PASSWORD: 'ez_password'
+      # Password for root access
+      POSTGRES_ROOT_PASSWORD: 'password'
+    ports:
+      # <Port exposed> : < POSTGRES Port running inside container>
+      - '5432:5432'
+    expose:
+      # Opens port 5432 on the container
+      - '5432'
+      # Where our data will be persisted
+    volumes:
+      - db:/var/lib/postgresql/data
+# Names our volume
+volumes:
+  db:
