@@ -35,19 +35,19 @@ pipeline {
             steps {
                echo "Building backend docker image "
 
-               sh 'docker build -t backend:v1.0 -f backend/pipelines/Dockerfile .'
+               sh ('docker build -t backend:v1.0 -f backend/pipelines/Dockerfile .')
             }
         }
          stage('DigitalOcean Login') {
            steps {
-             sh 'echo docker login -u dop_v1_91f72860268a78226dc8be27ccc6b9e6322bb3b5e615a319f51d9887e4353c45 -p dop_v1_91f72860268a78226dc8be27ccc6b9e6322bb3b5e615a319f51d9887e4353c45 registry.digitalocean.com/ezshopping'
+             sh ('echo docker login -u $DO_TOKEN -p $DO_TOKEN registry.digitalocean.com/ezshopping')
            }
          }
          stage("Pushing backend image to DigitalOcean"){
              steps {
                  echo "Pushing backend image to DigitalOcean container registry"
                  sh ('docker tag backend:v1.0 registry.digitalocean.com/ezshopping/backend')
-                 sh 'docker push registry.digitalocean.com/ezshopping/backend'
+                 sh ('docker push registry.digitalocean.com/ezshopping/backend')
              }
          }
         stage("Deploy"){
