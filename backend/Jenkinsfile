@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "Maven_3.8.1"
+    }
+
+    environment {
+      VERSION = VersionNumber([
+        versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_ID}',
+        projectStartDate : '2022-04-01'
+      ]);
+    }
+
+    stages {
+        stage("Read from Maven POM"){
+            steps{
+                script{
+                    pom = readMavenPom file: 'backend/pom.xml'
+                    projectArtifactId = pom.artifactId
+                    projectVersion = pom.version
+                }
+                echo "Building ${projectArtifactId}:${projectVersion}"
+            }
+        }
+        stage("Test"){
+            steps {
+                sh "mvn -version"
+               // bat "mvn test"
+            }
+        }
+        stage("Build JAR file"){
+            steps{
+                sh "mvn install -f backend/pom.xml -Dmaven.test.skip=true"
+            }
+        }
+        stage("Build docker image"){
+            steps {
+                echo "Building backend docker image "
+                sh   "docker build -t backend:"$VERSION" -f backend/Dockerfile ."
+            }
+        }
+         stage('DigitalOcean Login') {
+           steps {
+             sh 'echo doctl registry login --access-token dop_v1_dc4f7fceee86f0e4346955144318f4be410ad3450d617e83a4bf1508e2e8415a'
+           }
+         }
+         stage("Pushing backend image to DockerHub"){
+             steps {
+                 echo "Pushing backend image to DigitalOcean container registry"
+                 sh "docker tag backend:"$VERSION" registry.digitalocean.com/ezshopping/backend"
+                 sh "docker push registry.digitalocean.com/ezshopping/backend"
+             }
+         }
+        stage("Deploy"){
+            steps{
+                echo "Server is fully up and running"
+
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+            sh 'docker logout'
+        }
+    }
+}
