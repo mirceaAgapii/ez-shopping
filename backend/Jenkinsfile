@@ -7,10 +7,6 @@ pipeline {
 
     environment {
       def dockerImage = null;
-      VERSION = VersionNumber([
-        versionNumberString : '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_ID}',
-        projectStartDate : '2022-04-01'
-      ]);
     }
 
     stages {
@@ -37,9 +33,11 @@ pipeline {
         }
         stage("Build docker image"){
             steps {
-                echo "Building backend docker image "
-                 dir('Backend/') {
-                    dockerImage = docker.build("backend", , "-f pipelines/Dockerfile .")
+                script {
+                     echo "Building backend docker image "
+                     dir('Backend/') {
+                        dockerImage = docker.build("backend:v1.0", , "-f pipelines/Dockerfile .")
+                     }
                  }
                 //sh   "docker build -t backend:"$VERSION" -f backend/Dockerfile ."
             }
@@ -52,7 +50,7 @@ pipeline {
          stage("Pushing backend image to DockerHub"){
              steps {
                  echo "Pushing backend image to DigitalOcean container registry"
-                 sh ('docker tag backend:"$VERSION" registry.digitalocean.com/ezshopping/backend')
+                 sh ('docker tag backend:v1.0 registry.digitalocean.com/ezshopping/backend')
                  sh 'docker push registry.digitalocean.com/ezshopping/backend'
              }
          }
