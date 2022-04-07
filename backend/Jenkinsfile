@@ -40,7 +40,7 @@ pipeline {
         }
          stage('DigitalOcean Login') {
            steps {
-             sh 'echo docker login -u dop_v1_7b6f6f8d0c0c1158d0522d9d22f755e43ecf733c16b549d2dce4d9b03b39c382 -p dop_v1_7b6f6f8d0c0c1158d0522d9d22f755e43ecf733c16b549d2dce4d9b03b39c382 registry.digitalocean.com/ezshopping'
+             sh 'echo docker login -u dop_v1_91f72860268a78226dc8be27ccc6b9e6322bb3b5e615a319f51d9887e4353c45 -p dop_v1_91f72860268a78226dc8be27ccc6b9e6322bb3b5e615a319f51d9887e4353c45 registry.digitalocean.com/ezshopping'
            }
          }
          stage("Pushing backend image to DigitalOcean"){
