@@ -4,6 +4,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 RUN npm install
+RUN npm audit fix –force
 RUN npm run build --prod
 EXPOSE 4200
 
