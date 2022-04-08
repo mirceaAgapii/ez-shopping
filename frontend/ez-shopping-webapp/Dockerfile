@@ -1,5 +1,6 @@
 FROM node as build
 WORKDIR /app
+RUN ls -lah .
 COPY package*.json ./
 RUN npm install
 
