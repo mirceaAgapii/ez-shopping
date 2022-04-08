@@ -41,7 +41,10 @@ pipeline {
         stage("Build Angular app"){
             steps {
                 echo "Building angular docker image"
-                sh ('docker build -t frontend -f frontend/Dockerfile .')
+                //sh ('docker build -t frontend -f frontend/Dockerfile .')
+                 dir('frontend/') {
+                  dockerImage = docker.build("registry.digitalocean.com/ezshopping", "-f pipelines/Dockerfile .")
+                }
             }
         }
         stage('DigitalOcean Login') {
