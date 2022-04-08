@@ -6,7 +6,7 @@
     "start": "ng serve",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; ng build"
+    "build": "ng build"
   },
   "private": true,
   "dependencies": {
