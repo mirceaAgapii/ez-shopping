@@ -1,5 +1,5 @@
 #stage 1
-FROM node as node
+FROM node:latest as node
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
