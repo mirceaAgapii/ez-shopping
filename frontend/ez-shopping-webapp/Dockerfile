@@ -1,12 +1,16 @@
 FROM node as build
+
+RUN mkdir -p /app
+
 WORKDIR /app
-RUN ls -lah app
-COPY package*.json ./
-RUN npm install
 
 COPY . .
+
+RUN npm install
+
+	
 RUN npm run build --prod
 
-FROM nginx
-COPY --from=build /app/dist/tfh-frontend /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 4200
+
+CMD ["npm", "start"]
