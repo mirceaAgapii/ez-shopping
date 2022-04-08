@@ -1,5 +1,5 @@
 #stage 1
-FROM node:16.14.2-alpine3.15 as node
+FROM node:12 as node
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
