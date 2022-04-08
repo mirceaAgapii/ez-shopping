@@ -1,5 +1,6 @@
 #stage 1
 FROM node as node
+RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 RUN npm install
