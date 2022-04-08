@@ -1,5 +1,5 @@
 #stage 1
-FROM node:12 as node
+FROM node:16 as node
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
