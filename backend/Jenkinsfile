@@ -57,9 +57,9 @@ pipeline {
                  sh ('docker tag backend registry.digitalocean.com/ezshopping/backend')
                  sh ('docker push registry.digitalocean.com/ezshopping/backend')
 
-                // echo "Pushing frontend image to DigitalOcean container registry"
-                // sh ('docker tag frontend registry.digitalocean.com/ezshopping/frontend')
-                //sh ('docker push registry.digitalocean.com/ezshopping/frontend')
+                 echo "Pushing frontend image to DigitalOcean container registry"
+                 sh ('docker tag frontend registry.digitalocean.com/ezshopping/frontend')
+                sh ('docker push registry.digitalocean.com/ezshopping/frontend')
              }
         }
         stage('Deploy') {
@@ -68,12 +68,13 @@ pipeline {
                     steps {
                         script {
                             sh('docker stop backend || true && docker rm backend || true')
-                          //  sh('docker stop frontend || true && docker rm frontend || true')
+                            sh('docker stop frontend || true && docker rm frontend || true')
                             sh('docker image rm registry.digitalocean.com/ezshopping/backend')
-                           // sh('docker image rm registry.digitalocean.com/ezshopping/frontend')
+                            sh('docker image rm registry.digitalocean.com/ezshopping/frontend')
                             sh('docker pull registry.digitalocean.com/ezshopping/backend')
-                            //sh('docker pull registry.digitalocean.com/ezshopping/frontend')
+                            sh('docker pull registry.digitalocean.com/ezshopping/frontend')
                             sh ('docker run -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e DB_DBNAME=$DB_DBNAME -e PSQL_DATASOURCE_USERNAME=$PSQL_DATASOURCE_USERNAME -e PSQL_DATASOURCE_PASSWORD=$PSQL_DATASOURCE_PASSWORD -e SECRET_ALGORITHM=$SECRET_ALGORITHM -d -p 8090:8090 --name backend -t registry.digitalocean.com/ezshopping/backend')
+                            sh('docker run -d -p 4200:4200 --name frontend registry.digitalocean.com/ezshopping/frontend')
                         }
                     }
                 }
