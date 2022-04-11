@@ -74,7 +74,7 @@ pipeline {
                             sh('docker pull registry.digitalocean.com/ezshopping/backend')
                             sh('docker pull registry.digitalocean.com/ezshopping/frontend')
                             sh ('docker run -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e DB_DBNAME=$DB_DBNAME -e PSQL_DATASOURCE_USERNAME=$PSQL_DATASOURCE_USERNAME -e PSQL_DATASOURCE_PASSWORD=$PSQL_DATASOURCE_PASSWORD -e SECRET_ALGORITHM=$SECRET_ALGORITHM -d -p 8090:8090 --name backend -t registry.digitalocean.com/ezshopping/backend')
-                            sh('docker run -d -p 4200:4200 --name frontend registry.digitalocean.com/ezshopping/frontend')
+                            sh('docker run -d -p 80:80 --name frontend registry.digitalocean.com/ezshopping/frontend')
                         }
                     }
                 }
