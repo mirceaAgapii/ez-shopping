@@ -13,7 +13,7 @@ COPY . .
 FROM nginx:1.15.8-alpine
 
 #Copy built angular files to NGINX HTML folder
-COPY --from=node /app/dist/beauty-frontend/ /usr/share/nginx/html
+COPY --from=node /app/dist/frontend/ /usr/share/nginx/html
 EXPOSE 4200
 
 
