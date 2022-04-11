@@ -8,4 +8,7 @@ export class WebSocketMessage {
     totalQty!: number;
     finished!: boolean;
     productId!: string;
+    price!: number;
+    productName!: string;
+    productDescr!: string;
 }

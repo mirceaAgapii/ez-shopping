@@ -9,4 +9,5 @@ export class Product {
     category!: string;
     brand!: string;
     rfId!: string;
+    path!: string;
 }

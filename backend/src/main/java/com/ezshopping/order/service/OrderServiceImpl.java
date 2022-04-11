@@ -48,13 +48,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findByUserId(String userId) {
-        return orderRepository.findByUserId(userId)
-                .orElseThrow(() -> new OrderNotFoundException("Order for user with id " + userId + " could not be found."));
+        Optional<Order> optionalOrder = orderRepository.findByUserIdAndFinished(userId, false);
+        if (optionalOrder.isEmpty()) {
+            return createAnOrderForUser(userId);
+        }
+        return optionalOrder.get();
     }
 
     @Override
     public Order checkActiveOrderForUser(String userId) {
-        Optional<Order> optionalOrder = orderRepository.findByUserId(userId);
+        Optional<Order> optionalOrder = orderRepository.findByUserIdAndFinished(userId, false);
         if (optionalOrder.isEmpty() || optionalOrder.get().isFinished()) {
             return createAnOrderForUser(userId);
         } else {

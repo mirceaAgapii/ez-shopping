@@ -1,0 +1,38 @@
+<div class="card">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h4><b>Shopping Cart</b></h4>
+                    </div>
+                    <div class="col align-self-center text-right text-muted" > {{productsCount}} items</div>
+                </div>
+            </div>
+            <div class="row border-top border-bottom" *ngFor="let product of productsList">
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" [src]="imgPathPref + product.id + imgPathSuf"></div>
+                    <div class="col-7">
+                        <div class="row text-muted">{{product.name}}</div>
+                        <div class="row">{{product.description}}</div>
+                    </div>
+                    <div class="col-2">&euro; {{product.price}} </div><span class=" col-1 close" (click)="removeProduct(product.id)">&#10005;</span>
+                </div>
+            </div>
+          
+            <div class="back-to-shop" (click)="navigateToMain()">&#171;<span class="text-muted">Back to shop</span></div>
+        </div>
+        <div class="col-md-4 summary">
+            <div>
+                <h5><b>Summary</b></h5>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" style="padding-left:0;">ITEMS {{productsCount}}</div>
+                <div class="col text-right">&euro; {{totalPrice}}</div>
+            </div>
+
+            <button class="btn" (click)="finishOrder()">CHECKOUT</button>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { Product } from '../Model/Article';
+import { environment } from 'src/environments/environment.prod';
+import { Product } from '../Model/Product';
 import { WebSocketMessage } from '../Model/WebSocketMessage';
 import { ProductRestService } from '../services/rest/product/product-rest.service';
 import { UserService } from '../services/user/user.service';
@@ -20,7 +21,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   readyToSubmit = false;
 
-  socket: WebSocketSubject<WebSocketMessage> = webSocket('ws://localhost:8080/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
 
   constructor(private productRestService: ProductRestService,
     private userService: UserService) { }

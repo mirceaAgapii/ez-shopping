@@ -33,10 +33,13 @@ public class WebSocketConfig implements WebSocketConfigurer {
                                            org.springframework.web.socket.WebSocketHandler wsHandler, Map<String, Object> attributes)  {
                 // Get the URI segment corresponding to the station id during handshake
                 String path = request.getURI().getPath();
+                String userId = path.substring(path.lastIndexOf('/') + 1);
+                path = path.substring(0, path.lastIndexOf('/'));
                 String stationId = path.substring(path.lastIndexOf('/') + 1);
 
                 // This will be added to the websocket session
                 attributes.put("station", stationId);
+                attributes.put("userId", userId);
                 return true;
             }
 

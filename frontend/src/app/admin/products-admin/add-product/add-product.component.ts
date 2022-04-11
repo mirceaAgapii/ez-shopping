@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Product } from 'src/app/Model/Article';
+import { Product } from 'src/app/Model/Product';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Output, EventEmitter } from '@angular/core';
 import { MessageService } from 'primeng/api';
@@ -7,6 +7,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { WebSocketMessage } from 'src/app/Model/WebSocketMessage';
 import { ProductRestService } from 'src/app/services/rest/product/product-rest.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-add-product',
@@ -17,7 +18,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   defaultProduct: Product = new Product();
   statuses!: any[];
-  socket: WebSocketSubject<WebSocketMessage> = webSocket('ws://localhost:8080/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
 
   @Output()
   submitted = new EventEmitter();

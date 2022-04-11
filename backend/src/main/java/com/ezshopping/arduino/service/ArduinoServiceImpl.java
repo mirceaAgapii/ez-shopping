@@ -12,6 +12,7 @@ import com.ezshopping.order.orderline.model.dto.OrderLineDTO;
 import com.ezshopping.order.orderline.model.entity.OrderLine;
 import com.ezshopping.order.orderline.service.OrderLineService;
 import com.ezshopping.order.service.OrderService;
+import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.service.ProductService;
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -122,9 +123,6 @@ public class ArduinoServiceImpl implements ArduinoService {
         if(payloadData.getReadType().equals(ArduinoReadType.QR.toString())) {
             payloadData.setUserId(getFirstElementFromPayload(payload));
         } else {
-            payloadData.setUserId(getFirstElementFromPayload(payload));
-            payload = removeFirstElementFromPayload(payload);
-
             payloadData.setData(getFirstElementFromPayload(payload));
         }
         return payloadData;
@@ -145,9 +143,10 @@ public class ArduinoServiceImpl implements ArduinoService {
     private void handleCheckoutRead(PayloadData payloadData) {
         try {
             WebSocketSession session = textWebSocketHandler.getSessionByAttributeValue(STATION_ATTRIBUTE, payloadData.getWorkstationName());
-
-            Order order = orderService.findByUserId(payloadData.getUserId());
-            OrderLine orderLine = orderLineService.createUpdateOrderLineForOrder(order, productService.getProductByRfId(payloadData.getData()));
+            String userId = (String) session.getAttributes().get("userId");
+            Order order = orderService.findByUserId(userId);
+            Product product = productService.getProductByRfId(payloadData.getData());
+            OrderLine orderLine = orderLineService.createUpdateOrderLineForOrder(order, product);
 
             OrderLineDTO orderLineDTO = OrderLineDTO.builder()
                     .orderLineId(orderLine.getId())
@@ -160,6 +159,10 @@ public class ArduinoServiceImpl implements ArduinoService {
                             .orderId(order.getId())
                             .orderLineDTO(orderLineDTO)
                             .totalQty(order.getTotal())
+                            .price(product.getPrice())
+                            .productDescr(product.getDescription())
+                            .productName(product.getName())
+                            .productId(product.getId())
                             .finished(false)
                             .build();
 

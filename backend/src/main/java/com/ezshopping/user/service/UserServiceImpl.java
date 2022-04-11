@@ -28,16 +28,14 @@ public class UserServiceImpl implements  UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final Mapper<User, UserDTO> mapper;
-    private final EmailSender emailSender;
+    //private final EmailSender emailSender;
 
     public UserServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
-                           Mapper<User, UserDTO> mapper,
-                           EmailSender emailSender) {
+                           Mapper<User, UserDTO> mapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
-        this.emailSender = emailSender;
     }
 
     @Override

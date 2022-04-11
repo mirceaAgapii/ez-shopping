@@ -5,7 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Product } from '../Model/Article';
+import { Product } from '../Model/Product';
 import { User } from '../Model/User';
 import { ProductRestService } from '../services/rest/product/product-rest.service';
 import { UserRestService } from '../services/rest/user/user.rest.service';

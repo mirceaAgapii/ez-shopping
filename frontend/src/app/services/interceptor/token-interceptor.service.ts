@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 import { JWTTokenService } from '../auth/jwttoken.service';
 import { LocalStorageService } from '../auth/storage/local-storage.service';
 import { UserRestService } from '../rest/user/user.rest.service';
@@ -61,7 +62,7 @@ export class TokenInterceptorService implements HttpInterceptor{
     
 
   setAuthHeader(req: HttpRequest<any>): HttpRequest<any> {
-    if(req.url === 'http://localhost:8080/api/users/token/refresh') {
+    if(req.url === environment.restUrl + environment.api + '/users/token/refresh') {
       return req.clone({
         setHeaders: {
           Authorization: `Bearer ${this.jwtService.getRefreshToken()}`

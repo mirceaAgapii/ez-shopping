@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { Product } from '../Model/Article';
+import { Product } from '../Model/Product';
 import { Orderline } from '../Model/Orderline';
 import { WebSocketMessage } from '../Model/WebSocketMessage';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-order-station',
@@ -12,7 +13,7 @@ import { WebSocketMessage } from '../Model/WebSocketMessage';
 export class OrderStationComponent implements OnInit, OnDestroy {
 
   hideCart = true;
-  socket: WebSocketSubject<WebSocketMessage> = webSocket('ws://localhost:8080/web-socket/' + 'WS02'/*this.userService.currentUser.username*/);
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS02'/*this.userService.currentUser.username*/);
   orderlines: Array<Orderline> = new Array();
   orderId: string = '';
 

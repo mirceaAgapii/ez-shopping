@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { Product } from 'src/app/Model/Article';
+import { Product } from 'src/app/Model/Product';
 import { WebSocketMessage } from 'src/app/Model/WebSocketMessage';
 import { ProductService } from 'src/app/services/product/product.service';
 import { ProductRestService } from 'src/app/services/rest/product/product-rest.service';

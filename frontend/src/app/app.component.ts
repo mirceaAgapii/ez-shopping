@@ -56,4 +56,8 @@ export class AppComponent implements OnInit{
   checkout() {
     this.router.navigate(['/checkout']);
   }
+
+  toBasket() {
+    this.router.navigate(['/basket']);
+  }
 }

@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
                     .brand(productDTO.getBrand())
                     .rfId(productDTO.getRfId())
                     .build();
-            newProduct.setId(Utilities.getNewUuid());
+            newProduct.setId(String.valueOf(getNextId()));
             productRepository.save(newProduct);
     }
 
@@ -100,5 +100,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductDTOById(String id) {
         Product product = getById(id);
         return mapper.map(product);
+    }
+
+    private int getNextId() {
+        return productRepository.getMaxId() + 1;
     }
 }

@@ -54,6 +54,7 @@ import { ProductInfoComponent } from './products/product-info/product-info.compo
 import { CheckoutComponent } from './checkout/checkout.component';
 import { QRCodeComponent, QRCodeModule } from 'angular2-qrcode';
 import { OrderStationComponent } from './order-station/order-station.component';
+import { BasketComponent } from './basket/basket.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { OrderStationComponent } from './order-station/order-station.component';
     UserAccountComponent,
     ProductInfoComponent,
     CheckoutComponent,
-    OrderStationComponent
+    OrderStationComponent,
+    BasketComponent
 
   ],
   imports: [

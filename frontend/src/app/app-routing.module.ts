@@ -5,6 +5,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { AppComponent } from './app.component';
+import { BasketComponent } from './basket/basket.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AdminPermisionsGuard } from './guard/admin-permisions.guard';
 import { AuthorizationGuard } from './guard/authorization.guard';
@@ -64,6 +65,10 @@ export const routes: Routes = [
   {
     path: 'station', 
     component: OrderStationComponent
+  },
+  {
+    path: 'basket',
+    component: BasketComponent
   },
   {path: '404', component: PageNotFoundComponent},
   {path: '', component: MainComponent, canActivate: [AuthorizationGuard]},

@@ -64,4 +64,9 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/checkout']);
   }
 
+  
+  toBasket() {
+    this.router.navigate(['/basket']);
+  }
+
 }
