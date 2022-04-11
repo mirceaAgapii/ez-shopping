@@ -11,11 +11,8 @@ COPY . .
 
 
 #Download NGINX Image
-FROM nginx:1.15.8-alpine
+FROM nginx
 
 #Copy built angular files to NGINX HTML folder
-COPY --from=node /dist/ez-shopping-webapp/ /usr/share/nginx/html
-EXPOSE 4200
-
-
-CMD ["npm", "start"]
+COPY --from=node /app/dist/ez-shopping-webapp /usr/share/nginx/html
+EXPOSE 80
