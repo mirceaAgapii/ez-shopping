@@ -8,6 +8,7 @@ RUN npm install
 RUN npm run build --prod
 RUN npm set registry http://registry.npmjs.org/ 
 COPY . .
+RUN ls -l
 
 #Download NGINX Image
 FROM nginx:1.15.8-alpine
