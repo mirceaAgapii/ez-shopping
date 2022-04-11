@@ -8,6 +8,7 @@ RUN npm install
 RUN npm run build --prod
 RUN npm set registry http://registry.npmjs.org/ 
 COPY . .
+RUN cd dist
 RUN ls -l
 
 #Download NGINX Image
