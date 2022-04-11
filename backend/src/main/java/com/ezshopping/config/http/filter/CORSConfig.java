@@ -18,7 +18,7 @@ public class CORSConfig implements WebMvcConfigurer {
                                 "Authorization", "Access-Control-Allow-Origin",
                                 "Access-Control-Request-Method", "Access-Control-Request-Headers",
                                 "X-Request-With")
-                .allowedOrigins("http://localhost:4200");  //TODO: change the URL for the prod URL when we deploy - use different properties files for diff env
+                .allowedOrigins("http://164.92.147.61:80");  //TODO: change the URL for the prod URL when we deploy - use different properties files for diff env
         //TODO: or use annotation @Profile
 
     }
