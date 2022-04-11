@@ -8,6 +8,12 @@ RUN npm install
 RUN npm run build --prod
 RUN npm set registry http://registry.npmjs.org/ 
 COPY . .
+
+#Download NGINX Image
+FROM nginx:1.15.8-alpine
+
+#Copy built angular files to NGINX HTML folder
+COPY --from=node /app/dist/beauty-frontend/ /usr/share/nginx/html
 EXPOSE 4200
 
 
