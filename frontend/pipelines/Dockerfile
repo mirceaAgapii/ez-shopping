@@ -9,13 +9,12 @@ RUN npm run build --prod
 RUN npm set registry http://registry.npmjs.org/ 
 COPY . .
 
-RUN ls -l dist
 
 #Download NGINX Image
 FROM nginx:1.15.8-alpine
 
 #Copy built angular files to NGINX HTML folder
-COPY --from=node /dist/frontend/ /usr/share/nginx/html
+COPY --from=node /dist/ez-shopping-webapp/ /usr/share/nginx/html
 EXPOSE 4200
 
 
