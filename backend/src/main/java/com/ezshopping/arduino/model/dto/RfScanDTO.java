@@ -2,7 +2,6 @@ package com.ezshopping.arduino.model.dto;
 
 import com.ezshopping.order.orderline.model.dto.OrderLineDTO;
 import lombok.Builder;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -14,8 +13,4 @@ public class RfScanDTO {
     public OrderLineDTO orderLineDTO;
     public double totalQty;
     public boolean finished;
-    public String productId;
-    public double price;
-    public String productName;
-    public String productDescr;
 }

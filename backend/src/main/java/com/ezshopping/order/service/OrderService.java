@@ -9,9 +9,9 @@ public interface OrderService {
 
     Order createAnOrderForUser(String data);
 
-    Order findByUserId(String userId);
+    Order createIfNotExistsForUser(String userId);
 
-    Order checkActiveOrderForUser(String userId);
+    boolean checkActiveOrderForUser(String userId);
 
     void updateTotalQty(Order order);
 

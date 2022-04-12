@@ -1,20 +1,19 @@
 package com.ezshopping.arduino.service;
 
 import com.ezshopping.arduino.exception.ArduinoControllerNotFoundException;
-import com.ezshopping.arduino.model.dto.RfScanDTO;
 import com.ezshopping.arduino.model.entity.ArduinoEntity;
 import com.ezshopping.arduino.model.entity.PayloadData;
 import com.ezshopping.arduino.model.type.ArduinoReadType;
 import com.ezshopping.arduino.repository.ArduinoRepository;
 import com.ezshopping.order.model.entity.Order;
 import com.ezshopping.order.orderline.mapper.OrderLineDTOMapper;
-import com.ezshopping.order.orderline.model.dto.OrderLineDTO;
 import com.ezshopping.order.orderline.model.entity.OrderLine;
 import com.ezshopping.order.orderline.service.OrderLineService;
 import com.ezshopping.order.service.OrderService;
 import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.service.ProductService;
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
+import com.ezshopping.websocket.service.WebSocketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -39,8 +38,7 @@ public class ArduinoServiceImpl implements ArduinoService {
     private final OrderService orderService;
     private final OrderLineService orderLineService;
     private final ProductService productService;
-    private final ObjectMapper objectMapper;
-    private final OrderLineDTOMapper orderLineDTOMapper;
+    private final WebSocketService webSocketService;
 
     private static final String STATION_ATTRIBUTE = "station";
 
@@ -49,14 +47,14 @@ public class ArduinoServiceImpl implements ArduinoService {
                               ArduinoRepository arduinoRepository,
                               OrderService orderService,
                               OrderLineService orderLineService,
-                              ProductService productService, ObjectMapper objectMapper, OrderLineDTOMapper orderLineDTOMapper) {
+                              ProductService productService,
+                              WebSocketService webSocketService) {
         this.textWebSocketHandler = textWebSocketHandler;
         this.arduinoRepository = arduinoRepository;
         this.orderService = orderService;
         this.orderLineService = orderLineService;
         this.productService = productService;
-        this.objectMapper = objectMapper;
-        this.orderLineDTOMapper = orderLineDTOMapper;
+        this.webSocketService = webSocketService;
     }
 
     @Override
@@ -87,14 +85,8 @@ public class ArduinoServiceImpl implements ArduinoService {
                     .getSessionByAttributeValue(STATION_ATTRIBUTE, payloadData.getWorkstationName());
             session.getAttributes().put(USER_ID_ATTRIBUTE, payloadData.getUserId());
 
-            Order order = orderService.checkActiveOrderForUser(payloadData.getUserId());
-            List<OrderLine> orderLines = orderLineService.getAllByParent(order);
-            RfScanDTO dto = RfScanDTO.builder()
-                .orderId(order.getId())
-                .orderLines(orderLines.stream().map(orderLineDTOMapper::map).collect(Collectors.toList()))
-                .finished(false)
-                .build();
-             session.sendMessage(new TextMessage(objectMapper.writeValueAsString(dto)));
+            webSocketService.sendActiveOrderToClient(payloadData.getUserId(), session);
+
             } catch (IOException e) {
                 log.error("Error during sending message via WebSocket to workstation [{}]", payloadData.getWorkstationName());
             } catch (RuntimeException e) {
@@ -144,30 +136,17 @@ public class ArduinoServiceImpl implements ArduinoService {
         try {
             WebSocketSession session = textWebSocketHandler.getSessionByAttributeValue(STATION_ATTRIBUTE, payloadData.getWorkstationName());
             String userId = (String) session.getAttributes().get("userId");
-            Order order = orderService.findByUserId(userId);
+            Order order = orderService.createIfNotExistsForUser(userId);
+            List<OrderLine> orderLines = orderLineService.getAllByParent(order);
             Product product = productService.getProductByRfId(payloadData.getData());
-            OrderLine orderLine = orderLineService.createUpdateOrderLineForOrder(order, product);
+            Optional<OrderLine> existingOrderLineOptional = orderLines.stream().filter(ol -> ol.getProduct().getId().equals(product.getId())).findAny();
+            if (existingOrderLineOptional.isEmpty()) {
+                orderLineService.createUpdateOrderLineForOrder(order, product);
 
-            OrderLineDTO orderLineDTO = OrderLineDTO.builder()
-                    .orderLineId(orderLine.getId())
-                    .productId(orderLine.getProduct().getRfId())
-                    .productName(orderLine.getProduct().getName())
-                    .olQty(orderLine.getQuantity())
-                    .build();
-
-            RfScanDTO dto = RfScanDTO.builder()
-                            .orderId(order.getId())
-                            .orderLineDTO(orderLineDTO)
-                            .totalQty(order.getTotal())
-                            .price(product.getPrice())
-                            .productDescr(product.getDescription())
-                            .productName(product.getName())
-                            .productId(product.getId())
-                            .finished(false)
-                            .build();
-
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(dto)));
-
+                webSocketService.sendActiveOrderToClient(userId, session);
+            } else {
+                log.info("OrderLine with article [{}] already exists. Don't create new one", product.getId());
+            }
         } catch (RuntimeException ex) {
             log.error("No session found for station [{}]. Ignore payload", payloadData.getWorkstationName());
         } catch (IOException e) {

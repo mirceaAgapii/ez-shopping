@@ -5,7 +5,6 @@ export class WebSocketMessage {
     orderId!: string;
     orderLines!: Array<Orderline>;
     orderLineDTO!: Orderline;
-    totalQty!: number;
     finished!: boolean;
     productId!: string;
     price!: number;

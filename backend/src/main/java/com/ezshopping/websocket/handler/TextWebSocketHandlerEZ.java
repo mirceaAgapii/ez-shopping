@@ -1,9 +1,11 @@
 package com.ezshopping.websocket.handler;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.ezshopping.order.service.OrderService;
+import com.ezshopping.websocket.service.WebSocketService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,20 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Component
-
 @Primary
 @Slf4j
 public class TextWebSocketHandlerEZ extends TextWebSocketHandler {
 
     private final OrderService orderService;
+    private final WebSocketService webSocketService;
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Autowired
-    public TextWebSocketHandlerEZ(OrderService orderService) {
+    public TextWebSocketHandlerEZ(OrderService orderService,
+                                  WebSocketService webSocketService) {
         this.orderService = orderService;
+        this.webSocketService = webSocketService;
     }
 
     @Override
@@ -34,6 +38,11 @@ public class TextWebSocketHandlerEZ extends TextWebSocketHandler {
         log.info("New session established");
         sessions.add(session);
         super.afterConnectionEstablished(session);
+
+        String userId = (String) session.getAttributes().get("userId");
+        if(Objects.nonNull(userId) && orderService.checkActiveOrderForUser(userId)) {
+            webSocketService.sendActiveOrderToClient(userId, session);
+        }
     }
 
     @Override

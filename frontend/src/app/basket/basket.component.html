@@ -11,7 +11,7 @@
             </div>
             <div class="row border-top border-bottom" *ngFor="let product of productsList">
                 <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" [src]="imgPathPref + product.id + imgPathSuf"></div>
+                    <div class="col-2"><img class="img-fluid" [src]="imgPathPref + product.id + imgPathSuf" alt="product image"></div>
                     <div class="col-7">
                         <div class="row text-muted">{{product.name}}</div>
                         <div class="row">{{product.description}}</div>
@@ -19,7 +19,7 @@
                     <div class="col-2">&euro; {{product.price}} </div><span class=" col-1 close" (click)="removeProduct(product.id)">&#10005;</span>
                 </div>
             </div>
-          
+
             <div class="back-to-shop" (click)="navigateToMain()">&#171;<span class="text-muted">Back to shop</span></div>
         </div>
         <div class="col-md-4 summary">

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { Product } from '../Model/Product';
-import { Orderline } from '../Model/Orderline';
 import { WebSocketMessage } from '../Model/WebSocketMessage';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+import {Router} from "@angular/router";
+import {LocalStorageService} from "../services/auth/storage/local-storage.service";
 
 @Component({
   selector: 'app-order-station',
@@ -12,12 +12,10 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class OrderStationComponent implements OnInit, OnDestroy {
 
-  hideCart = true;
-  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS02'/*this.userService.currentUser.username*/);
-  orderlines: Array<Orderline> = new Array();
-  orderId: string = '';
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS02/none');
 
-  constructor() { }
+  constructor(private router: Router,
+              private storage: LocalStorageService) { }
 
   ngOnInit(): void {
     this.connectWS();
@@ -30,43 +28,15 @@ export class OrderStationComponent implements OnInit, OnDestroy {
   connectWS() {
     this.socket.subscribe(
       message => {
-        
-        if(this.orderId === '' || this.orderId === message.orderId) {
-          if(message.orderLines) {
-            for(let olDTO of message.orderLines) {
-              this.updateOrderLines(olDTO);
-            }
-          } else if (message.orderLineDTO) {
-            this.updateOrderLines(message.orderLineDTO);
-          }
-          this.orderId = message.orderId;
-          this.hideCart = false;
+        if (message.userId !== null) {
+          console.log(`Received response with user id [${message.userId}]`);
+          this.storage.set('orderUserId', message.userId);
+          this.router.navigate(['/basket']);
         }
-        
       },
       error => {
         console.error(error);
       });
-  }
-
-  updateOrderLines(olDTO: Orderline) {
-    var index = this.orderlines.findIndex(ol => ol.productId === olDTO.productId);
-    if(index === -1) {
-      var ol = new Orderline();
-      ol.productId = olDTO.productId;
-      ol.productName = olDTO.productName;
-      ol.olQty = olDTO.olQty;
-      this.orderlines.push(ol);
-    } else {
-      this.orderlines[index].olQty = olDTO.olQty;
-    }
-  }
-
-  finishOrder() {
-    var message = new WebSocketMessage();
-    message.finished = true;
-    message.orderId = this.orderId;
-    this.socket.next(message);
   }
 
   closeWebSocketSession() {

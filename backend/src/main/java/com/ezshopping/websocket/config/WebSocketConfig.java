@@ -1,4 +1,4 @@
-package com.ezshopping.config.websocket;
+package com.ezshopping.websocket.config;
 
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
                 // This will be added to the websocket session
                 attributes.put("station", stationId);
-                attributes.put("userId", userId);
+                if (!"none".equals(userId)) {
+                    attributes.put("userId", userId);
+                }
                 return true;
             }
 

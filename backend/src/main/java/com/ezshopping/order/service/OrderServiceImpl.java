@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order findByUserId(String userId) {
+    public Order createIfNotExistsForUser(String userId) {
         Optional<Order> optionalOrder = orderRepository.findByUserIdAndFinished(userId, false);
         if (optionalOrder.isEmpty()) {
             return createAnOrderForUser(userId);
@@ -56,13 +56,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order checkActiveOrderForUser(String userId) {
+    public boolean checkActiveOrderForUser(String userId) {
         Optional<Order> optionalOrder = orderRepository.findByUserIdAndFinished(userId, false);
-        if (optionalOrder.isEmpty() || optionalOrder.get().isFinished()) {
-            return createAnOrderForUser(userId);
-        } else {
-          return optionalOrder.get();
-        }
+        return optionalOrder.isPresent() && !optionalOrder.get().isFinished();
     }
 
     @Override
