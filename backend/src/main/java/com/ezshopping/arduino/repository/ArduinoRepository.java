@@ -11,4 +11,5 @@ public interface ArduinoRepository extends JpaRepository<ArduinoEntity,String> {
 
     Optional<ArduinoEntity> getByIdAndWorkstationName(String id, String workstationName);
     boolean existsByIdAndWorkstationName(String id, String workstationName);
+    Optional<ArduinoEntity> findByWorkstationName(String workstationName);
 }

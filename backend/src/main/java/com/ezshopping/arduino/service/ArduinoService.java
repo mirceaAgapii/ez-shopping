@@ -1,5 +1,6 @@
 package com.ezshopping.arduino.service;
 
+import com.ezshopping.arduino.model.entity.ArduinoEntity;
 import com.ezshopping.arduino.model.entity.PayloadData;
 
 public interface ArduinoService {
@@ -9,4 +10,6 @@ public interface ArduinoService {
     void handleRFRead(String payload);
 
     void handleQRScan(String payload);
+
+    ArduinoEntity getArduinoByName(String name);
 }

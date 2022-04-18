@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.ezshopping.arduino.model.entity.ArduinoEntity;
+import com.ezshopping.arduino.repository.ArduinoRepository;
+import com.ezshopping.common.GeneralConstants;
 import com.ezshopping.order.service.OrderService;
 import com.ezshopping.websocket.service.WebSocketService;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -23,37 +27,46 @@ public class TextWebSocketHandlerEZ extends TextWebSocketHandler {
 
     private final OrderService orderService;
     private final WebSocketService webSocketService;
+    private final ArduinoRepository arduinoRepository;
 
     private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Autowired
     public TextWebSocketHandlerEZ(OrderService orderService,
-                                  WebSocketService webSocketService) {
+                                  WebSocketService webSocketService,
+                                  ArduinoRepository arduinoRepository) {
         this.orderService = orderService;
         this.webSocketService = webSocketService;
+        this.arduinoRepository = arduinoRepository;
     }
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(@NotNull WebSocketSession session) throws Exception {
         log.info("New session established");
         sessions.add(session);
         super.afterConnectionEstablished(session);
 
-        String userId = (String) session.getAttributes().get("userId");
-        if(Objects.nonNull(userId) && orderService.checkActiveOrderForUser(userId)) {
+        String userId = (String) session.getAttributes().get(GeneralConstants.USER_ID_ATTRIBUTE);
+        String station = (String) session.getAttributes().get(GeneralConstants.STATION_ATTRIBUTE);
+        ArduinoEntity arduino = arduinoRepository.findByWorkstationName(station).orElseThrow();
+        if(!GeneralConstants.WORKSTATION_TYPE_CHECK_ARTICLE.equals(arduino.getWorkstationType())
+                && Objects.nonNull(userId)
+                && orderService.checkActiveOrderForUser(userId)) {
             webSocketService.sendActiveOrderToClient(userId, session);
         }
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    public void afterConnectionClosed(@NotNull WebSocketSession session,
+                                      @NotNull CloseStatus status) throws Exception {
         log.info("Session closed");
         sessions.remove(session);
         super.afterConnectionClosed(session, status);
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(@NotNull WebSocketSession session,
+                                     @NotNull TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
         handlePayload(message.getPayload());
     }

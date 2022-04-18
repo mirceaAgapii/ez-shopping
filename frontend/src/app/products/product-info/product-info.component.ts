@@ -8,10 +8,12 @@ import { Product } from 'src/app/Model/Product';
 })
 export class ProductInfoComponent implements OnInit {
 
-  constructor() { }
-
-  private _product!: Product;
+  _product!: Product;
   productName = '';
+  imgPathPref = 'assets/img/articles/';
+  imgPathSuf = '.jpg';
+
+  constructor() { }
 
   @Input() set product(product: Product) {
     this._product = product;

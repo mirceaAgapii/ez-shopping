@@ -10,4 +10,5 @@ export class WebSocketMessage {
     price!: number;
     productName!: string;
     productDescr!: string;
+    payload!: string;
 }

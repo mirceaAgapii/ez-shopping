@@ -6,7 +6,6 @@ import com.ezshopping.arduino.model.entity.PayloadData;
 import com.ezshopping.arduino.model.type.ArduinoReadType;
 import com.ezshopping.arduino.repository.ArduinoRepository;
 import com.ezshopping.order.model.entity.Order;
-import com.ezshopping.order.orderline.mapper.OrderLineDTOMapper;
 import com.ezshopping.order.orderline.model.entity.OrderLine;
 import com.ezshopping.order.orderline.service.OrderLineService;
 import com.ezshopping.order.service.OrderService;
@@ -14,12 +13,13 @@ import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.service.ProductService;
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
 import com.ezshopping.websocket.service.WebSocketService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+
+import static com.ezshopping.common.GeneralConstants.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,18 +29,12 @@ import java.util.Optional;
 @Slf4j
 public class ArduinoServiceImpl implements ArduinoService {
 
-    private static final String WORKSTATION_TYPE_RECEIVING = "RECEIVING";
-    private static final String WORKSTATION_TYPE_CHECKOUT = "CHECKOUT";
-    private static final String USER_ID_ATTRIBUTE = "USER_ID";
-
     private final ArduinoRepository arduinoRepository;
     private final TextWebSocketHandlerEZ textWebSocketHandler;
     private final OrderService orderService;
     private final OrderLineService orderLineService;
     private final ProductService productService;
     private final WebSocketService webSocketService;
-
-    private static final String STATION_ATTRIBUTE = "station";
 
     @Autowired
     public ArduinoServiceImpl(TextWebSocketHandlerEZ textWebSocketHandler,
@@ -65,8 +59,9 @@ public class ArduinoServiceImpl implements ArduinoService {
             ArduinoEntity arduinoEntity = arduinoRepository.getByIdAndWorkstationName(payloadData.getWorkstationId(), payloadData.getWorkstationName())
                     .orElseThrow(() -> new ArduinoControllerNotFoundException(" not found"));
             switch (arduinoEntity.getWorkstationType()) {
+                case WORKSTATION_TYPE_CHECK_ARTICLE:
                 case WORKSTATION_TYPE_RECEIVING:
-                    handleReceivingRead(payloadData);
+                    handleArticleRead(payloadData);
                     break;
                 case WORKSTATION_TYPE_CHECKOUT:
                     handleCheckoutRead(payloadData);
@@ -100,6 +95,11 @@ public class ArduinoServiceImpl implements ArduinoService {
         return arduinoRepository.existsByIdAndWorkstationName(payloadData.getWorkstationId(), payloadData.getWorkstationName());
     }
 
+    @Override
+    public ArduinoEntity getArduinoByName(String name) {
+        return arduinoRepository.findByWorkstationName(name).orElseThrow(() -> new ArduinoControllerNotFoundException("Controller not found"));
+    }
+
     private PayloadData decodePayload(String payload) {
         PayloadData payloadData = new PayloadData();
 
@@ -120,7 +120,7 @@ public class ArduinoServiceImpl implements ArduinoService {
         return payloadData;
     }
 
-    private void handleReceivingRead(PayloadData payloadData) {
+    private void handleArticleRead(PayloadData payloadData) {
         try {
             textWebSocketHandler
                     .getSessionByAttributeValue(STATION_ATTRIBUTE, payloadData.getWorkstationName())

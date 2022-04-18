@@ -36,9 +36,9 @@ public class WebSocketService {
     /**
      * Message through websocket will be sent to client with active order
      *
-     * @param userId
-     * @param session
-     * @throws IOException
+     * @param userId        user to whom the dto will be sent
+     * @param session       started by the user
+     * @throws IOException  will be thrown in case of  an exception
      */
     public void sendActiveOrderToClient(String userId, WebSocketSession session) throws IOException {
         Order order = orderService.createIfNotExistsForUser(userId);

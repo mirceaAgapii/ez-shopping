@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './services/auth/authorization.service';
 import { JWTTokenService } from './services/auth/jwttoken.service';
-import { LocalStorageService } from './services/auth/storage/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,6 @@ export class AppComponent implements OnInit{
   title = 'ez-shopping-webapp';
   isUserLoggedIn = false;
   isUserAdmin = false;
-  
 
   constructor(private authorizationService: AuthorizationService,
     private router: Router,
@@ -52,7 +50,6 @@ export class AppComponent implements OnInit{
     this.router.navigate(['/admin/dashboard']);
   }
 
-    
   checkout() {
     this.router.navigate(['/checkout']);
   }

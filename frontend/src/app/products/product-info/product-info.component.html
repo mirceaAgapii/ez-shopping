@@ -1,6 +1,13 @@
-<div class="card grid">
-    <img src="../../../assets/img/mizuno_wave.jpg" class="col-12">
-    <h3 class="col-12">Title</h3>
-    <input type="text" disabled [(ngModel)]="productName"/>
-    <h5 class="col-12">Price$</h5>
+<div class="product-card" *ngIf="_product !== undefined">
+  <h1>{{_product.name}}</h1>
+  <p>{{_product.description}}</p>
+  <img class="product-pic" [src]="imgPathPref + _product.id + imgPathSuf">
+  <!--div class="product-colors">
+
+  </div-->
+  <div class="product-info">
+    <div class="product-price">&euro; {{_product.price}}</div>
+    <a href="#" class="product-button">> Shopping list</a>
+  </div>
 </div>
+

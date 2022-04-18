@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Product } from '../Model/Product';
 import { WebSocketMessage } from '../Model/WebSocketMessage';
 import { ProductRestService } from '../services/rest/product/product-rest.service';
 import { UserService } from '../services/user/user.service';
+import {LocalStorageService} from "../services/auth/storage/local-storage.service";
 
 @Component({
   selector: 'app-products',
@@ -19,16 +20,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   product!: Product;
 
-  readyToSubmit = false;
+  readyToSubmit = true;
 
-  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS03/' + this.storage.get('userId'));
 
   constructor(private productRestService: ProductRestService,
-    private userService: UserService) { }
+    private storage: LocalStorageService) { }
 
   ngOnInit() {
     this.connectWS();
-    
+
   }
 
   ngOnDestroy() {
@@ -37,7 +38,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   searchProduct() {
     if(this.barcode || this.rfId) {
- 
+
       this.productRestService.getProduct(this.barcode, this.rfId)?.subscribe(
         data => {
           this.product = data;
@@ -51,14 +52,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
   connectWS() {
     this.socket.subscribe(
       message => {
-        console.log("Response: " + message.productId);
-        this.rfId = message.productId;
-        this.barcode = '';
-        this.placeholder = 'RFID:' + this.rfId;
-        this.readyToSubmit = true;
+        if (message.payload !== undefined) {
+          console.log("Response: " + message.payload);
+          this.rfId = message.payload;
+          this.barcode = '';
+          this.placeholder = 'RFID:' + this.rfId;
+          this.searchProduct();
+        }
       },
       error => {
         console.error(error);
+        this.readyToSubmit = false;
       });
   }
 

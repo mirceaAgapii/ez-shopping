@@ -1,9 +1,14 @@
-<h3>Search for a product</h3>
-<h4>Enter a barcode or scan the RFID</h4>
+<div class="container">
+  <h3>Search for a product</h3>
+  <div class="row">
+    <div class="col search">
 
-<input type="text" name="barcode" [(ngModel)]="barcode" [placeholder]="placeholder" [disabled]="placeholder === 'RFID scanned'"><br>
-
-<button class="btn btn-primary" [disabled]="!readyToSubmit" (click)="searchProduct()">Search</button>
-
-
-<app-product-info [product]="product"></app-product-info>
+      <h4>Enter a barcode or scan the RFID</h4>
+      <input type="text" name="barcode" [(ngModel)]="barcode" [placeholder]="placeholder" [disabled]="placeholder === 'RFID scanned'"><br>
+      <button class="btn btn-primary col-3" [disabled]="!readyToSubmit" (click)="searchProduct()">Search</button>
+    </div>
+    <div class="col">
+      <app-product-info [product]="product"></app-product-info>
+    </div>
+  </div>
+</div>

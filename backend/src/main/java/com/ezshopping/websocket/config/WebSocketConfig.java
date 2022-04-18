@@ -1,5 +1,6 @@
 package com.ezshopping.websocket.config;
 
+import com.ezshopping.common.GeneralConstants;
 import com.ezshopping.websocket.handler.TextWebSocketHandlerEZ;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -38,9 +39,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
                 String stationId = path.substring(path.lastIndexOf('/') + 1);
 
                 // This will be added to the websocket session
-                attributes.put("station", stationId);
+                attributes.put(GeneralConstants.STATION_ATTRIBUTE, stationId);
                 if (!"none".equals(userId)) {
-                    attributes.put("userId", userId);
+                    attributes.put(GeneralConstants.USER_ID_ATTRIBUTE, userId);
                 }
                 return true;
             }
