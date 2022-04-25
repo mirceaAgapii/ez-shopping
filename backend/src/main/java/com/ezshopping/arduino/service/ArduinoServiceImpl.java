@@ -135,7 +135,7 @@ public class ArduinoServiceImpl implements ArduinoService {
     private void handleCheckoutRead(PayloadData payloadData) {
         try {
             WebSocketSession session = textWebSocketHandler.getSessionByAttributeValue(STATION_ATTRIBUTE, payloadData.getWorkstationName());
-            String userId = (String) session.getAttributes().get("userId");
+            String userId = (String) session.getAttributes().get(USER_ID_ATTRIBUTE);
             Order order = orderService.createIfNotExistsForUser(userId);
             List<OrderLine> orderLines = orderLineService.getAllByParent(order);
             Product product = productService.getProductByRfId(payloadData.getData());
