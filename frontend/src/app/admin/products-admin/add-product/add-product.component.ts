@@ -1,13 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Product } from 'src/app/Model/Product';
-import { ProductService } from 'src/app/services/product/product.service';
 import { Output, EventEmitter } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { WebSocketMessage } from 'src/app/Model/WebSocketMessage';
 import { ProductRestService } from 'src/app/services/rest/product/product-rest.service';
-import { UserService } from 'src/app/services/user/user.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+import {ImageSnippet} from "../../../Model/ImageSnippet";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-product',
@@ -18,21 +18,26 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   defaultProduct: Product = new Product();
   statuses!: any[];
-  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01'/*this.userService.currentUser.username*/);
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01/none');
+
+  selectedFile!: ImageSnippet;
+
+  @Input()
+  fromAdmin = false;
 
   @Output()
   submitted = new EventEmitter();
-  articleDialog: boolean = true;
 
   constructor(private productService: ProductRestService,
-    private messageService: MessageService,
-    private userService: UserService) { }
+              private messageService: MessageService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.statuses = [
-      {label: 'INSTOCK', value: 'instock'},
-      {label: 'LOWSTOCK', value: 'lowstock'},
-      {label: 'OUTOFSTOCK', value: 'outofstock'}
+      {label: 'IN-STOCK', value: 'instock'},
+      {label: 'LOW-STOCK', value: 'lowstock'},
+      {label: 'OUT-OF-STOCK', value: 'outofstock'},
+      {label: 'PROMO', value: 'promo'}
     ];
     this.connectWS();
   }
@@ -49,7 +54,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
       product.status = this.defaultProduct.status;
       product.name = this.defaultProduct.name;
       product.price = this.defaultProduct.price;
-      product.quantity = this.defaultProduct.quantity;
       product.barcode = this.defaultProduct.barcode;
       product.rfId = this.defaultProduct.rfId;
       this.productService.saveProduct(product);
@@ -59,11 +63,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   cancel(){
-    this.submitted.emit();
+    if(this.fromAdmin) {
+      this.submitted.emit();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   checkProduct() {
-    if (!(this.defaultProduct.name && this.defaultProduct.price && this.defaultProduct.quantity && this.defaultProduct.rfId)) {
+    if (!(this.defaultProduct.name && this.defaultProduct.price && this.defaultProduct.rfId)) {
       this.messageService.add({severity:'error', summary: 'Please fill all fields', detail:''});
       return false;
     }
@@ -73,8 +81,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   connectWS() {
     this.socket.subscribe(
       message => {
-        console.log("Response: " + message.productId);
-        this.defaultProduct.rfId = message.productId;
+        console.log("Response: " + message.payload);
+        this.defaultProduct.rfId = message.payload;
       },
       error => {
         console.error(error);
@@ -83,5 +91,35 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   closeWebSocketSession() {
     this.socket.complete();
+  }
+
+  showPreview(input: any) {
+    const file: File = input.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+      if (this.selectedFile.file.type.match('image/*')) {
+        if (this.selectedFile.file.size <= 250000) {
+          const preview = document.getElementById('img-preview');
+          // @ts-ignore
+          preview.src = this.selectedFile.src;
+          // @ts-ignore
+          preview.style.display = "block";
+          // @ts-ignore
+          preview.hidden = false;
+        } else {
+          this.messageService.add({severity: 'error', summary: 'Image size is too large', detail: ''});
+        }
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Please upload an image', detail: ''});
+      }
+
+
+    });
+
+    reader.readAsDataURL(file);
+
   }
 }
