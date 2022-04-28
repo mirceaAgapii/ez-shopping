@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, Output} from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
 import { Product } from '../Model/Product';
@@ -27,9 +27,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(private productRestService: ProductRestService,
     private storage: LocalStorageService) { }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if(window.innerWidth < 767) {
+
+      document.getElementById('search-row')!.classList.remove('row');
+    } else {
+      document.getElementById('search-row')!.classList.add('row');
+    }
+  }
+
   ngOnInit() {
     this.connectWS();
-
+    window.innerWidth
   }
 
   ngOnDestroy() {
@@ -43,6 +53,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
         data => {
           this.product = data;
           console.log(data.name);
+          this.barcode = '';
+          this.placeholder = '';
         },
         error => console.log(error)
       )
@@ -69,5 +81,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   closeWebSocketSession() {
     this.socket.complete();
   }
+
+  onKeydown(event: { key: string; }) {
+    console.log(event.key);
+    if (event.key === "Enter") {
+      this.searchProduct();
+    }
+  }
+
 
 }

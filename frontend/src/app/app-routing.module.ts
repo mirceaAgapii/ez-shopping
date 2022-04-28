@@ -22,10 +22,12 @@ import { ProductsComponent } from './products/products.component';
 import { DashboardService } from './services/admin/dashboard.service';
 import { AuthorizationService } from './services/auth/authorization.service';
 import { UserAccountComponent } from './user-account/user-account.component';
+import {AddProductComponent} from "./admin/products-admin/add-product/add-product.component";
+import {PrefetchPromoProductsResolver} from "./guard/prefetch-promo-products.resolver";
 
 export const routes: Routes = [
   {
-    path: 'admin', 
+    path: 'admin',
     component: AdminComponent,
     children:[
     {
@@ -47,33 +49,47 @@ export const routes: Routes = [
   canActivate: [AuthorizationGuard, AdminPermisionsGuard]
   },
   {
-    path: 'account', 
-    component: UserAccountComponent, 
+    path: 'account',
+    component: UserAccountComponent,
     canActivate: [AuthorizationGuard],
     resolve: {user : CurrentUserResolver}
   },
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegisterComponent},
   {
-    path: 'products', 
+    path: 'products',
     component: ProductsComponent
   },
   {
-    path: 'checkout', 
+    path: 'checkout',
     component: CheckoutComponent
   },
   {
-    path: 'station', 
+    path: 'station',
     component: OrderStationComponent
+  },
+  {
+    path: 'receiving',
+    component: AddProductComponent
   },
   {
     path: 'basket',
     component: BasketComponent
   },
-  {path: '404', component: PageNotFoundComponent},
-  {path: '', component: MainComponent, canActivate: [AuthorizationGuard]},
-  
-  {path: '**', redirectTo: '/404'}
+  {
+    path: '404',
+    component: PageNotFoundComponent
+  },
+  {
+    path: '',
+    component: MainComponent,
+    canActivate: [AuthorizationGuard],
+    resolve: {products: PrefetchPromoProductsResolver}
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
+  }
 ];
 
 @NgModule({

@@ -3,21 +3,21 @@ package com.ezshopping.product.service;
 import com.ezshopping.common.Mapper;
 import com.ezshopping.product.exceptions.ProductAlreadyInDatabaseException;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
-import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.model.dto.ProductDTO;
+import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.repository.ProductRepository;
-import com.ezshopping.util.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+
+    private final String PROMO_STATUS = "promo";
 
     private final ProductRepository productRepository;
     private final Mapper<Product, ProductDTO> mapper;
@@ -25,6 +25,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getAll() {
         return productRepository.findAll()
+                .stream()
+                .map(mapper::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDTO> getAllPromo() {
+        return productRepository.findAllByStatus(PROMO_STATUS)
                 .stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());

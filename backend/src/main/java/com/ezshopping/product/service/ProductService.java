@@ -8,6 +8,7 @@ import java.util.List;
 public interface ProductService {
 
     List<ProductDTO> getAll();
+    List<ProductDTO> getAllPromo();
 
     Product getById(String id);
 

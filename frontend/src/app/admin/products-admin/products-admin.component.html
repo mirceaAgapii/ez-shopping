@@ -1,4 +1,4 @@
-<app-add-product class="add_prod" [hidden]="!addNewProduct" (submitted)="closeComp()"></app-add-product>
+<app-add-product class="add_prod" [hidden]="!addNewProduct" (submitted)="closeComp()" [fromAdmin]="true"></app-add-product>
 
 <div class="card" [ngClass]="addNewProduct ? 'cont' : ''">
   <div class="">
@@ -14,7 +14,6 @@
         <th>Status</th>
         <th>Category</th>
         <th>Price</th>
-        <th>Quantity</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
@@ -23,7 +22,6 @@
         <td>{{product.status}}</td>
         <td>{{product.category}}</td>
         <td>{{product.price}}</td>
-        <td>{{product.quantity}}</td>
       </tr>
     </ng-template>
   </p-table>

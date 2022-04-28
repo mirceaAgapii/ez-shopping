@@ -45,6 +45,12 @@ public class ProductControllerREST {
         }
     }
 
+    @GetMapping("/promo")
+    public ResponseEntity<List<ProductDTO>> getAllPromoProducts() {
+        log.info("getAllPromoProducts: received GET request");
+        return ResponseEntity.ok().body(productService.getAllPromo());
+    }
+
     @PostMapping("/save")
     public ResponseEntity<Void> saveProduct(@RequestBody ProductDTO productDTO) {
         log.info("saveProduct: received POST request for product [{}]", productDTO.getName());

@@ -26,7 +26,6 @@ export class ProductsAdminComponent implements OnInit {
 
   ngOnInit() {
     this.products = this.route.snapshot.data['products'];
-
   }
 
   next() {

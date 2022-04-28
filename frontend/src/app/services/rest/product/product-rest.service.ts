@@ -15,6 +15,10 @@ export class ProductRestService {
     return this.http.get<Product[]>(environment.restUrl + environment.api + '/products' );
   }
 
+  getPromoProducts() {
+    return this.http.get<Product[]>(environment.restUrl + environment.api + '/products/promo' );
+  }
+
   getProduct(barcode: string, rfId: string) {
     if(barcode) {
       return this.http.get<Product>(environment.restUrl + environment.api + '/products/product?barcode=' + barcode);

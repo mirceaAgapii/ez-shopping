@@ -47,6 +47,8 @@ export class LoginComponent implements OnInit {
     console.log(event.key);
     if (event.key === "F6") {
       this.autoLogin();
+    } else if (event.key === "Enter") {
+      this.login();
     }
   }
 

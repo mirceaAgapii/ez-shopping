@@ -1,10 +1,9 @@
 <div class="product-card" *ngIf="_product !== undefined">
   <h1>{{_product.name}}</h1>
   <p>{{_product.description}}</p>
+  <img src="assets/img/prom.png" id="promo" [hidden]="false">
   <img class="product-pic" [src]="imgPathPref + _product.id + imgPathSuf">
-  <!--div class="product-colors">
 
-  </div-->
   <div class="product-info">
     <div class="product-price">&euro; {{_product.price}}</div>
     <a href="#" class="product-button">> Shopping list</a>
