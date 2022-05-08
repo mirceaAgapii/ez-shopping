@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Product } from 'src/app/Model/Product';
-import { WebSocketMessage } from 'src/app/Model/WebSocketMessage';
 import { ProductService } from 'src/app/services/product/product.service';
 import { ProductRestService } from 'src/app/services/rest/product/product-rest.service';
 
@@ -15,6 +13,8 @@ export class ProductsAdminComponent implements OnInit {
 
   addNewProduct: boolean = false;
 
+  productToUpdate!:Product;
+
   products: Product[] = [];
 
   first = 0;
@@ -22,10 +22,18 @@ export class ProductsAdminComponent implements OnInit {
   rows = 10;
 
   constructor(private productRestService: ProductRestService,
-    private route: ActivatedRoute) { }
+              private productService: ProductService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.products = this.route.snapshot.data['products'];
+  }
+
+  updateProd(product: Product) {
+    this.productService.productToUpdate = product;
+    this.productService.fromAdmin = true;
+    this.router.navigate(['/receiving']);
   }
 
   next() {
@@ -49,7 +57,8 @@ export class ProductsAdminComponent implements OnInit {
   }
 
   enableAddProductComp() {
-    this.addNewProduct = !this.addNewProduct;
+    this.productService.fromAdmin = true;
+    this.router.navigate(['/receiving']);
   }
 
   closeComp() {

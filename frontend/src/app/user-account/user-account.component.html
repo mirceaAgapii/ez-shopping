@@ -1,20 +1,36 @@
-<p-toast></p-toast>
-<h3>My account</h3>
-<span>{{user.email}}</span>
-<button class="btn btn-primary" (click)="logOff()">Logout</button>
 
-<h4>Change password</h4>
-<form class="grid">
-    
-    <label class="col-5" for="old_pass">Old password</label>
-    <input class="col-5" id="old_pass" type="password" name="oldPassword" [(ngModel)]="oldPassword" (keyup)="onKeyUp()">
+<div class="container rounded bg-white mt-5">
+  <div class="row">
+    <div class="col-md-4 border-right">
+      <div class="d-flex flex-column align-items-center text-center p-3 py-5">
 
-    <label class="col-5" for="new_pass">New password</label>
-    <input class="col-5" id="new_pass" type="password" name="newPassword" [(ngModel)]="newPassword" (keyup)="onKeyUp()">
+        <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="rounded-circle mt-5" alt="User-Profile-Image" width="90">
+        <span class="font-weight-bold">{{testUser.username}}</span>
+        <span class="text-black-50">{{testUser.email}}</span>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="p-3 py-5">
+        <div class="d-flex justify-content-end align-items-center mb-3">
+          <h6 class="save" (click)="updateUserData()">Save changes</h6>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12"><input type="text" class="form-control" placeholder="first name" [(ngModel)]="user.username" (keyup)="onKeyUp()"></div>
 
-    <label class="col-5" for="re_new_pass">Re-enter password</label>
-    <input class="col-5" id="re_new_pass" type="password" name="reNewPassword" [(ngModel)]="reNewPassword" (keyup)="onKeyUp()">
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12"><input type="text" class="form-control" placeholder="Email" [(ngModel)]="user.email" (keyup)="onKeyUp()"></div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6"><input type="password" class="form-control" placeholder="Old password" value="" [(ngModel)]="oldPassword" (keyup)="onKeyUp()"></div>
 
-    <div class="col-5"></div>
-    <button id="submit-btn" class="btn btn-primary col-5" type="submit" [disabled]="!passwordsMatch" (click)="updatePassword()">Confirm</button>
-</form>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6"><input type="password" class="form-control" value="" placeholder="New password" [(ngModel)]="newPassword" (keyup)="onKeyUp()"></div>
+          <div class="col-md-6"><input type="password" class="form-control" value="" placeholder="Re-enter password" [(ngModel)]="reNewPassword" (keyup)="onKeyUp()"></div>
+        </div>
+        <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="button" (click)="logOff()">Log out</button></div>
+      </div>
+    </div>
+  </div>
+</div>

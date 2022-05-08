@@ -17,10 +17,11 @@ export class MenuComponent implements OnInit {
   currentUser!: string | null;
   isUserLoggedIn!: boolean;
   isUserAdmin = false;
+  isUserStation = false;
 
   constructor(private router: Router,
     private localStorageService: LocalStorageService,
-    private userService: UserService, 
+    private userService: UserService,
     private jwtService: JWTTokenService) { }
 
   ngOnInit() {
@@ -38,8 +39,9 @@ export class MenuComponent implements OnInit {
     const userRoles = this.jwtService.getUserRoles();
     if(userRoles !== null) {
       this.isUserAdmin = userRoles.includes('ADMINISTRATOR');
+      this.isUserStation = userRoles.includes('CHECKOUT') || userRoles.includes('RECEIVING');
     }
-    
+
   }
 
   navigateToMain() {
@@ -59,14 +61,18 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/admin/dashboard']);
   }
 
-  
+
   checkout() {
     this.router.navigate(['/checkout']);
   }
 
-  
+
   toBasket() {
     this.router.navigate(['/basket']);
+  }
+
+  toShoppingList() {
+    this.router.navigate(['/list']);
   }
 
 }

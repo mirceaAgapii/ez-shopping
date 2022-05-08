@@ -1,12 +1,28 @@
-<p-toast></p-toast>
 <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
-<button class="btn btn-primary" (click)="openStation()">Station</button>
-<button class="btn btn-primary" (click)="openReceiving()">Receiving</button>
+<div id="logo-wrap">
+  <div id="logo-bar">
+  </div>
+</div>
+<div [hidden]="!isUserAdmin">
+  <button class="btn btn-primary" (click)="openReceiving()">Receiving</button>
+  <button class="btn btn-primary" (click)="openStation()">Station</button>
+</div>
 
-<div class="">
-  <div class="row justify-content-around " style="width: auto">
-    <div class="promo-element col-sm-12 col-md-5 col-lg-3 col-xl-3 m-3 no-gutters" *ngFor="let product of products">
+<div class="container">
+  <div class="row justify-content-around" >
+    <div class="promo-element col-sm-12 col-md-5 col-lg-5 col-xl-5 m-3 no-gutters" *ngFor="let product of products">
       <app-product-info [product]="product"></app-product-info>
     </div>
+  </div>
+</div>
+
+<div id="footer-content" >
+  <div id="contact-info">
+    <ul>
+      <h4>Contact Us</h4>
+      <li>+373 61111111</li>
+      <li>33, Bulgara, str., 3rd Floor</li>
+      <li>Chisinau, Republic of Moldova</li>
+    </ul>
   </div>
 </div>

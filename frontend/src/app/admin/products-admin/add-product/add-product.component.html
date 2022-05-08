@@ -1,5 +1,3 @@
-<p-toast></p-toast>
-
 <div class="card">
   <div class="row">
     <div class="col-md-6 col-lg-6  cart">
@@ -80,7 +78,7 @@
       </div>
     </div>
     <div class="col-md-6 col-lg-6  summary">
-      <div class="container">
+      <div class="container" [hidden]="isUserStation">
 
         <i class="fa-solid fa-x close-btn" (click)="cancel()"></i>
       </div>
@@ -92,7 +90,7 @@
       <div class="container" style="text-align: center; min-height: 200px">
 
         <label class="image-upload-container">
-          <label for="imgInput"><img id="img-preview" src="assets/img/up.png"></label>
+          <label for="imgInput"><img id="img-preview" [src]="this.defaultProduct.imageUrl ? defaultProduct.imageUrl : defaultUploadImage"></label>
           <input id="imgInput" #imageInput
                  type="file"
                  accept="image/*"

@@ -6,6 +6,7 @@ import { WebSocketMessage } from '../Model/WebSocketMessage';
 import { ProductRestService } from '../services/rest/product/product-rest.service';
 import { UserService } from '../services/user/user.service';
 import {LocalStorageService} from "../services/auth/storage/local-storage.service";
+import {JWTTokenService} from "../services/auth/jwttoken.service";
 
 @Component({
   selector: 'app-products',
@@ -14,6 +15,7 @@ import {LocalStorageService} from "../services/auth/storage/local-storage.servic
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
+  isClient = false;
   barcode!: string;
   rfId!: string;
   placeholder: string = 'Enter a barcode or scan the RFID';
@@ -25,7 +27,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS03/' + this.storage.get('userId'));
 
   constructor(private productRestService: ProductRestService,
-    private storage: LocalStorageService) { }
+              private storage: LocalStorageService,
+              private jwtService: JWTTokenService) { }
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -39,7 +42,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.connectWS();
-    window.innerWidth
+    //window.innerWidth
+    if(window.innerWidth < 767) {
+
+      document.getElementById('search-row')!.classList.remove('row');
+    }
   }
 
   ngOnDestroy() {

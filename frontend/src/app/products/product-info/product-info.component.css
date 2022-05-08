@@ -10,6 +10,10 @@ body{
   transition: 0.6s linear;
 }
 
+h1 {
+  min-height: 55px;
+}
+
 .product-card{
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   width: 20rem;

@@ -19,6 +19,8 @@ public class ProductDTOMapper implements Mapper<Product, ProductDTO> {
                 .status(entity.getStatus())
                 .brand(entity.getBrand())
                 .rfId(entity.getRfId())
+                .imageUrl(entity.getImageUrl())
+                .imageId(entity.getImageId())
                 .build();
     }
 }

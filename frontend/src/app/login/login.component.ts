@@ -46,8 +46,14 @@ export class LoginComponent implements OnInit {
   onKeydown(event: { key: string; }) {
     console.log(event.key);
     if (event.key === "F6") {
-      this.autoLogin();
-    } else if (event.key === "Enter") {
+      this.autoLoginAdmin();
+    } else if (event.key === "F8"){
+      this.autoLoginClient();
+    } else if (event.key === "F9"){
+      this.autoLoginReceiving();
+    } else if (event.key === "F10"){
+      this.autoLoginCheckout();
+    }else if (event.key === "Enter") {
       this.login();
     }
   }
@@ -87,9 +93,30 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/registration']);
   }
 
-  autoLogin() {
-    this.username = 'Mircea';
-    this.password = '12345';
+  autoLoginAdmin() {
+    this.username = 'Administrator4ever';
+    this.password = 'admin';
+    this.login();
+    this.showSpinner = true;
+  }
+
+  autoLoginClient() {
+    this.username = 'client';
+    this.password = 'client';
+    this.login();
+    this.showSpinner = true;
+  }
+
+  autoLoginReceiving() {
+    this.username = 'receiving';
+    this.password = 'receiving';
+    this.login();
+    this.showSpinner = true;
+  }
+
+  autoLoginCheckout() {
+    this.username = 'checkout';
+    this.password = 'checkout';
     this.login();
     this.showSpinner = true;
   }

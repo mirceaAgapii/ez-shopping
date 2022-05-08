@@ -9,9 +9,9 @@ import { BasketComponent } from './basket/basket.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AdminPermisionsGuard } from './guard/admin-permisions.guard';
 import { AuthorizationGuard } from './guard/authorization.guard';
-import { CurrentUserResolver } from './guard/current-user.resolver';
-import { PrefetchProductsResolver } from './guard/prefetch-products.resolver';
-import { PrefetchUserResolver } from './guard/prefetch-user.resolver';
+import { CurrentUserResolver } from './guard/resolvers/current-user.resolver';
+import { PrefetchProductsResolver } from './guard/resolvers/prefetch-products.resolver';
+import { PrefetchUserResolver } from './guard/resolvers/prefetch-user.resolver';
 import { PrefetchDashboardResolver } from './guard/resolvers/prefetch-dashboard.resolver';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register/register.component';
@@ -19,11 +19,12 @@ import { MainComponent } from './main/main.component';
 import { OrderStationComponent } from './order-station/order-station.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProductsComponent } from './products/products.component';
-import { DashboardService } from './services/admin/dashboard.service';
-import { AuthorizationService } from './services/auth/authorization.service';
 import { UserAccountComponent } from './user-account/user-account.component';
 import {AddProductComponent} from "./admin/products-admin/add-product/add-product.component";
-import {PrefetchPromoProductsResolver} from "./guard/prefetch-promo-products.resolver";
+import {PrefetchPromoProductsResolver} from "./guard/resolvers/prefetch-promo-products.resolver";
+import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
+import {PrefetchProductNamesResolver} from "./guard/resolvers/prefetch-product-names.resolver";
+import {PrefetchShoppingListResolver} from "./guard/resolvers/prefetch-shopping-list.resolver";
 
 export const routes: Routes = [
   {
@@ -75,6 +76,14 @@ export const routes: Routes = [
   {
     path: 'basket',
     component: BasketComponent
+  },
+  {
+    path: 'list',
+    component: ShoppingListComponent,
+    resolve: {
+      productNames: PrefetchProductNamesResolver,
+      shoppingList: PrefetchShoppingListResolver
+    }
   },
   {
     path: '404',

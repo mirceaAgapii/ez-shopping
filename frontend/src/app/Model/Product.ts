@@ -10,4 +10,8 @@ export class Product {
     brand!: string;
     rfId!: string;
     path!: string;
+    done = false;
+    imageUrl!: string;
+    imageId!: string;
+
 }

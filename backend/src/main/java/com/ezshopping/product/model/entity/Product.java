@@ -43,6 +43,12 @@ public class Product extends AbstractEntity {
     @Column(name = "rf_id")
     private String rfId;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "image_id")
+    private String imageId;
+
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private Set<Stock> stockEntities;

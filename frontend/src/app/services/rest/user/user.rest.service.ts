@@ -29,8 +29,8 @@ export class UserRestService {
     body = body.set('username', username);
     body = body.set('password', password);
     return this.http.post<HttpResponse<Object>>(
-        environment.restUrl + environment.api + '/login', 
-        body, 
+        environment.restUrl + environment.api + '/login',
+        body,
         {observe: 'response'}
       );
   }
@@ -63,14 +63,7 @@ export class UserRestService {
       email : user.email,
       role : user.role
     }
-    this.http.patch<any>(environment.restUrl + environment.api + '/users/user', body).subscribe({
-      next: data => {
-        console.log('successful update');
-      },
-      error: error => {
-        console.log(error);
-      }
-    })
+    return this.http.patch<any>(environment.restUrl + environment.api + '/users/user', body);
   }
 
   refreshToken()  {

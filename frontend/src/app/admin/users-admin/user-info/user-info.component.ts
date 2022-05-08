@@ -34,7 +34,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
   constructor(private userRestService: UserRestService) { }
 
   ngOnInit(): void {
-    this.roles = ['CLIENT', 'ADMINISTRATOR', 'PRICE_CHECK', 'SUPERVISOR'];    
+    this.roles = ['CLIENT', 'ADMINISTRATOR', 'PRICE_CHECK', 'SUPERVISOR'];
   }
 
   ngOnDestroy(): void {
@@ -59,7 +59,10 @@ export class UserInfoComponent implements OnInit, OnDestroy {
       this.userUpdated = true;
     }
     if(this.userUpdated) {
-      this.userRestService.updateUser(this._user);
+      this.userRestService.updateUser(this._user).subscribe(
+        data => console.log('update successful'),
+        error => console.log(error)
+      );
       this.userUpdated = false;
     }
     this.close();

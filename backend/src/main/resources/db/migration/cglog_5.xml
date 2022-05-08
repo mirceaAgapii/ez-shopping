@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="5" author="mag">
+        <createTable tableName="ez_shopping_list_items">
+            <column name="id" type="varchar(36)"/>
+            <column name="user_id" type="varchar(36)"/>
+            <column name="product_name" type="varchar(50)"/>
+            <column name="active" type="boolean"/>
+        </createTable>
+        <addPrimaryKey
+                tableName="ez_shopping_list_items"
+                columnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_user2shoppinglist"
+                                 baseTableName="ez_shopping_list_items"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="ez_user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

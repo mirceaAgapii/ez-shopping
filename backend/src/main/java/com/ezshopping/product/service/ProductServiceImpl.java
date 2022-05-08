@@ -1,16 +1,20 @@
 package com.ezshopping.product.service;
 
 import com.ezshopping.common.Mapper;
+import com.ezshopping.config.cloud.CloudinaryService;
 import com.ezshopping.product.exceptions.ProductAlreadyInDatabaseException;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.product.model.dto.ProductDTO;
 import com.ezshopping.product.model.entity.Product;
 import com.ezshopping.product.repository.ProductRepository;
+import com.ezshopping.util.Utilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +25,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final Mapper<Product, ProductDTO> mapper;
+    private final CloudinaryService cloudinaryService;
+
+    @Override
+    public List<String> getAllProductNames() {
+        return productRepository.findAllProductNames();
+    }
 
     @Override
     public List<ProductDTO> getAll() {
@@ -66,26 +76,39 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void saveProduct(ProductDTO productDTO) {
-        if(productRepository.existsByNameOrBarcodeOrRfId(
+    public ProductDTO saveProduct(ProductDTO productDTO) {
+        if (productRepository.existsByNameOrBarcodeOrRfId(
                 productDTO.getName(),
                 productDTO.getBarcode(),
                 productDTO.getRfId())) {
             throw new ProductAlreadyInDatabaseException("Product is already in database");
         }
-            Product newProduct = Product
-                    .builder()
-                    .name(productDTO.getName())
-                    .description(productDTO.getDescription())
-                    .price(productDTO.getPrice())
-                    .barcode(productDTO.getBarcode())
-                    .status(productDTO.getStatus())
-                    .category(productDTO.getCategory())
-                    .brand(productDTO.getBrand())
-                    .rfId(productDTO.getRfId())
-                    .build();
-            newProduct.setId(String.valueOf(getNextId()));
-            productRepository.save(newProduct);
+        Product newProduct = Product
+                .builder()
+                .name(productDTO.getName())
+                .description(productDTO.getDescription())
+                .price(productDTO.getPrice())
+                .barcode(productDTO.getBarcode())
+                .status(productDTO.getStatus())
+                .category(productDTO.getCategory())
+                .brand(productDTO.getBrand())
+                .rfId(productDTO.getRfId())
+                .build();
+        newProduct.setId(Utilities.getNewUuid());
+        productRepository.save(newProduct);
+        return mapper.map(newProduct);
+    }
+
+    @Override
+    @Transactional
+    public void setProductImage(String id, MultipartFile file) {
+        Product product = productRepository.findById(id).orElseThrow();
+        Map response = cloudinaryService.upload(file);
+        String url = (String)response.get("url");
+        String public_id = (String)response.get("public_id");
+        product.setImageUrl(url);
+        product.setImageId(public_id);
+        productRepository.save(product);
     }
 
     @Override

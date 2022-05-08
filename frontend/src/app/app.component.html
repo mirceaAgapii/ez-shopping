@@ -1,17 +1,30 @@
+<p-toast></p-toast>
 <div class="main">
   <app-menu *ngIf="isUserLoggedIn"></app-menu>
   <header *ngIf="isUserLoggedIn"><img class="logo" src="../assets/img/logo_name.png"></header>
-
+<div *ngIf="!isUserStation">
   <router-outlet></router-outlet>
-  <footer *ngIf="isUserLoggedIn">
-    <nav>
+</div>
+<div *ngIf="isReceiving">
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-primary" (click)="showReceivingComp()">Receiving</button>
+    <button type="button" class="btn btn-secondary" (click)="showCheckProdComp()">Product check</button>
+  </div>
+  <app-add-product *ngIf="showReceiving"></app-add-product>
+  <app-products *ngIf="showCheckProduct"></app-products>
+</div>
+<div *ngIf="isCheckout">
+  <app-order-station></app-order-station>
+</div>
+  <button class="log-out-btn btn btn-danger" *ngIf="isUserLoggedIn && isUserStation" (click)="logOff()">Log Out</button>
+  <footer *ngIf="isUserLoggedIn && !isUserStation">
+    <nav >
       <ul class="">
         <li (click)="navigateToMain()"><i class="fas fa-home nav_icon" ></i></li>
         <li (click)="toAdmin()" [hidden]="!isUserAdmin"><i class="fas fa-user-cog nav_icon"></i></li>
         <li (click)="checkout()"><i class="fas fa-cash-register nav_icon" ></i></li>
-        <li (click)="toBasket()"><i class="fas fa-shopping-basket nav_icon"></i></li>
+        <li (click)="toShoppingList()"><i class="fa-solid fa-list-check nav_icon"></i></li>
         <li (click)="toProducts()"><i class="fas fa-apple-alt nav_icon" ></i></li>
-        <!--li><i class="fas fa-sign-out-alt nav_icon" (click)="logOff()"></i></li-->
         <li (click)="toAccount()"><i class="fas fa-user nav_icon"></i></li>
       </ul>
     </nav>

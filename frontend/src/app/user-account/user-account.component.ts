@@ -19,7 +19,7 @@ export class UserAccountComponent implements OnInit {
   newPassword!: string;
   reNewPassword!: string;
   passwordsMatch = false;
-
+  testUser = new User();
   user!: User;
 
 
@@ -34,6 +34,7 @@ export class UserAccountComponent implements OnInit {
   ngOnInit(): void {
     this.passwordsMatch = false;
     this.user = this.route.snapshot.data['user'];
+    this.testUser = Object.assign({},this.user);
   }
 
   logOff() {
@@ -44,33 +45,42 @@ export class UserAccountComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  private checkPasswords() {
+  private checkPasswords(): boolean {
     if(this.oldPassword && this.newPassword && this.reNewPassword) {
-      if(this.newPassword !== this.reNewPassword) {
-        this.passwordsMatch = false;
-      } else {
-        this.passwordsMatch = true;
+      if(this.newPassword === this.reNewPassword) {
+        return true;
       }
-    } else {
-      this.passwordsMatch = false;
     }
-
+    return false;
   }
 
-  updatePassword() {
-    this.userRestService.updatePassword(this.oldPassword, 
-      this.newPassword, 
-      this.localStorageService.get("userId"))
-      .subscribe(
+  checkDataChanged(): boolean {
+    if (this.user.username !== this.testUser.username
+      || this.user.password !== this.testUser.password
+      || this.user.email !== this.testUser.email) {
+      return true;
+    }
+    return false;
+  }
+
+  updateUserData() {
+    if (this.checkPasswords()) {
+      this.user.password = this.newPassword;
+    }
+    if (this.checkDataChanged()) {
+      this.userRestService.updateUser(this.user).subscribe(
         data => {
-           this.clearData();
-           this.messageService.add({severity:'success', summary: "Password successfuly updated", detail:''});
+          this.clearData();
+          this.testUser = this.user;
+          this.messageService.add({severity: 'success', summary: "Data successfully updated", detail: ''});
         },
         error => {
-          this.messageService.add({severity:'error', summary: error.error, detail:''});
+          this.messageService.add({severity: 'error', summary: "Error during updating data", detail: ''});
         }
-    );
-
+      );
+    } else {
+      this.messageService.add({severity: 'warn', summary: "User data hasn't been changed", detail: ''});
+    }
   }
 
   onKeyUp() {
@@ -79,6 +89,5 @@ export class UserAccountComponent implements OnInit {
 
   private clearData() {
     this.newPassword = this.oldPassword = this.reNewPassword = '';
-
   }
 }

@@ -6,7 +6,10 @@ import lombok.Getter;
 public enum UserRole {
 
     CLIENT("CLIENT"),
-    ADMINISTRATOR("ADMINISTRATOR");
+    ADMINISTRATOR("ADMINISTRATOR"),
+    CHECKOUT("CHECKOUT"),
+    RECEIVING("RECEIVING");
+
 
     private final String value;
 

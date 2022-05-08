@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
@@ -30,4 +31,8 @@ public class ProductDTO {
     private String brand;
 
     private String rfId;
+
+    private String imageUrl;
+
+    private String imageId;
 }

@@ -7,6 +7,10 @@ import { Product } from 'src/app/Model/Product';
 export class ProductService {
   products: Product[] = [];
 
+  productToUpdate!: Product | null;
+  //used in admin products
+  fromAdmin = false;
+
 
   addProduct(product: Product) {
     this.products.push(product);

@@ -1,11 +1,11 @@
 <header>
   <img class="logo" src="../../assets/img/logo_name.png" alt="ez_shopping logo" (click)="navigateToMain()">
-  <nav>
+  <nav [hidden]="isUserStation">
     <ul class="nav_links">
       <li (click)="navigateToMain()"><a class="nav_text">Home</a><i class="fas fa-home nav_icon" ></i></li>
       <li (click)="toAdmin()" [hidden]="!isUserAdmin"><a class="nav_text" >Admin Page</a><i class="fas fa-user nav_icon" ></i></li>
       <li (click)="checkout()"><a class="nav_text">Checkout</a><i class="fas fa-cash-register nav_icon" ></i></li>
-      <li (click)="toBasket()"><a class="nav_text" >Basket</a><i class="fas fa-basket nav_icon" ></i></li>
+      <li (click)="toShoppingList()"><a class="nav_text" >Shopping List</a><i class="fa-solid fa-list-check nav_icon" ></i></li>
       <li (click)="toProducts()"><a class="nav_text">Products</a><i class="fas fa-apple-alt nav_icon" ></i></li>
       <li (click)="toAccount()"><a class="nav_text">Account</a><i class="fas fa-user nav_icon"></i></li>
     </ul>

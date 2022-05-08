@@ -23,7 +23,6 @@ export class BasketComponent implements OnInit, OnDestroy {
   currentOrderId!: string;
 
   socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS02/' + this.storage.get("orderUserId"));
-  //socket: WebSocketSubject<WebSocketMessage> = webSocket('ws://localhost:8090/web-socket/' + 'WS02/' + this.storage.get("userId"));
 
   constructor(private router: Router,
     private userService: UserService,

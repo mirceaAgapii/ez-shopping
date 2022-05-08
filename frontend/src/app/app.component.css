@@ -34,7 +34,7 @@
    .main::after {
         content: '';
         display: block;
-        height: 450px; /* Set same as footer's height */
+        height: 50px; /* Set same as footer's height */
     }
 
     app-menu {
@@ -76,4 +76,22 @@
         bottom: 0;
     }
 
+}
+
+.main {
+  min-height: 600px;
+}
+
+.log-out-btn {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.btn-group {
+  width: 100%;
+}
+
+.btn-group button {
+  width: 50%;
 }

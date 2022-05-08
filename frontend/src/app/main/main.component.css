@@ -1,0 +1,41 @@
+#logo-wrap {
+  background: url(https://i.imgur.com/AaMlZXK.png);
+  background-size: cover;
+}
+#logo-bar {
+  height: 200px !important;
+}
+
+@media(max-width:767px) {
+  #logo-bar {
+    height: 150px !important;
+  }
+}
+img {
+  margin: 55px 0 0 25px;
+  display: block;
+
+}
+
+#footer-content {
+background-color: #24252A;
+}
+
+
+#contact-info {
+  color: #ffffff;
+  display: flex;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 20px 0 40px 0;
+  text-align: center;
+}
+
+ul {
+  margin: 0 auto;
+}
+
+li {
+  list-style-type: none;
+
+}

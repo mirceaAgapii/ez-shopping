@@ -18,4 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     int getMaxId();
 
     List<Product> findAllByStatus(String status);
+
+    @Query("select product.name " +
+            "from Product product")
+    List<String> findAllProductNames();
 }

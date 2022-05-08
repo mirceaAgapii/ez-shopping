@@ -13,10 +13,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { JWTTokenService } from './services/auth/jwttoken.service';
@@ -40,7 +40,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
 import { AddProductComponent } from './admin/products-admin/add-product/add-product.component';
 import { TreeTableModule } from 'primeng/treetable';
-import { PrefetchUserResolver } from './guard/prefetch-user.resolver';
+import { PrefetchUserResolver } from './guard/resolvers/prefetch-user.resolver';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
@@ -55,6 +55,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { QRCodeComponent, QRCodeModule } from 'angular2-qrcode';
 import { OrderStationComponent } from './order-station/order-station.component';
 import { BasketComponent } from './basket/basket.component';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -77,41 +78,43 @@ import { BasketComponent } from './basket/basket.component';
     ProductInfoComponent,
     CheckoutComponent,
     OrderStationComponent,
-    BasketComponent
+    BasketComponent,
+    ShoppingListComponent
 
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDialogModule,
-    MatIconModule,
-    MatInputModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MenubarModule,
-    ToastModule,
-    BlockUIModule,
-    ProgressSpinnerModule,
-    TableModule,
-    DropdownModule,
-    DialogModule,
-    RadioButtonModule,
-    InputTextModule,
-    InputTextareaModule,
-    InputNumberModule,
-    RippleModule,
-    ButtonModule,
-    TreeTableModule,
-    NgbModule,
-    QRCodeModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        MatIconModule,
+        MatInputModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MenubarModule,
+        ToastModule,
+        BlockUIModule,
+        ProgressSpinnerModule,
+        TableModule,
+        DropdownModule,
+        DialogModule,
+        RadioButtonModule,
+        InputTextModule,
+        InputTextareaModule,
+        InputNumberModule,
+        RippleModule,
+        ButtonModule,
+        TreeTableModule,
+        NgbModule,
+        QRCodeModule,
+        ReactiveFormsModule
+    ],
   exports: [
     MatButtonModule,
     MatCardModule,

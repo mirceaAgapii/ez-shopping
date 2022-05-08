@@ -1,0 +1,52 @@
+.strikethrough {
+  text-decoration: line-through;
+}
+
+#item {
+  display: block;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+.dropdown-content li {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.container {
+  max-width: 750px;
+  margin-top: 20px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+.list-element {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-group-item {
+  padding-bottom: 0;
+  padding-top: 0;
+  padding-right: 0;
+}
+
+.drop-down {
+  cursor: pointer;
+}
+
+.drop-down li:hover {
+  background: #9ff1f1;
+}

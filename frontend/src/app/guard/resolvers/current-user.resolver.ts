@@ -5,16 +5,16 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { User } from '../Model/User';
-import { LocalStorageService } from '../services/auth/storage/local-storage.service';
-import { UserRestService } from '../services/rest/user/user.rest.service';
-import { UserService } from '../services/user/user.service';
+import { User } from '../../Model/User';
+import { LocalStorageService } from '../../services/auth/storage/local-storage.service';
+import { UserRestService } from '../../services/rest/user/user.rest.service';
+import { UserService } from '../../services/user/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrentUserResolver implements Resolve<User> {
- 
+
   constructor(private userRestService: UserRestService,
     protected userService: UserService,
     private localStorageService: LocalStorageService) {}

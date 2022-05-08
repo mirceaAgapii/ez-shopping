@@ -8,6 +8,8 @@ import { ProductRestService } from 'src/app/services/rest/product/product-rest.s
 import { environment } from 'src/environments/environment';
 import {ImageSnippet} from "../../../Model/ImageSnippet";
 import {Route, Router} from "@angular/router";
+import {ProductService} from "../../../services/product/product.service";
+import {JWTTokenService} from "../../../services/auth/jwttoken.service";
 
 @Component({
   selector: 'app-add-product',
@@ -16,11 +18,15 @@ import {Route, Router} from "@angular/router";
 })
 export class AddProductComponent implements OnInit, OnDestroy {
 
+  isUserStation = false;
+
   defaultProduct: Product = new Product();
   statuses!: any[];
   socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01/none');
 
   selectedFile!: ImageSnippet;
+
+  defaultUploadImage = 'assets/img/up.png';
 
   @Input()
   fromAdmin = false;
@@ -28,9 +34,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
   @Output()
   submitted = new EventEmitter();
 
-  constructor(private productService: ProductRestService,
+  @Input() set product(product: Product) {
+    if(product) {
+      this.defaultProduct = product;
+    }
+  }
+
+  constructor(private productRestService: ProductRestService,
+              private productService: ProductService,
               private messageService: MessageService,
-              private router: Router) { }
+              private router: Router,
+              private jwtService: JWTTokenService) { }
 
   ngOnInit(): void {
     this.statuses = [
@@ -40,6 +54,16 @@ export class AddProductComponent implements OnInit, OnDestroy {
       {label: 'PROMO', value: 'promo'}
     ];
     this.connectWS();
+
+    this.fromAdmin = this.productService.fromAdmin;
+    if(this.productService.productToUpdate) {
+      this.defaultProduct = this.productService.productToUpdate;
+      this.productService.productToUpdate = null;
+    }
+    const userRoles = this.jwtService.getUserRoles();
+    if(userRoles !== null) {
+      this.isUserStation = userRoles.includes('CHECKOUT') || userRoles.includes('RECEIVING');
+    }
   }
 
   ngOnDestroy(): void {
@@ -48,23 +72,41 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   save(){
     if(this.checkProduct()) {
-      let product = new Product();
-      product.category = this.defaultProduct.category;
-      product.description = this.defaultProduct.description;
-      product.status = this.defaultProduct.status;
-      product.name = this.defaultProduct.name;
-      product.price = this.defaultProduct.price;
-      product.barcode = this.defaultProduct.barcode;
-      product.rfId = this.defaultProduct.rfId;
-      this.productService.saveProduct(product);
-      this.submitted.emit();
-      this.defaultProduct = new Product();
+      if(this.defaultProduct.id) {
+        this.productRestService.updateProduct(this.defaultProduct).subscribe(
+          data => {
+            if(this.selectedFile) {
+              this.productRestService.saveImage(this.selectedFile.file, this.defaultProduct.id);
+            }
+          }
+        )
+      } else {
+        this.productRestService.saveProduct(this.defaultProduct).subscribe(
+          data => {
+            console.log('success ' + data);
+            console.log('save image');
+            if (this.selectedFile) {
+              this.productRestService.saveImage(this.selectedFile.file, data.id);
+            }
+            const preview = document.getElementById('img-preview');
+            // @ts-ignore
+            preview.src = defaultUploadImage;
+          }
+        );
+      }
+
+      this.cancel();
     }
+  }
+
+  private backToAdmin() {
+    this.router.navigate(['/admin/products']);
+    this.productService.fromAdmin = false;
   }
 
   cancel(){
     if(this.fromAdmin) {
-      this.submitted.emit();
+      this.backToAdmin();
     } else {
       this.router.navigate(['/']);
     }
@@ -98,7 +140,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     const reader = new FileReader();
 
     reader.addEventListener('load', (event: any) => {
-
       this.selectedFile = new ImageSnippet(event.target.result, file);
       if (this.selectedFile.file.type.match('image/*')) {
         if (this.selectedFile.file.size <= 250000) {
@@ -115,11 +156,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
       } else {
         this.messageService.add({severity: 'error', summary: 'Please upload an image', detail: ''});
       }
-
-
     });
-
     reader.readAsDataURL(file);
-
   }
 }

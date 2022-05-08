@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/Model/Product';
+import {ProductRestService} from "../../services/rest/product/product-rest.service";
+import {ShoppingListItem} from "../../Model/ShoppingListItem";
+import {LocalStorageService} from "../../services/auth/storage/local-storage.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-product-info',
@@ -10,10 +14,10 @@ export class ProductInfoComponent implements OnInit {
 
   _product!: Product;
   productName = '';
-  imgPathPref = 'assets/img/articles/';
-  imgPathSuf = '.jpg';
 
-  constructor() { }
+  constructor(private productRestService: ProductRestService,
+              private storage: LocalStorageService,
+              private messageService: MessageService) { }
 
   @Input() set product(product: Product) {
     this._product = product;
@@ -29,4 +33,28 @@ export class ProductInfoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addToShoppingList(product: Product) {
+    let listItem = new ShoppingListItem();
+    listItem.productName = product.name;
+    listItem.active = !product.done;
+    listItem.userId = this.storage.get('userId');
+    this.productRestService.saveShoppingListItem(listItem).subscribe(
+      data => {
+        console.log(product.name + ' successful added to list');
+        this.messageService.add({
+          severity: 'success',
+          summary: `Product ${product.name} added to list`,
+          detail: ''
+        });
+      },
+      error => {
+        console.log(error.error);
+        this.messageService.add({
+          severity: 'warn',
+          summary: `Product ${product.name} is already in the list`,
+          detail: ''
+        });
+      }
+    )
+  }
 }

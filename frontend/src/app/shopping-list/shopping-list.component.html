@@ -1,0 +1,28 @@
+<section class="container" (click)="closeDropDown()">
+  <h2>Shopping list</h2>
+  <form class="shopping">
+    <input class="form-control" type="text" name="item" id="item" [(ngModel)]="newItem" (keyup)="searchProd()">
+    <div class="dropdown-content">
+      <ul *ngFor="let item of dropDownNames" class="list-group drop-down" id="drop-down-item">
+        <li class="list-group-item " (click)="selectItem(item)">{{item}}</li>
+      </ul>
+    </div>
+    <div class="input-group-append" >
+      <button class="btn btn-primary " type="submit" (click)="addItemToList()" [disabled]="this.newItem===''">+ Add Item</button>
+    </div>
+  </form>
+  <form [formGroup]="form" novalidate>
+    <div *ngFor="let item of shoppingListItems; let i=index" class="list-group">
+      <div class="list-group-item input-group list-element">
+
+        <div [ngClass]="item.done ? 'strikethrough' : 'null'">{{item.name}}</div>
+        <div class="input-group-append" >
+          <button class="btn btn-success" type="submit" (click)="done(item.id)"><i class="fa-solid fa-check"></i></button>
+          <button class="btn btn-outline-secondary" type="submit" (click)="undo(item.id)"><i class="fa-solid fa-rotate-left"></i></button>
+          <button class="btn btn-danger" type="submit" (click)="remove(item.id)"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
