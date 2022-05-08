@@ -19,6 +19,13 @@
             <tr>
               <td>
                 <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Email" [(ngModel)]="email"type="email" name="email" [disabled]="showSpinner" email>
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
                   <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" [disabled]="showSpinner">
                 </mat-form-field>
               </td>
@@ -30,13 +37,7 @@
                 </mat-form-field>
               </td>
             </tr>
-            <tr>
-              <td>
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Email" [(ngModel)]="email"type="email" name="email" [disabled]="showSpinner" email>
-                </mat-form-field>
-              </td>
-            </tr>
+
           </table>
         </form>
       </mat-card-content>

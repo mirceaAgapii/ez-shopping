@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface ShoppingListItemRepository extends JpaRepository<ShoppingListItem, String> {
 
     Optional<List<ShoppingListItem>> findAllByUser(User user);
-    boolean existsByProductName(String productName);
+    boolean existsByProductNameAndUser(String productName, User user);
 }

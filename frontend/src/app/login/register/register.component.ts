@@ -30,21 +30,30 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  register() {
 
-    if(this.password && this.re_password && this.password === this.re_password) {
-      this.invalid_input = false;
-    } else {
-      console.log('invalid password');
-      alert('Passwords don\'t match');
-      this.invalid_input = true;
+register() {
+    if (!this.username) {
+      this.messageService.add({severity:'warn', summary: 'Please provide an username', detail:''});
+      console.log('no username');
+      return;
     }
 
     if(this.email && this.email.includes('@') && this.email.includes('.')) {
       console.log('valid email');
     } else {
-      alert('Email you entered is invalid')
+      this.messageService.add({severity:'warn', summary: 'Email you entered is invalid', detail:''});
       console.log('invalid email');
+      return;
+    }
+
+    if(this.password && this.re_password && this.password === this.re_password) {
+      this.invalid_input = false;
+    } else {
+      console.log('invalid password');
+      this.messageService.add({severity:'warn', summary: 'Passwords don\'t match', detail:''});
+      this.invalid_input = true;
+      return;
+
     }
 
     let user = new User();
@@ -56,11 +65,13 @@ export class RegisterComponent implements OnInit {
       next: data => {
         console.log('success');
         if(!this.authorizationService.isAuthenticated()) {
+          this.messageService.add({severity:'success', summary: 'User registered successfully', detail:''});
           this.router.navigate(['/login']);
         }
       },
       error: error => {
         var errorMessage = error.error;
+        console.log(error);
         this.messageService.add({severity:'error', summary: errorMessage, detail:''});
       }
     });

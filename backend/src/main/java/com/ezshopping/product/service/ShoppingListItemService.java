@@ -43,7 +43,7 @@ public class ShoppingListItemService {
     @Transactional
     public ShoppingListDTO saveShoppingListItem(ShoppingListDTO shoppingListDTO) {
         User user = userService.getUserById(shoppingListDTO.getUserId());
-        if (!shoppingListItemRepository.existsByProductName(shoppingListDTO.getProductName())) {
+        if (!shoppingListItemRepository.existsByProductNameAndUser(shoppingListDTO.getProductName(), user)) {
             ShoppingListItem newItem = new ShoppingListItem(user, shoppingListDTO.getProductName(), shoppingListDTO.isActive());
             newItem.setId(Utilities.getNewUuid());
             shoppingListItemRepository.save(newItem);
