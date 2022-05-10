@@ -3,6 +3,7 @@ export class Orderline {
     productId!: string;
     productName!: string;
     productDescr!: string;
+    productImageUrl!: string;
     price = 0;
 
 }

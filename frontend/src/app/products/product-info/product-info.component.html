@@ -1,7 +1,7 @@
 <div class="product-card" *ngIf="_product !== undefined">
   <h1>{{_product.name}}</h1>
   <p>{{_product.description}}</p>
-  <img src="assets/img/prom.png" id="promo" [hidden]="false">
+  <img src="assets/img/prom.png" id="promo" [hidden]="!showPromoImag">
   <img class="product-pic" [src]="_product.imageUrl">
 
   <div class="product-info">

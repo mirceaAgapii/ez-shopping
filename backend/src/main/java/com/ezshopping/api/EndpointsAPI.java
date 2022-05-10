@@ -26,6 +26,8 @@ public class EndpointsAPI {
 
     public static final String ORDERS = "/orders";
 
+    public static final String ORDER_LINES = "/orderlines";
+
     public static final String ARDUINO = "/arduino";
 
 }

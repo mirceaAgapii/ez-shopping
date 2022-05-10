@@ -7,6 +7,7 @@ public class OrderLineDTO {
     public String orderLineId;
     public String productName;
     public String productId;
+    public String productImageUrl;
     public double price;
     public String productDescr;
 }

@@ -20,7 +20,7 @@
           <h6 class="m-b-20">404 Response</h6>
           <h2 class="text-right"><i class="fa fa-times-circle f-left"></i><span>{{http404Traces?.length}}</span></h2>
           <p class="m-b-0">Updated<span class="f-right">{{ http404Traces[0]?.timestamp | date:
-              'short'}}</span></p>
+            'short'}}</span></p>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
           <h6 class="m-b-20">200 Respose</h6>
           <h2 class="text-right"><i class="fa fa-check-square-o f-left"></i><span>{{http200Traces?.length}}</span></h2>
           <p class="m-b-0">Updated<span class="f-right">{{ http200Traces[0]?.timestamp | date:
-              'short'}}</span></p>
+            'short'}}</span></p>
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
           <h2 class="text-right"><i class="fa fa-exclamation-circle f-left"></i><span>{{http400Traces?.length}}</span>
           </h2>
           <p class="m-b-0">Updated<span class="f-right">{{ http200Traces[0]?.timestamp | date:
-              'short'}}</span></p>
+            'short'}}</span></p>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
           <h6 class="m-b-20">500 Response</h6>
           <h2 class="text-right"><i class="fa fa-bug f-left"></i><span>{{http500Traces?.length}}</span></h2>
           <p class="m-b-0">Updated<span class="f-right">{{ http200Traces[0]?.timestamp | date:
-              'short'}}</span></p>
+            'short'}}</span></p>
         </div>
       </div>
     </div>
@@ -64,9 +64,9 @@
   <div class="row container ">
     <div class="col-sm-12 col-md-12 col-lg-12 mt-50">
       <p-table class="table table-bordered text-center" id="httptrace-table" [value]="tracesList" [paginator]="true"
-        [rows]="10" [totalRecords]="tracesList.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="[10,25,50]">
+               [rows]="10" [totalRecords]="tracesList.length" [showCurrentPageReport]="true" responsiveLayout="scroll"
+               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+               [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
           <tr>
             <th>Time Stamp</th>
@@ -97,10 +97,6 @@
       <li class="nav-item">
         <a class="nav-link active" data-toggle="pill">
           <i class="fa fa-sitemap"></i> Request</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="pill">
-          <i class="fa fa-sliders"></i> Response</a>
       </li>
     </ul>
     <div class="tab-content">

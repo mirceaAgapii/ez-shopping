@@ -24,7 +24,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   readyToSubmit = true;
 
-  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS03/' + this.storage.get('userId'));
+  socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS01/' + this.storage.get('userId'));
 
   constructor(private productRestService: ProductRestService,
               private storage: LocalStorageService,
@@ -42,9 +42,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.connectWS();
-    //window.innerWidth
     if(window.innerWidth < 767) {
-
       document.getElementById('search-row')!.classList.remove('row');
     }
   }

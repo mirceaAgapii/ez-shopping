@@ -16,6 +16,7 @@ public class OrderLineDTOMapper implements Mapper<OrderLine, OrderLineDTO> {
                 .productName(entity.getProduct().getName())
                 .productDescr(entity.getProduct().getDescription())
                 .price(entity.getProduct().getPrice())
+                .productImageUrl(entity.getProduct().getImageUrl())
                 .build();
     }
 }

@@ -23,4 +23,12 @@ export class AuthorizationService {
       return false;
     }
   }
+
+  public isUserWorkstation(): boolean {
+    let userRoles = this.jwtTokeService.getUserRoles();
+    if(userRoles !== null) {
+      return userRoles.includes('CHECKOUT') || userRoles.includes('RECEIVING');
+    }
+    return false;
+  }
 }

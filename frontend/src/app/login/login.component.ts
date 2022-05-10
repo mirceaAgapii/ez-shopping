@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
   }
 
   autoLoginAdmin() {
-    this.username = 'Administrator4ever';
+    this.username = 'Administrator';
     this.password = 'admin';
     this.login();
     this.showSpinner = true;

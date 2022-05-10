@@ -4,7 +4,6 @@ import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
-import { AppComponent } from './app.component';
 import { BasketComponent } from './basket/basket.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AdminPermisionsGuard } from './guard/admin-permisions.guard';
@@ -25,6 +24,7 @@ import {PrefetchPromoProductsResolver} from "./guard/resolvers/prefetch-promo-pr
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {PrefetchProductNamesResolver} from "./guard/resolvers/prefetch-product-names.resolver";
 import {PrefetchShoppingListResolver} from "./guard/resolvers/prefetch-shopping-list.resolver";
+import {WorkstationGuard} from "./guard/workstation-guard.service";
 
 export const routes: Routes = [
   {
@@ -47,35 +47,46 @@ export const routes: Routes = [
       resolve: {systemCPU : PrefetchDashboardResolver}
     }
   ],
-  canActivate: [AuthorizationGuard, AdminPermisionsGuard]
+  canActivate: [AuthorizationGuard, AdminPermisionsGuard, WorkstationGuard]
   },
   {
     path: 'account',
     component: UserAccountComponent,
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthorizationGuard, WorkstationGuard],
     resolve: {user : CurrentUserResolver}
   },
-  {path: 'login', component: LoginComponent},
-  {path: 'registration', component: RegisterComponent},
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'registration',
+    component: RegisterComponent
+  },
   {
     path: 'products',
-    component: ProductsComponent
+    component: ProductsComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'checkout',
-    component: CheckoutComponent
+    component: CheckoutComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'station',
-    component: OrderStationComponent
+    component: OrderStationComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'receiving',
-    component: AddProductComponent
+    component: AddProductComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'basket',
-    component: BasketComponent
+    component: BasketComponent,
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'list',
@@ -83,7 +94,8 @@ export const routes: Routes = [
     resolve: {
       productNames: PrefetchProductNamesResolver,
       shoppingList: PrefetchShoppingListResolver
-    }
+    },
+    canActivate: [AuthorizationGuard, WorkstationGuard]
   },
   {
     path: '404',
@@ -92,8 +104,9 @@ export const routes: Routes = [
   {
     path: '',
     component: MainComponent,
-    canActivate: [AuthorizationGuard],
-    resolve: {products: PrefetchPromoProductsResolver}
+    canActivate: [AuthorizationGuard, WorkstationGuard],
+    resolve: {products: PrefetchPromoProductsResolver},
+
   },
   {
     path: '**',

@@ -52,10 +52,7 @@ export class ProductRestService {
 
     const fd = new FormData();
     fd.append('image', file, file.name);
-    this.http.post<any>(environment.restUrl + environment.api + '/products/image/' + rfid,fd).subscribe(
-      data => console.log('success ' + data),
-      error => console.log(error)
-    );
+    return this.http.post<any>(environment.restUrl + environment.api + '/products/image/' + rfid,fd);
   }
 
   getShoppingListForCurrentUser() {

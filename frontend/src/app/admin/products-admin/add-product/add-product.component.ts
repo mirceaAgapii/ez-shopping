@@ -86,11 +86,16 @@ export class AddProductComponent implements OnInit, OnDestroy {
             console.log('success ' + data);
             console.log('save image');
             if (this.selectedFile) {
-              this.productRestService.saveImage(this.selectedFile.file, data.id);
+              this.productRestService.saveImage(this.selectedFile.file, data.id).subscribe(
+                next => {
+                  console.log('image saved');
+                  this.defaultProduct = new Product();
+                  const preview = document.getElementById('img-preview');
+                  // @ts-ignore
+                  preview.src = this.defaultUploadImage;
+                }
+              );
             }
-            const preview = document.getElementById('img-preview');
-            // @ts-ignore
-            preview.src = defaultUploadImage;
           }
         );
       }

@@ -51,4 +51,11 @@ public class OrderLineServiceImpl implements OrderLineService {
         orderService.updateTotalQty(order);
         return orderLine;
     }
+
+    @Override
+    @Transactional
+    public void removeOrderLine(String orderLineId) {
+        OrderLine orderLine = this.orderLineRepository.findById(orderLineId).orElseThrow();
+        orderLineRepository.delete(orderLine);
+    }
 }

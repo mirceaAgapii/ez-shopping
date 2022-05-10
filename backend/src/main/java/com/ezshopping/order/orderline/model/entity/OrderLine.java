@@ -17,11 +17,11 @@ import javax.persistence.*;
 @Builder
 public class OrderLine extends AbstractEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order parent;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 

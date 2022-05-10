@@ -17,9 +17,6 @@ export class AppComponent implements OnInit{
   isReceiving = false;
   isCheckout = false;
 
-  showReceiving = true;
-  showCheckProduct = false;
-
   constructor(private authorizationService: AuthorizationService,
               private router: Router,
               private jwtService: JWTTokenService,
@@ -34,6 +31,7 @@ export class AppComponent implements OnInit{
         console.log('in app component. userLoggedIn=' + this.isUserLoggedIn);
         const userRoles = this.jwtService.getUserRoles();
         if(userRoles !== null) {
+          this.isUserAdmin = userRoles.includes('ADMINISTRATOR');
           this.isCheckout = userRoles.includes('CHECKOUT');
           this.isReceiving = userRoles.includes('RECEIVING');
           this.isUserStation = this.isCheckout || this.isReceiving;
@@ -82,12 +80,10 @@ export class AppComponent implements OnInit{
   }
 
   showReceivingComp() {
-    this.showReceiving = true;
-    this.showCheckProduct = false;
+    this.router.navigate(['/receiving']);
   }
 
   showCheckProdComp() {
-    this.showReceiving = false;
-    this.showCheckProduct = true;
+    this.router.navigate(['/products']);
   }
 }

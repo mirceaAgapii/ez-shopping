@@ -14,12 +14,14 @@ export class ProductInfoComponent implements OnInit {
 
   _product!: Product;
   productName = '';
+  showPromoImag = false;
 
   constructor(private productRestService: ProductRestService,
               private storage: LocalStorageService,
               private messageService: MessageService) { }
 
   @Input() set product(product: Product) {
+    this.showPromoImag = false;
     this._product = product;
     this.loadUserDetails();
   }
@@ -27,6 +29,9 @@ export class ProductInfoComponent implements OnInit {
   loadUserDetails() {
     if(this._product && this._product.name) {
       this.productName = this._product.name;
+      if(this._product.status === 'promo') {
+        this.showPromoImag = true;
+      }
     }
   }
 

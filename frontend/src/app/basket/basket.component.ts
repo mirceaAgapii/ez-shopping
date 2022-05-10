@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { environment } from 'src/environments/environment';
-import { Product } from '../Model/Product';
-import { WebSocketMessage } from '../Model/WebSocketMessage';
-import { LocalStorageService } from '../services/auth/storage/local-storage.service';
-import { OrderRestService } from '../services/rest/order/order-rest.service';
-import { UserService } from '../services/user/user.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
+import {environment} from 'src/environments/environment';
+import {WebSocketMessage} from '../Model/WebSocketMessage';
+import {LocalStorageService} from '../services/auth/storage/local-storage.service';
+import {OrderRestService} from '../services/rest/order/order-rest.service';
+import {UserService} from '../services/user/user.service';
+import {Orderline} from "../Model/Orderline";
 
 @Component({
   selector: 'app-basket',
@@ -17,16 +17,16 @@ export class BasketComponent implements OnInit, OnDestroy {
 
   productsCount = 0;
   totalPrice = 0;
-  productsList: Product[] = [];
-  imgPathPref: string = '../../assets/img/articles/';
-  imgPathSuf: string = '.jpg';
+  orderlines: Orderline[] = [];
   currentOrderId!: string;
 
   socket: WebSocketSubject<WebSocketMessage> = webSocket(environment.wsUrl + '/web-socket/' + 'WS02/' + this.storage.get("orderUserId"));
 
   constructor(private router: Router,
-    private userService: UserService,
-    private storage: LocalStorageService) { }
+              private userService: UserService,
+              private storage: LocalStorageService,
+              private orderRestService: OrderRestService) {
+  }
 
   ngOnInit(): void {
     this.updateOrderDetails();
@@ -34,16 +34,24 @@ export class BasketComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-  this.closeWebSocketSession();
+    this.closeWebSocketSession();
   }
 
   removeProduct(id: string) {
-    this.productsList.forEach(p => {
-      if (p.id == id) {
-        this.productsList.splice(this.productsList.indexOf(p), 1);
+    this.orderlines.forEach(ol => {
+      if (ol.productId == id) {
+        let orderLine = this.orderlines[this.orderlines.indexOf(ol)];
+        this.orderRestService.removeOrderLine(orderLine.orderLineId).subscribe(
+          next => {
+            this.orderlines.splice(this.orderlines.indexOf(ol), 1);
+            this.updateOrderDetails();
+          },
+          error => {
+            console.log(error);
+          }
+        )
       }
     })
-    this.updateOrderDetails();
   }
 
   navigateToMain() {
@@ -51,9 +59,9 @@ export class BasketComponent implements OnInit, OnDestroy {
   }
 
   updateOrderDetails() {
-    this.productsCount = this.productsList.length;
+    this.productsCount = this.orderlines.length;
     this.totalPrice = 0;
-    this.productsList.forEach(p => {
+    this.orderlines.forEach(p => {
       this.totalPrice += p.price;
     })
   }
@@ -63,13 +71,10 @@ export class BasketComponent implements OnInit, OnDestroy {
       message => {
         if (message.orderLines.length > 0) {
           message.orderLines.forEach(ol => {
-            if (this.productsList.filter(p => p.id === ol.productId).length === 0) {
-              var product = new Product();
-              product.id = ol.productId;
-              product.name = ol.productName;
-              product.price = ol.price;
-              product.description = ol.productDescr;
-              this.productsList.push(product);
+            if (this.orderlines.filter(o => o.productId === ol.productId).length === 0) {
+              let orderLine = new Orderline();
+              orderLine = ol;
+              this.orderlines.push(orderLine);
             } else {
               console.log(`${ol.productId} is already in list`);
             }
@@ -92,7 +97,7 @@ export class BasketComponent implements OnInit, OnDestroy {
     message.finished = true;
     message.orderId = this.currentOrderId;
     this.socket.next(message);
-    this.productsList = [];
+    this.orderlines = [];
     this.currentOrderId = '';
     this.updateOrderDetails();
   }
