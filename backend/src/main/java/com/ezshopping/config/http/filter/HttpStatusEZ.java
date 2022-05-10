@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 public enum HttpStatusEZ {
 
     USER_NOT_FOUND(461, HttpStatus.Series.CLIENT_ERROR, "User not found"),
-    USER_EXISTS(462, HttpStatus.Series.CLIENT_ERROR, "User already in database");
+    USER_EXISTS(462, HttpStatus.Series.CLIENT_ERROR, "User already in database"),
+    PASSWORD_INCORRECT(463, HttpStatus.Series.CLIENT_ERROR, "The provided password is incorrect");
 
     private final int value;
     private final HttpStatus.Series series;

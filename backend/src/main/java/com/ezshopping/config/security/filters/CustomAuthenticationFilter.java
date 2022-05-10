@@ -6,7 +6,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.ezshopping.config.http.filter.HttpStatusEZ;
 import com.ezshopping.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -109,14 +111,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        //timeout just to simulate connection to database and show spinner on front
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (failed instanceof BadCredentialsException) {
+            response.setStatus(HttpStatusEZ.PASSWORD_INCORRECT.getValue());
+            response.sendError(HttpStatusEZ.PASSWORD_INCORRECT.getValue(), HttpStatusEZ.PASSWORD_INCORRECT.getReasonPhrase());
+        } else {
+            response.setStatus(HttpStatusEZ.USER_NOT_FOUND.getValue());
+            response.sendError(HttpStatusEZ.USER_NOT_FOUND.getValue(), HttpStatusEZ.USER_NOT_FOUND.getReasonPhrase());
         }
-        response.setStatus(HttpStatusEZ.USER_NOT_FOUND.getValue());
-        response.sendError(HttpStatusEZ.USER_NOT_FOUND.getValue(), HttpStatusEZ.USER_NOT_FOUND.getReasonPhrase());
     }
 
     private Algorithm getSecretAlgorithm() {

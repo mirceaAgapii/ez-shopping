@@ -77,6 +77,10 @@ export class LoginComponent implements OnInit {
             this.messageService.add({severity:'error', summary:`User ${this.username} wasn't found`, detail:''});
             this.username = '';
             this.password = '';
+          } else if (error.error.status === 463) {
+            this.showSpinner = false;
+            this.messageService.add({severity:'error', summary:'Provided password is incorrect', detail:''});
+            this.password = '';
           }
         }
       );

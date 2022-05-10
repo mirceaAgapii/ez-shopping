@@ -100,6 +100,7 @@ export class BasketComponent implements OnInit, OnDestroy {
     this.orderlines = [];
     this.currentOrderId = '';
     this.updateOrderDetails();
+    this.router.navigate(['/station']);
   }
 
 }
