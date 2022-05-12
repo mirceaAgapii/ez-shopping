@@ -1,4 +1,4 @@
-<p-toast></p-toast>
+<p-toast [style]="{width: showShortToast ? '350px' : '400px' }" baseZIndex.number="99999999"></p-toast>
 <div class="main">
   <app-menu *ngIf="isUserLoggedIn"></app-menu>
   <header *ngIf="isUserLoggedIn"><img class="logo" src="../assets/img/logo_name.png"></header>

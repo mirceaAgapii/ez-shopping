@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './services/auth/authorization.service';
 import { JWTTokenService } from './services/auth/jwttoken.service';
@@ -16,6 +16,7 @@ export class AppComponent implements OnInit{
   isUserStation = false;
   isReceiving = false;
   isCheckout = false;
+  showShortToast = true;
 
   constructor(private authorizationService: AuthorizationService,
               private router: Router,
@@ -39,6 +40,14 @@ export class AppComponent implements OnInit{
       });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if(window.innerWidth < 450) {
+      this.showShortToast = true;
+    } else {
+      this.showShortToast = false;
+    }
+  }
 
   navigateToMain() {
     this.router.navigate(['']);
