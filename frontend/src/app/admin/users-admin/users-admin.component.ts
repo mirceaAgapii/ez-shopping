@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { User } from 'src/app/Model/User';
 import { UserRestService } from 'src/app/services/rest/user/user.rest.service';
 import { UserService } from 'src/app/services/user/user.service';
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-users-admin',
@@ -23,8 +24,9 @@ export class UsersAdminComponent implements OnInit {
   checkboxes!: QueryList<ElementRef>;
 
   constructor(private userService: UserRestService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+              private router: Router,
+              private route: ActivatedRoute,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.users = this.route.snapshot.data['users'];
@@ -39,7 +41,7 @@ export class UsersAdminComponent implements OnInit {
   fetchUsers() {
     this.userService.getAllUsers().subscribe(
       data =>  {
-        setTimeout(() => {}, 500);
+        //setTimeout(() => {}, 500);
         this.users = data;
       }
     ),
@@ -50,11 +52,22 @@ export class UsersAdminComponent implements OnInit {
 
   deleteUser() {
     if (this.selectedUsers.length > 0) {
-      this.userService.deleteUsers(this.selectedUsers[0]);
-      this.selectedUsers.pop();
+      this.userService.deleteUsers(this.selectedUsers[0]).subscribe(
+        next => {
+          this.fetchUsers();
+
+        },
+        error => this.messageService.add({
+          severity: 'warn',
+          summary: error.error,
+          detail: ''
+        })
+      );
+
     }
+    this.selectedUsers.pop();
     this.uncheckAll();
-    this.fetchUsers();
+
   }
 
   closeAddUserComp() {

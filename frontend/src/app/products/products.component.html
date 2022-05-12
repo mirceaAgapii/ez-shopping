@@ -3,8 +3,8 @@
   <div id="search-row" class="row">
     <div class="col search">
 
-      <h4>Enter a barcode<span [hidden]="false" > or scan the RFID</span></h4>
-      <input type="text" name="barcode" [(ngModel)]="barcode" [placeholder]="placeholder" [disabled]="placeholder === 'RFID scanned'"><br>
+      <h4>Enter a barcode<span [hidden]="isClient" > or scan the RFID</span></h4>
+      <input type="text" name="barcode" [(ngModel)]="barcode" [placeholder]="isClient ? placeholderClient : placeholderStation" [disabled]="placeholderStation === 'RFID scanned'"><br>
       <button class="btn btn-primary col-3" [disabled]="!readyToSubmit" (click)="searchProduct()">Search</button>
     </div>
     <div class="col">

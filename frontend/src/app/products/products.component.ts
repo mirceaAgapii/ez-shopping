@@ -18,7 +18,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   isClient = false;
   barcode!: string;
   rfId!: string;
-  placeholder: string = 'Enter a barcode or scan the RFID';
+  placeholderStation: string = 'Enter a barcode or scan the RFID';
+  placeholderClient: string = 'Enter a barcode';
 
   product!: Product;
 
@@ -45,6 +46,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     if(window.innerWidth < 767) {
       document.getElementById('search-row')!.classList.remove('row');
     }
+    let userRoles = this.jwtService.getUserRoles();
+    if(userRoles !== null) {
+      this.isClient = userRoles.includes('CLIENT');
+    }
   }
 
   ngOnDestroy() {
@@ -59,7 +64,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
           this.product = data;
           console.log(data.name);
           this.barcode = '';
-          this.placeholder = '';
+          this.placeholderStation = '';
         },
         error => console.log(error)
       )
@@ -73,7 +78,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
           console.log("Response: " + message.payload);
           this.rfId = message.payload;
           this.barcode = '';
-          this.placeholder = 'RFID:' + this.rfId;
+          this.placeholderStation = 'RFID:' + this.rfId;
           this.searchProduct();
         }
       },

@@ -6,6 +6,7 @@ import com.ezshopping.location.cart.exceptions.CartNotFoundException;
 import com.ezshopping.product.exceptions.ProductNotFoundException;
 import com.ezshopping.stock.exceptions.StockNotFoundException;
 import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
+import com.ezshopping.user.exceptions.UserCantBeDeletedException;
 import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
 import org.hibernate.procedure.NoSuchParameterException;
@@ -76,6 +77,11 @@ public class RestResponseEntityExceptionHandler
 
     @ExceptionHandler
     public ResponseEntity<String> handleEntityExistsException(EntityExistsException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleUserCantBeDeletedException(UserCantBeDeletedException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 }

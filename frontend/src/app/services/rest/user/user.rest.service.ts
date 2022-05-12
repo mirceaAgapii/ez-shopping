@@ -81,9 +81,7 @@ export class UserRestService {
 
   deleteUsers(user: User) {
     console.log(environment.restUrl + environment.api + '/users/user?id=' + user.id);
-    this.http.delete<any>(environment.restUrl + environment.api + '/users/user?id=' + user.id).subscribe(
-      data => console.log(data)
-    );
+    return this.http.delete<any>(environment.restUrl + environment.api + '/users/user?id=' + user.id);
   }
 
   updatePassword(oldPass: string, newPass: string, userId: string) {

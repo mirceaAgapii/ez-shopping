@@ -1,15 +1,17 @@
 package com.ezshopping.user.service;
 
 import com.ezshopping.common.Mapper;
-import com.ezshopping.mail.service.EmailSender;
+import com.ezshopping.product.model.entity.ShoppingListItem;
+import com.ezshopping.product.repository.ShoppingListItemRepository;
 import com.ezshopping.user.UserRole;
+import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
+import com.ezshopping.user.exceptions.UserCantBeDeletedException;
+import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.user.exceptions.WrongPasswordProvidedException;
 import com.ezshopping.user.model.dto.PasswordChangeDTO;
 import com.ezshopping.user.model.dto.UserDTO;
 import com.ezshopping.user.model.entity.User;
 import com.ezshopping.user.repository.UserRepository;
-import com.ezshopping.user.exceptions.UserAlreadyInDatabaseException;
-import com.ezshopping.user.exceptions.UserNotFoundException;
 import com.ezshopping.util.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,14 +30,17 @@ public class UserServiceImpl implements  UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final Mapper<User, UserDTO> mapper;
+    private final ShoppingListItemRepository shoppingListItemRepository;
     //private final EmailSender emailSender;
 
     public UserServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
-                           Mapper<User, UserDTO> mapper) {
+                           Mapper<User, UserDTO> mapper,
+                           ShoppingListItemRepository shoppingListItemRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
+        this.shoppingListItemRepository = shoppingListItemRepository;
     }
 
     @Override
@@ -97,8 +102,16 @@ public class UserServiceImpl implements  UserService {
     @Transactional
     public UserDTO deleteUserById(String id) throws UserNotFoundException {
         User user = getUserById(id);
-        userRepository.delete(user);
-        return mapper.map(user);
+        if (checkUserCanBeDeleted(user)) {
+            userRepository.delete(user);
+            return mapper.map(user);
+        }
+        throw new UserCantBeDeletedException("User still has products in the list");
+    }
+
+    private boolean checkUserCanBeDeleted(User user) {
+        List<ShoppingListItem> shoppingListForUser = shoppingListItemRepository.findAllByUser(user).orElseThrow();
+        return shoppingListForUser.isEmpty();
     }
 
     @Override
